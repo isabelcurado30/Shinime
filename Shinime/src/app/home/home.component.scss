@@ -1,0 +1,117 @@
+.home {
+    text-align: center;
+    padding: 50px 20px;
+    font-family: 'Lexend', sans-serif;
+
+    &__header {
+        h1 {
+            font-size: 2.8rem;
+            color: #EAC4D5;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #666;
+        }
+    }
+
+    &__search {
+        margin: 20px auto;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+
+        input {
+            padding: 10px;
+            width: 50%;
+            border: 1px solid #CCC;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #95B8D1;
+            color: #FFF;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+
+            &:hover {
+                background-color: #809BCE;
+            }
+        }
+    }
+
+    &__carousel {
+        h2 {
+            font-size: 1.8rem;
+        }
+
+        .carousel {
+            display: flex;
+            overflow-x: scroll;
+            gap: 15px;
+            padding: 10px 0;
+
+            .anime-slide {
+                flex: 0 0 150px;
+
+                img {
+                    width: 100%;
+                    border-radius: 5px;
+                }
+
+                p {
+                    margin-top: 5px;
+                    font-size: 1rem;
+                }
+            }
+        }
+    }
+
+    &__categories {
+        margin-top: 40px;
+
+        h2 {
+            font-size: 1.8rem;
+        }
+
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+
+            button {
+                background-color: #95B8D1;
+                color: #FFF;
+                border: none;
+                padding: 10px 15px;
+                border-radius: 5px;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #809BCE;
+                }
+            }
+        }
+    }
+
+    &__ranking {
+        margin-top:  40px;
+
+        h2 {
+            font-size: 1.8rem;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+
+            li {
+                font-size: 1.2rem;
+                padding: 5px 0;
+            }
+        }
+    }
+}
+

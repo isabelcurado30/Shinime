@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang = "es">
+    <head>
+        <meta charset = "UTF-8">
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+        <title>Inicio - Shinime</title>
+        <link href = "https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;700&display=swap" rel = "stylesheet">
+    </head>
+    <body>
+        <section class = "home">
+            <!-- Encabezado -->
+            <header class = "home__header">
+                <h1>Bienvenido/a a Shinime</h1>
+                <p>Descubre, Organiza y Reta tu Pasión por el Anime</p>
+            </header>
+
+            <!-- Barra de Búsqueda -->
+            <div class = "home__search">
+                <input type = "text" placeholder = "Busca un Anime..." [(ngModel)] = "searchQuery">
+                <button (click) = "buscarAnime()">🔍</button>
+            </div>
+
+            <!-- Carrusel de Animes Populares -->
+             <div class = "home__carousel">
+                <h2>✨ Animes Destacados</h2>
+                <div class = "carousel">
+                    <div class = "anime-slide" *ngFor = "let anime of animesDestacados">
+                        <img [src] = "anime.image" [alt] = "anime.title">
+                        <p>{{ anime.title }}</p>
+                    </div> 
+                </div>
+             </div>
+
+            <!-- Categorías de Animes -->
+            <div class = "home__categories">
+                <h2>📺 Descubre Animes</h2>
+                <div class = "categories">
+                    <button routerLink = "/category/emision">📡 En Emisión</button>
+                    <button routerLink = "/category/finalizados">✔️ Finalizados</button>
+                    <button routerLink = "/category/proximamente">🔜 Próximamente</button>
+                </div>
+            </div>
+
+            <!-- Ranking de Animes -->
+            <div class = "home__ranking">
+                <h2>🔥 Top Animes Mejor Valorados</h2>
+                <ul>
+                    <li *ngFor = "let anime of topAnimes">
+                        <span>#{{ anime.rank }}</span> {{ anime.title }} ⭐ {{ anime.score }}
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang = "es">
+    <head>
+        <meta charset = "UTF-8">
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+        <title>Inicio - Shinime</title>
+        <link href = "https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;700&display=swap" rel = "stylesheet">
+    </head>
+    <body>
+        <header class = "header">
+            <!-- Logo -->
+            <div class = "header__logo">
+                <a href = "/" class = "logo">Shinime</a>
+            </div>
+
+            <!-- Barra de Navegación -->
+            <nav class = "header__nav">
+                <ul>
+                    <li><a routerLink = "/anime-list" class = "nav-link">Animes</a></li>
+                    <li><a routerLink = "/category" class = "nav-link">Categorías</a></li>
+                    <li><a routerLink = "/challengue" class = "nav-link">Reto del Año</a></li>
+                    <li><a routerLink = "/profile" class = "nav-link">Perfil</a></li>
+                </ul>
+            </nav>
+
+            <!-- Buscador -->
+            <div class = "header__search">
+                <input type = "text" placeholder = "Buscar Animes..." [(ngModel)] = "searchQuery" (keyup) = "searchAnimes()">
+            </div>
+
+            <!-- Iconos de Usuario -->
+            <div class = "header__user">
+                <a routerLink = "/login" class = "user-link">Iniciar Sesión</a>
+                <a routerLink = "/register" class = "user-link">Registrarse</a>
+            </div>
+        </header>
+    </body>
+</html>
