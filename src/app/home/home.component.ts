@@ -7,6 +7,17 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
   searchQuery: string = '';
+  currentSlide: number = 0;
+
+  ngOnInit() {
+    setInterval(() => {
+      this.nextSlide();
+    }, 4000); // Cambia Cada 4 Segundos
+  }
+
+  nextSlide() {
+    this.currentSlide = (this.currentSlide + 1) % this.animesDestacados.length;
+  }
 
   animesDestacados = [
     { title: 'One Piece', image: 'assets/img/OnePieceEgghead.jpg' },

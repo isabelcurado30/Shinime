@@ -8,6 +8,15 @@
     </head>
     <body>
         <section class = "home">
+            <!-- Carrusel de Animes Populares -->
+            <div class = "home__carousel">
+                <div class = "carousel">
+                    <div class = "anime-slide" *ngFor = "let anime of animesDestacados; let i = index" [class.active] = "i === currentSlide">
+                        <img [src] = "anime.image" [alt] = "anime.title">
+                    </div>
+                </div>
+            </div>
+
             <!-- Encabezado -->
             <header class = "home__header">
                 <h1>Bienvenido/a a Shinime</h1>
@@ -19,17 +28,6 @@
                 <input type = "text" placeholder = "Busca un Anime..." [(ngModel)] = "searchQuery">
                 <button (click) = "buscarAnime()">🔍</button>
             </div>
-
-            <!-- Carrusel de Animes Populares -->
-             <div class = "home__carousel">
-                <h2>✨ Animes Destacados</h2>
-                <div class = "carousel">
-                    <div class = "anime-slide" *ngFor = "let anime of animesDestacados">
-                        <img [src] = "anime.image" [alt] = "anime.title">
-                        <p>{{ anime.title }}</p>
-                    </div> 
-                </div>
-             </div>
 
             <!-- Categorías de Animes -->
             <div class = "home__categories">
