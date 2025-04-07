@@ -16,17 +16,12 @@
             <!-- Barra de Navegación -->
             <nav class = "header__nav">
                 <ul>
-                    <li><a routerLink = "/anime-list" class = "nav-link">Animes</a></li>
-                    <li><a routerLink = "/category" class = "nav-link">Categorías</a></li>
-                    <li><a routerLink = "/challengue" class = "nav-link">Reto del Año</a></li>
-                    <li><a routerLink = "/profile" class = "nav-link">Perfil</a></li>
+                    <li><a routerLink = "/animes" routerLinkActive = "active" class = "nav-link">Animes</a></li>
+                    <li><a routerLink = "/category" routerLinkActive = "active" class = "nav-link">Categorías</a></li>
+                    <li><a routerLink = "/challengue" routerLinkActive = "active" class = "nav-link">Reto del Año</a></li>
+                    <li><a routerLink = "/profile" routerLinkActive = "active" class = "nav-link">Perfil</a></li>
                 </ul>
             </nav>
-
-            <!-- Buscador -->
-            <div class = "header__search">
-                <input type = "text" placeholder = "Buscar Animes..." [(ngModel)] = "searchQuery" (keyup) = "searchAnimes()">
-            </div>
 
             <!-- Iconos de Usuario -->
             <div class = "header__user">

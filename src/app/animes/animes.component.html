@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang = "es">
+    <head>
+        <meta charset = "UTF-8">
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+        <title>Animes - Shinime</title>
+        <link href = "https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;700&display=swap" rel = "stylesheet">
+    </head>
+    <body>
+        <div class = "animes-container">
+            <h2>✨ Animes Populares</h2>
+
+            <!-- Barra de Búsqueda -->
+            <div class = "search-bar">
+                <input type = "text" [(ngModel)] = "searchQuery" placeholder = "Buscar...">
+                <button (click) = "searchAnimes()">Buscar</button>
+            </div>
+
+            <!-- Loader -->
+            <div *ngIf = "isLoading" class = "loading">Cargando...</div>
+
+            <!-- Lista de Animes -->
+            <div class = "animes-list" *ngIf = "animes.length > 0">
+                <div *ngFor = "let anime of animes" class = "anime-card">
+                    <img [src] = "anime.images.jpg.large_image_url" [alt] = "anime.title">
+                    <h3>{{ anime.title }}</h3>
+                    <button (click) = "verDetalles (anime)">Ver Detalles</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
