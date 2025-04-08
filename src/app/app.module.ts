@@ -10,6 +10,8 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { AnimesComponent } from './animes/animes.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
+import { RetoAnualComponent } from './reto-anual/reto-anual.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     HomeComponent,
     HeaderComponent,
     FooterComponent,
-    AnimesComponent
+    AnimesComponent,
+    RetoAnualComponent
   ],
   imports: [
     BrowserModule,
@@ -25,6 +28,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     FormsModule,
     HttpClientModule
   ],
+
   providers: [AnimesService],
   bootstrap: [AppComponent]
 })

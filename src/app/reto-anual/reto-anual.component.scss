@@ -1,0 +1,85 @@
+.reto-container {
+    font-family: 'Lexend', sans-serif;
+    padding: 40px;
+    background: linear-gradient(145deg, #0F2027, #203A43, #2C5364);
+    color: #FFF;
+    min-height: 100vh;
+    text-align: center;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.titulo {
+    font-size: 3rem;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 5px #000;
+    animation: slideInDown 1s ease forwards;
+}
+
+.inicio-reto {
+    background-color: #1E1E2F;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    display: inline-block;
+
+    input {
+        padding: 10px;
+        width: 60px;
+        margin: 10px;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    button {
+        background: #00C9FF;
+        background: linear-gradient(to right, #92FE9D, #00C9FF);
+        padding: 10px 20px;
+        font-weight: bold;
+        border: none;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: transform 0.3s ease, background 0.3s ease;
+
+        &:hover {
+            transform: scale(1.1);
+            background: linear-gradient(to right, #00C9FF, #92FE9D);
+        }
+    }
+}
+
+.progreso {
+    margin: 30px 0;
+
+    .barra-progreso {
+        height: 25px;
+        background: #444;
+        border-radius: 15px;
+        overflow: hidden;
+        margin-top: 10px;
+
+        .relleno {
+            height: 100%;
+            background: linear-gradient(to right, #FF758C, #FF7EB3);
+            width: 0;
+            transition: width 0.6s ease;
+        }
+    }
+}
+
+.buscador {
+    margin: 20px 0;
+
+    input {
+        padding: 10px;
+        width: 250px;
+        border-radius: 10px;
+        border: none;
+        font-size: 1rem;
+    }
+
+    button {
+        
+    }
+}
