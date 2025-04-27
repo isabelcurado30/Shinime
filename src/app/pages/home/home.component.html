@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang = "es">
+    <head>
+        <meta charset = "UTF-8">
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1-0">
+        <title>Inicio - Shinime</title>
+        <link href = "https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel = "stylesheet">
+    </head>
+    <body>
+        <div class="home-page">
+            <!-- Hero -->
+            <div class = "hero-static">
+                <img src = "assets/img/JujutsuHero.png" alt = "Hero Image">
+                <div class = "hero-content">
+                    <h1>Haz Espacio para las Buenas Historias</h1>
+                    <button>Descubrir Animes</button>
+                </div> 
+            </div>
+
+            <!-- Tendencias -->
+            <section class = "trending">
+                <h2>Tendencias</h2>
+                <div class = "trending-grid">
+                    <div *ngFor = "let anime of trendingAnimes">
+                        <img [src] = "anime.images.jpg.image_url" alt = "{{ anime.title }}">
+                        <p>{{ anime.title }}</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Últimos Estrenos -->
+            <section class = "new-releases">
+                <h2>Últimos Estrenos</h2>
+                <div class = "released-grid">
+                    <div *ngFor = "let anime of newReleases">
+                        <img [src] = "anime.images.jpg.image_url" alt = "{{ anime.title }}">
+                        <p>{{ anime.title }}</p>
+                        <small>{{ anime.aired.from | date }}</small>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recomendaciones -->
+            <section class = "recommendations">
+                <h2>Recomendaciones</h2>
+                <div class = "recommendations-grid">
+                    <div *ngFor = "let anime of recommendedAnimes">
+                        <img [src] = "anime.images.jpg.image_url" alt = "{{ anime.title }}">
+                        <p>{{ anime.title }}</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ranking -->
+            <section class = "ranking">
+                <h2>Top 5 de la Semana</h2>
+                <ol>
+                    <li *ngFor = "let anime of topAnimes">
+                        {{ anime.title }} - ⭐ {{ anime.score }}
+                    </li>
+                </ol>
+            </section>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,140 @@
+// Variables de Colores
+$color-primary: #A3E4D7;
+$color-primary-dark: #76C7B7;
+$color-accent: #B9B9B9;
+$color-background: #FFFFFF;
+$color-text: #333333;
+$color-secondary-text: #555555;
+$color-border: #DDDDDD;
+$color-highlight: #DAF2EC;
+
+// Variables de Espaciados
+$padding-section: 3rem 2rem;
+$border-radius: 12px;
+$transition: all 0.3s ease;
+
+.home-page {
+    background-color: $color-background;
+    color: $color-text;
+    font-family: 'Lexend', sans-serif;
+
+    .hero-static {
+        position: relative;
+        width: 100%;
+        height: 640px;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+        
+            h1 {
+                font-size: 2rem;
+                text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+                margin-bottom: 1rem;
+                font-family: 'Lexend', sans-serif;
+            }
+        
+            button {
+                background-color: #a3e4d7;
+                border: none;
+                padding: 0.75rem 1.5rem;
+                font-size: 1.2rem;
+                border-radius: 999px;
+                cursor: pointer;
+                color: #000;
+                font-weight: bold;
+                transition: background 0.3s;
+            
+                &:hover {
+                    background-color: #7cd1bf;
+                }
+            }
+        }
+    }
+
+    section {
+        padding: $padding-section;
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: $color-primary-dark;
+            text-align: center;
+        }
+
+        .trending-grid,
+        .released-grid,
+        .recommendations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1.5rem;
+
+            div {
+                background-color: $color-accent;
+                border: 1px solid $color-border;
+                border-radius: $border-radius;
+                overflow: hidden;
+                text-align: center;
+                transition: $transition;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: $color-highlight;
+                }
+
+                img {
+                    width: 100%;
+                    height: 220px;
+                    object-fit: cover;
+                }
+
+                p {
+                    margin: 0.75rem 0;
+                    font-weight: 600;
+                    color: $color-secondary-text;
+                    padding: 0 0.5rem;
+                }
+
+                small {
+                    color: $color-secondary-text;
+                    font-size: 0.8rem;
+                    display: block;
+                    margin-bottom: 0.75rem;
+                }
+            }
+        }
+
+        ol {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+
+            li {
+                background-color: $color-accent;
+                padding: 1rem;
+                border: 1px solid $color-border;
+                border-radius: $border-radius;
+                transition: $transition;
+
+                &:hover {
+                    background-color: $color-highlight;
+                }
+            }
+        }
+    }
+}
