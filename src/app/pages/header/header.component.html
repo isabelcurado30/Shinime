@@ -1,1 +1,36 @@
-<p>header works!</p>
+<!DOCTYPE html>
+<html lang = "es">
+    <head>
+        <meta charset = "UTF-8">
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+        <title>Header - Shinime</title>
+        <link href = "https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel = "stylesheet">
+    </head>
+    <body>
+        <header class = "header-container">
+            <!-- Logo -->
+            <div class = "logo" (click) = "navigateToHome()">
+                Shinime
+            </div>
+
+            <!-- Menú de Navegación -->
+            <nav class = "nav-menu">
+                <a routerLink = "/animes" routerLinkActive = "active-link">Animes</a>
+                <a routerLink = "/reto-anual" routerLinkActive = "active-link">Reto Anual</a>
+                <a routerLink = "/listas" routerLinkActive = "active-link">Listas</a>
+            </nav>
+
+            <!-- Botones -->
+            <div class = "auth-buttons">
+                <ng-container *ngIf = "!isLoggedIn; else loggedInTemplate">
+                    <button class = "login-btn" (click) = "navigateToLogin()">Iniciar Sesión</button>
+                    <button class = "register-btn" (click) = "navigateToRegister()">Registrarse</button>
+                </ng-container>
+
+                <ng-template #loggedInTemplate>
+                    <button class = "logout-btn" (click) = "logout()">Cerrar Sesión</button>
+                </ng-template>
+            </div>
+        </header>
+    </body>
+</html>

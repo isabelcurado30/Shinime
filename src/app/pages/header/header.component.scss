@@ -1,0 +1,122 @@
+// Variables de Color
+$color-primary: #A3E4D7;
+$color-primary-dark: #76C7B7;
+$color-accent: #B9B9B9;
+$color-background: #FFFFFF;
+$color-text: #333333;
+$color-secondary-text: #555555;
+$color-border: #DDDDDD;
+$color-highlight: #DAF2EC;
+
+$shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+.header-container {
+    background-color: $color-primary;
+    box-shadow: $shadow;
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    font-family: 'Lexend', sans-serif;
+    height: 50px;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: $color-text;
+    cursor: pointer;
+    font-family: 'Lexend', sans-serif;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 1.5rem;
+    font-family: 'Lexend', sans-serif;
+
+    a {
+        color: $color-text;
+        font-weight: 500;
+        text-decoration: none;
+
+        &:hover {
+            color: $color-primary-dark;
+            text-decoration: underline;
+        }
+
+        &.active-link {
+            color: $color-primary-dark;
+            border-bottom: 2px solid $color-primary-dark;
+        }
+    }
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 0.5rem;
+    font-family: 'Lexend', sans-serif;
+
+    button {
+        padding: 0.4rem 0.8rem;
+        border-radius: 0.5rem;
+        font-weight: 500;
+        transition: background-color 0.3s;
+        color: $color-background;
+        border: none;
+        cursor: pointer;
+        font-family: 'Lexend', sans-serif;
+
+        &.login-btn {
+            background-color: $color-primary-dark;
+
+            &:hover {
+                color: $color-text;
+            }
+        }
+
+        &.register-btn {
+            background-color: $color-highlight;
+            color: $color-text;
+
+            &:hover {
+                background-color: $color-primary-dark;
+                color: $color-background;
+            }
+        }
+
+        &.logout-btn {
+            background-color: $color-accent;
+            
+            &:hover {
+                background-color: $color-secondary-text;
+            }
+        }
+    }
+}
+
+// Responsividad
+@media (max-width: 768px) {
+    .nav-menu {
+        gap: 1rem;
+
+        a {
+            font-size: 0.9rem;
+        }
+    }
+
+    .auth-buttons {
+        gap: 0.3rem;
+
+        button {
+            padding: 0.3rem 0.6rem;
+            font-size: 0.85rem;
+        }
+    }
+
+    .logo {
+        font-size: 1.5rem;
+    }
+}
