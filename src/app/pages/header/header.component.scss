@@ -10,6 +10,12 @@ $color-highlight: #DAF2EC;
 
 $shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 .header-container {
     background-color: $color-primary;
     box-shadow: $shadow;
@@ -21,7 +27,7 @@ $shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     top: 0;
     z-index: 50;
     font-family: 'Lexend', sans-serif;
-    height: 50px;
+    height: 70px;
 }
 
 .logo {

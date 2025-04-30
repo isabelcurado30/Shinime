@@ -1,0 +1,102 @@
+// Variables de Color
+$color-primary: #A3E4D7;
+$color-primary-dark: #76C7B7;
+$color-accent: #B9B9B9;
+$color-background: #FFFFFF;
+$color-text: #333333;
+$color-secondary-text: #555555;
+$color-border: #DDDDDD;
+$color-highlight: #DAF2EC;
+
+// Otros
+$spacing-unit: 16px;
+$border-radius: 8px;
+
+// Estilos
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: $spacing-unit;
+  margin: $spacing-unit 0;
+
+  input {
+    padding: 0.5rem 1rem;
+    border: 1px solid $color-border;
+    border-radius: $border-radius;
+    font-size: 1rem;
+    width: 300px;
+    background-color: $color-background;
+    color: $color-text;
+  }
+
+  button {
+    background-color: $color-primary;
+    color: $color-text;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: $border-radius;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: $color-primary-dark;
+    }
+  }
+}
+
+// Loader y mensajes
+p {
+  text-align: center;
+  color: $color-text;
+}
+
+p[style] {
+  color: red; // Error en rojo (puedes crear otra variable si quieres más fino)
+}
+
+// Lista de animes
+.anime-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-unit;
+  justify-content: center;
+  margin-top: $spacing-unit * 2;
+}
+
+// Cada tarjeta de anime
+.anime-card {
+  background-color: $color-background;
+  border: 1px solid $color-border;
+  border-radius: $border-radius;
+  overflow: hidden;
+  width: 180px;
+  text-align: center;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid $color-border;
+  }
+
+  h3 {
+    font-size: 1rem;
+    color: $color-secondary-text;
+    margin: 0.5rem 0;
+  }
+
+  p {
+    font-size: 0.9rem;
+    color: $color-accent;
+    margin-bottom: 0.5rem;
+  }
+}
