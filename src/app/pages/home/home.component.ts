@@ -25,19 +25,19 @@ export class HomeComponent implements OnInit{
 
   loadTrending() {
     this.http.get <any> ('https://api.jikan.moe/v4/top/anime').subscribe (response => {
-      this.trendingAnimes = response.data.slice (0, 8);
+      this.trendingAnimes = response.data.slice (0, 6);
     });
   }
 
   loadNewReleases() {
     this.http.get <any> ('https://api.jikan.moe/v4/seasons/now').subscribe (response => {
-      this.newReleases = response.data.slice (0, 8);
+      this.newReleases = response.data.slice (0, 6);
     });
   }
 
   loadRecommendations() {
     this.http.get <any> ('https://api.jikan.moe/v4/recommendations/anime').subscribe (response => {
-      this.recommendedAnimes = response.data.slice (0, 8).map ((rec: any) => rec.entry [0]);
+      this.recommendedAnimes = response.data.slice (0, 6).map ((rec: any) => rec.entry [0]);
     });
   }
 

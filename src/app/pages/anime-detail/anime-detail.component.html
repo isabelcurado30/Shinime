@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang = "es">
+    <head>
+        <meta charset = "UTF-8">
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+        <title>Animes - Shinime</title>
+        <link href = "https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel = "stylesheet">
+    </head>
+    <body>
+        <div *ngIf = "loading" class = "loading">Cargando Detalles...</div>
+        <div *ngIf = "error" class = "error">{{ error }}</div>
+
+        <div *ngIf = "anime" class = "anime-detail">
+            <img src = "{{ anime.images.jpg.image_url }}" alt = "{{ anime.title }}">
+
+            <div class = "anime-info">
+                <h1>{{ anime.title }}</h1>
+                <p><strong>Estado:</strong> {{ anime.status | statusTranslate }}</p>
+                <p><strong>Puntuación:</strong> {{ anime.score }}</p>
+                <p><strong>Episodios:</strong> {{ anime.episodes }}</p>
+                <p><strong>Géneros:</strong> {{ getGenres() }}</p>
+                <p><strong>Clasificación:</strong> {{ anime.rating | ratingTranslate }}</p>
+            </div>
+
+            <div class = "synopsis">
+                {{ anime.synopsis }}
+            </div>
+        </div>
+    </body>
+</html>

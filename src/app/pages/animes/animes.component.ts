@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AnimeService } from 'src/app/services/anime.service';
+import { Router } from '@angular/router';
 
 @Component ({
   selector: 'app-animes',
@@ -7,33 +8,74 @@ import { AnimeService } from 'src/app/services/anime.service';
   styleUrls: ['./animes.component.scss']
 })
 
-export class AnimesComponent {
+export class AnimesComponent implements OnInit{
+  
   query: string = '';
   animes: any[] = [];
-  loading: boolean = false;
-  error: string = '';
+  loading = false;
+  error = '';
 
-  constructor (private animeService: AnimeService) {}
+  genres: any[] = [];
+  selectedGenre: number | null = null;
 
-  searchAnime() {
-    if (!this.query.trim()) {
-      this.error = 'Introduce un Anime para Buscar';
-      return;
-    } // Fin Si
+  constructor (private animeService: AnimeService, private router: Router) {}
 
+  ngOnInit(): void {
+    this.loadGenres();
+    this.loadInitialAnimes();
+  }
+
+  loadGenres() {
+    this.animeService.getGenres().subscribe ({
+      next: (res) => this.genres = res,
+      error: () => this.error = 'No se Pudieron Cargar los Géneros'
+    });
+  }
+
+  loadInitialAnimes() {
     this.loading = true;
-    this.error = '';
-
-    this.animeService.searchAnime (this.query).subscribe ({
-      next: (response) => {
-        this.animes = response;
+    this.animeService.getTopAnimes().subscribe ({
+      next: (res) => {
+        this.animes = res;
         this.loading = false;
       },
 
-      error: (err) => {
-        this.error = 'Error al Buscar el Anime';
+      error: () => {
+        this.error = 'Error al Cargar Animes';
         this.loading = false;
       }
     });
+  }
+
+  searchAnime() {
+    this.loading = true;
+    this.error = '';
+
+    const query = this.query.trim();
+
+    if (!query && !this.selectedGenre) {
+      this.loadInitialAnimes();
+      return;
+    } // Fin Si
+
+    this.animeService.searchAnime (query, 1, this.selectedGenre !== null ? this.selectedGenre: undefined).subscribe ({
+      next: (res) => {
+        this.animes = res;
+        this.loading = false;
+      },
+
+      error: () => {
+        this.error = 'Error al Buscar Animes';
+        this.loading = false;
+      }
+    });
+  }
+
+  onGenreChange() {
+    this.searchAnime();
+  }
+
+  goToDetail (id: number) {
+    this.router.navigate (['/animes', id])
   }
 }

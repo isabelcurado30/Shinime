@@ -1,0 +1,103 @@
+// Variables de Color
+$color-primary: #A3E4D7;
+$color-primary-dark: #76C7B7;
+$color-accent: #B9B9B9;
+$color-background: #FFFFFF;
+$color-text: #333333;
+$color-secondary-text: #555555;
+$color-border: #DDDDDD;
+$color-highlight: #DAF2EC;
+
+:host {
+    display: block;
+    padding: 2rem;
+    font-family: 'Lexend', sans-serif;
+    background-color: $color-background;
+    color: $color-text;
+}
+
+.loading,
+.error {
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.error {
+    color: red;
+}
+
+.anime.detail {
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: $color-highlight;
+    border: 1px solid $color-border;
+    border-radius: 20px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    box-shadow: 0 12px 24px rgba( 0, 0, 0, 0.08);
+    animation:  fadeIn 0.3s ease-in-out;
+
+    @media (min-width: 768px) {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    img {
+        flex-shrink: 0;
+        width: 100%;
+        max-width: 280px;
+        height: auto;
+        border-radius: 12px;
+        box-shadow: 0 4px 16px rgba( 0, 0, 0, 0.1);
+        margin: 0 auto;
+
+        @media (min-width: 768px) {
+            margin: 0;
+        }
+    }
+
+    .anime-info {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: left;
+        gap: 0.8rem;
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;  
+            color: $color-primary-dark;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            font-size: 1rem;
+            color: $color-secondary-text;
+
+            strong {
+                color: $color-text;
+                font-weight: 600;
+                
+            }
+        }
+    }
+}
+
+.synopsis {
+    margin-top: 1rem;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: $color-secondary-text;
+    padding-top: 1rem;
+    border-top: 1px solid $color-border;
+    
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

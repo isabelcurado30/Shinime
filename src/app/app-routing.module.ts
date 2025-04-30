@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { AnimesComponent } from './pages/animes/animes.component';
+import { AnimeDetailComponent } from './pages/anime-detail/anime-detail.component';
 
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'animes', component: AnimesComponent },
+  { path: 'animes/:id', component: AnimeDetailComponent}
 ];
 
 @NgModule ({
@@ -14,4 +16,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 
-export class AppRoutingModule { }
+export class AppRoutingModule {}
