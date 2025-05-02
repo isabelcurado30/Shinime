@@ -1,0 +1,127 @@
+// Variables
+$color-primary: #A3E4D7;
+$color-primary-dark: #76C7B7;
+$color-accent: #B9B9B9;
+$color-background: #FFFFFF;
+$color-text: #333333;
+$color-secondary-text: #555555;
+$color-border: #DDDDDD;
+$color-highlight: #DAF2EC;
+
+.reto-container {
+    max-width: 990px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: $color-background;
+    border: 1px solid $color-border;
+    border-radius: 1rem;
+    font-family: 'Lexend', sans-serif;
+    color: $color-text;
+
+    h1.titulo {
+        text-align: center;
+        margin-bottom: 2rem;
+        color: $color-primary-dark;
+    }
+
+    input [type = 'number'],
+    input [type = 'text'] {
+        width: 100%;
+        padding: 0.5rem;
+        margin: 0.5rem 0;
+        border: 1px solid $color-border;
+        border-radius: 0.5rem;
+        background-color: $color-highlight;
+        color: $color-text;
+    }
+
+    button {
+        padding: 0.5rem 1rem;
+        background: $color-primary-dark;
+        color: white;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        margin-top: 0.5rem;
+        font-weight: 600;
+
+        &:hover {
+            background-color: darken($color-primary-dark, 8%);
+        }
+    }
+
+    .barra-progreso {
+        width: 100%;
+        height: 20px;
+        background: $color-accent;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-top: 0.5rem;
+
+        .relleno {
+            height: 100%;
+            background: $color-primary;
+            transition: width 0.4s ease-in-out;
+        }
+    }
+
+    .completado {
+        margin-top: 1rem;
+        color: #4CAF50;
+        font-weight: bold;
+    }
+
+    .anime, 
+    .anime-visto {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        padding: 0.5rem;
+        border: 1px solid $color-border;
+        border-radius: 0.5rem;
+        background-color: $color-highlight;
+    }
+
+    img {
+        width: 50px;
+        height: auto;
+        border-radius: 0.25rem;
+    }
+
+    .info {
+        flex: 1;
+
+        p {
+            color: $color-secondary-text;
+            margin: 0;
+        }
+    }
+
+    h2 {
+        margin-top: 2rem;
+        color: $color-text;
+    }
+
+    .reset-button {
+        margin-top: 1rem;
+        background-color: $color-accent;
+        color: $color-text;
+        border: 1px solid $color-border;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        cursor: pointer;
+
+        &:hover {
+            background-color: darken($color-accent, 10%);
+        }
+    }
+
+    .countdown {
+        margin-top: 0.5rem;
+        font-style: italic;
+        color: $color-secondary-text;
+        font-size: 0.9rem;
+    }
+}

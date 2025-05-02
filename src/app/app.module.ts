@@ -11,9 +11,11 @@ import { AnimesComponent } from './pages/animes/animes.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AnimeDetailComponent } from './pages/anime-detail/anime-detail.component';
-import { StatusTranslatePipe } from './pipes/status-translate/status-translate.component';
-import { RatingTranslateComponent } from './pipes/rating-translate/rating-translate.component';
-import { GenresTranslateComponent } from './pipes/genres-translate/genres-translate.component';
+import { StatusTranslatePipe } from './pipes/status-translate/status-translate.pipe';
+import { RatingTranslatePipe } from './pipes/rating-translate/rating-translate.pipe';
+import { GenresTranslatePipe } from './pipes/genres-translate/genres-translate.pipe';
+import { CommonModule } from '@angular/common';
+import { AnnualChallengeComponent } from './pages/annual-challenge/annual-challenge.component';
 
 @NgModule ({
   declarations: [
@@ -24,14 +26,16 @@ import { GenresTranslateComponent } from './pipes/genres-translate/genres-transl
     AnimesComponent,
     AnimeDetailComponent,
     StatusTranslatePipe,
-    RatingTranslateComponent,
-    GenresTranslateComponent
+    RatingTranslatePipe,
+    GenresTranslatePipe,
+    AnnualChallengeComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

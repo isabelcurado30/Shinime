@@ -50,8 +50,8 @@ export class GenresTranslatePipe implements PipeTransform {
     Dementia: 'Demencia'
   };
 
-  transform (genres: { name: string }[]) {
-    if (!Array.isArray (genres)) return '';
+  transform (genres: { name: string }[] | undefined): string {
+    if (!genres || !Array.isArray (genres)) return '';
     return genres
       .map (g => this.genreMap [this.normalize (g.name)] || g.name)
       .join (', ');

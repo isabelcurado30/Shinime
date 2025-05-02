@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang = "es">
+    <head>
+        <meta charset = "UTF-8">
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1-0">
+        <title>Reto Anual - Shinime</title>
+        <link href = "https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel = "stylesheet">
+    </head>
+    <body>
+        <div class = "reto-container">
+            <!-- Formulario para Iniciar el Reto -->
+            <div class = "inicio-reto" *ngIf = "!retoIniciado">
+                <label for = "animeCount">¿Cuántos Animes Quieres Ver este Año?</label>
+                <input type = "number" id = "animeCount" [(ngModel)] = "animeCount" min = "1">
+                <button (click) = "iniciarReto()">¡Empezar!</button>
+            </div>
+
+            <!-- Contenido del Reto -->
+            <div class = "contenido-reto" *ngIf = "retoIniciado">
+                <div class = "progreso">
+                    Has Visto {{ animesVistos.length }} de {{ animeCount }} Animes
+                    <div class = "barra-progreso">
+                        <div class = "relleno" [style.width.%] = "progreso"></div>
+                    </div>
+                    <p *ngIf = "progreso >= 100" class = "completado">🎉 ¡Reto Completado!</p>
+                    <p class = "countDown">⏳ Tiempo Restante: {{ timeLeft }}</p>
+                </div>
+
+                <button class = "reset-button" (click) = "restablecerReto()">Restablecer Reto</button>
+            </div>
+
+            <!-- Buscador -->
+            <div class = "buscador">
+                <input type = "text" [(ngModel)] = "searchQuery" placeholder = "Buscar Animes...">
+                <button (click) = "buscarAnimes()">Buscar</button>
+            </div>
+
+            <!-- Resultados -->
+            <div class = "resultados" *ngIf = "resultadosBusqueda.length > 0">
+                <div class = "anime" *ngFor = "let anime of resultadosBusqueda">
+                    <img [src] = "anime.images.jpg.image_url" alt = "{{ anime.title }}">
+                    <h3>{{ anime.title }}</h3>
+                    <button (click) = "agregarAnime (anime)">Añadir a Vistos ✅</button>
+                </div>
+            </div>
+
+            <!-- Animes Vistos -->
+            <div class = "vistos" *ngIf = "animesVistos.length > 0">
+                <h2>Animes Vistos</h2>
+                <div class = "anime-visto" *ngFor = "let anime of animesVistos">
+                    <img [src] = "anime.images.jpg.image_url" alt = "{{ anime.title }}">
+                    <div class = "info">
+                        <p>{{ anime.title }}</p>
+                        <button (click) = "eliminarAnime (anime)">Eliminar ❌</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

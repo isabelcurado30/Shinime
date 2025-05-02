@@ -18,7 +18,7 @@
                 <p><strong>Estado:</strong> {{ anime.status | statusTranslate }}</p>
                 <p><strong>Puntuación:</strong> {{ anime.score }}</p>
                 <p><strong>Episodios:</strong> {{ anime.episodes }}</p>
-                <p><strong>Géneros:</strong> {{ getGenres() }}</p>
+                <p><strong>Géneros:</strong> {{ anime?.genres | genresTranslate }}</p>
                 <p><strong>Clasificación:</strong> {{ anime.rating | ratingTranslate }}</p>
             </div>
 

@@ -14,6 +14,7 @@ interface Anime {
   synopsis: string;
   score: number;
   status: string;
+  rating: string;
   episodes: number;
   images: {
     jpg: {
@@ -41,7 +42,10 @@ export class AnimeDetailComponent implements OnInit {
   loading = true;
   error = '';
 
-  constructor (private route: ActivatedRoute, private animeService: AnimeService) {}
+  constructor (
+    private route: ActivatedRoute, 
+    private animeService: AnimeService
+  ) {}
 
   ngOnInit(): void {
     this.animeId = Number (this.route.snapshot.paramMap.get ('id'));
