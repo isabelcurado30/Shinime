@@ -8,22 +8,33 @@
     </head>
     <body>
         <div class = "reto-container">
+            <!-- Título Principal -->
+            <h1 class = "titulo">Una Lista Larga. Y Tiempo para Tacharla.</h1>
+
             <!-- Formulario para Iniciar el Reto -->
             <div class = "inicio-reto" *ngIf = "!retoIniciado">
                 <label for = "animeCount">¿Cuántos Animes Quieres Ver este Año?</label>
-                <input type = "number" id = "animeCount" [(ngModel)] = "animeCount" min = "1">
-                <button (click) = "iniciarReto()">¡Empezar!</button>
+                <div class = "form-group">
+                    <input
+                        type = "number"
+                        id = "animeCount"
+                        [(ngModel)] = "animeCount"
+                        min = "1"
+                        placeholder = "Ej: 50"
+                    />
+                    <button (click) = "iniciarReto()">¡Empezar!</button>
+                </div>
             </div>
 
             <!-- Contenido del Reto -->
             <div class = "contenido-reto" *ngIf = "retoIniciado">
                 <div class = "progreso">
-                    Has Visto {{ animesVistos.length }} de {{ animeCount }} Animes
+                    <p>Has Visto <strong>{{ animesVistos.length }}</strong> de <strong>{{ animeCount }}</strong> Animes</p>
                     <div class = "barra-progreso">
                         <div class = "relleno" [style.width.%] = "progreso"></div>
                     </div>
-                    <p *ngIf = "progreso >= 100" class = "completado">🎉 ¡Reto Completado!</p>
-                    <p class = "countDown">⏳ Tiempo Restante: {{ timeLeft }}</p>
+                    <p *ngIf = "progreso >= 100" class = "completado">¡Reto Completado!</p> 
+                    <p class = "countdown">Tiempo Restante: {{ timeLeft }}</p>
                 </div>
 
                 <button class = "reset-button" (click) = "restablecerReto()">Restablecer Reto</button>
@@ -31,16 +42,24 @@
 
             <!-- Buscador -->
             <div class = "buscador">
-                <input type = "text" [(ngModel)] = "searchQuery" placeholder = "Buscar Animes...">
-                <button (click) = "buscarAnimes()">Buscar</button>
+                <div class = "form-group">
+                    <input 
+                        type = "text"
+                        [(ngModel)] = "searchQuery"
+                        placeholder = "Buscar Animes..."
+                    />
+                    <button (click) = "buscarAnimes()">Buscar</button>
+                </div>
             </div>
 
             <!-- Resultados -->
             <div class = "resultados" *ngIf = "resultadosBusqueda.length > 0">
                 <div class = "anime" *ngFor = "let anime of resultadosBusqueda">
                     <img [src] = "anime.images.jpg.image_url" alt = "{{ anime.title }}">
-                    <h3>{{ anime.title }}</h3>
-                    <button (click) = "agregarAnime (anime)">Añadir a Vistos ✅</button>
+                    <div class = "info">
+                        <p>{{ anime.title }}</p>
+                        <button (click) = "agregarAnime (anime)">Añadir a Vistos</button>
+                    </div>
                 </div>
             </div>
 
@@ -51,7 +70,7 @@
                     <img [src] = "anime.images.jpg.image_url" alt = "{{ anime.title }}">
                     <div class = "info">
                         <p>{{ anime.title }}</p>
-                        <button (click) = "eliminarAnime (anime)">Eliminar ❌</button>
+                        <button (click) = "eliminarAnime (anime)">Eliminar</button>
                     </div>
                 </div>
             </div>

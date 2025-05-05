@@ -1,0 +1,121 @@
+// =========================
+// 🎨 Variables Globales
+// =========================
+$color-primary: #A3E4D7;
+$color-primary-dark: #76C7B7;
+$color-accent: #C1C1C1;
+$color-background: #F5F9F8;
+$color-text: #2C3E50;
+$color-secondary-text: #7F8C8D;
+$color-border: #E0E0E0;
+$color-highlight: #E8F9F5;
+
+// =========================
+// 📦 Estilos del Contenedor Principal
+// =========================
+
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $color-background;
+    min-height: 100vh;
+    font-family: 'Lexend', sans-serif;
+    color: $color-text;
+}
+
+// =========================
+// 🧾 Estilos del Formulario
+// =========================
+form {
+    background-color: #FFFFFF;
+    padding: 2.5rem 3rem;
+    border: 1px solid $color-border;
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+    align-items: center;
+}
+
+// =========================
+// 🏷️ Título
+// =========================
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    color: $color-primary-dark;
+    text-align: center
+}
+
+// =========================
+// 🏷️ Etiquetas de Formulario
+// =========================
+label {
+    font-size: 0.9rem;
+    color: $color-secondary-text;
+    margin-bottom: 0.3rem;
+}
+
+// =========================
+// 🔤 Campos de Entrada
+// =========================
+input {
+    padding: 0.75rem 1rem;
+    border: 1px solid $color-border;
+    border-radius: 0.5rem;
+    background-color: #FFFFFF;
+    transition: border-color 0.3s ease;
+
+    &:focus {
+        outline: none;
+        border-color: $color-primary;
+        box-shadow: 0 0 0 2px rgba($color-primary, 0.2);
+    }
+}
+
+// =========================
+// 🔘 Botón de Envío
+// =========================
+button [type = "submit"] {
+    background-color: $color-primary;
+    border: none;
+    padding: 0.9rem;
+    border-radius: 0.5rem;
+    color: #FFFFFF;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: $color-primary-dark;
+    }
+
+    &:disabled {
+        background-color: $color-accent;
+        cursor: not-allowed;
+    }
+}
+
+// =========================
+// 💬 Mensajes (Error / Éxito)
+// =========================
+p {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+
+    &.error {
+        color: red;
+    }
+
+    &.success {
+        color: green;
+    }
+}

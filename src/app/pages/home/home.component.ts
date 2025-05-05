@@ -20,7 +20,6 @@ export class HomeComponent implements OnInit{
     this.loadTrending();
     this.loadNewReleases();
     this.loadRecommendations();
-    this.loadTop(); 
   }
 
   loadTrending() {
@@ -38,13 +37,6 @@ export class HomeComponent implements OnInit{
   loadRecommendations() {
     this.http.get <any> ('https://api.jikan.moe/v4/recommendations/anime').subscribe (response => {
       this.recommendedAnimes = response.data.slice (0, 6).map ((rec: any) => rec.entry [0]);
-    });
-  }
-
-  loadTop() {
-    this.http.get <any> ('https://api.jikan.moe/v4/top/anime').subscribe (response => {
-      console.log ('Top Animes:', response.data);
-      this.topAnimes = response.data.slice (0, 5);
     });
   }
 }

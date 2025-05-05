@@ -1,127 +1,222 @@
-// Variables
+// =========================
+// 🎨 Variables Globales
+// =========================
 $color-primary: #A3E4D7;
 $color-primary-dark: #76C7B7;
-$color-accent: #B9B9B9;
-$color-background: #FFFFFF;
-$color-text: #333333;
-$color-secondary-text: #555555;
-$color-border: #DDDDDD;
-$color-highlight: #DAF2EC;
+$color-accent: #C1C1C1;
+$color-background: #F5F9F8;
+$color-text: #2C3E50;
+$color-secondary-text: #7F8C8D;
+$color-border: #E0E0E0;
+$color-highlight: #E8F9F5;
+$shahow-soft: 0 4px 12px rgba(0, 0, 0, 0.06);
+$radius: 1.2rem;
+$transition: all 0.3s ease;
 
+// =========================
+// 🔁 Mixins Reutilizables
+// =========================
+@mixin glassy {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+@mixin card {
+    border-radius: $radius;
+    box-shadow: $shahow-soft;
+    background-color: $color-highlight;
+    transition: $transition;
+}
+
+@mixin hover-scale {
+    transition: $transition;
+    &:hover {
+        transform: scale(1.02);
+    }
+}
+
+@mixin input-style {
+    width: 100%;
+    padding: 0.75 1rem;
+    margin: 0.75rem 0;
+    border: 1px solid $color-border;
+    border-radius: 0.75rem;
+    background-color: $color-highlight;
+    color: $color-text;
+    font-size: 1rem;
+    transition: border 0.2s ease;
+
+    &:hover {
+        border-color: $color-primary-dark;
+        outline: none;
+    }
+}
+
+@mixin fade-in($duration: 0.6s, $delay: 0s) {
+    animation: fade-in $duration ease $delay both;
+}
+
+// =========================
+// 📦 Estilos del Reto Anual
+// =========================
 .reto-container {
     max-width: 990px;
-    margin: 2rem auto;
+    margin: 3rem auto;
     padding: 2rem;
-    background: $color-background;
-    border: 1px solid $color-border;
-    border-radius: 1rem;
+    @include glassy;
+    border-radius: $radius;
     font-family: 'Lexend', sans-serif;
     color: $color-text;
+    position: relative;
+    overflow: hidden;
 
     h1.titulo {
         text-align: center;
         margin-bottom: 2rem;
         color: $color-primary-dark;
+        font-size: 2.2rem;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        @include fade-in(0.8s);
     }
 
     input [type = 'number'],
     input [type = 'text'] {
-        width: 100%;
-        padding: 0.5rem;
-        margin: 0.5rem 0;
-        border: 1px solid $color-border;
-        border-radius: 0.5rem;
-        background-color: $color-highlight;
-        color: $color-text;
+        @include input-style;
+        @include fade-in(0.5s);
     }
 
     button {
-        padding: 0.5rem 1rem;
-        background: $color-primary-dark;
-        color: white;
+        padding: 0.6rem 1.2rem;
+        background: linear-gradient(145deg, $color-primary-dark, darken($color-primary-dark, 5%));
+        color: #FFFFFF;
         border: none;
-        border-radius: 0.5rem;
+        border-radius: 0.75rem;
         cursor: pointer;
-        margin-top: 0.5rem;
         font-weight: 600;
-
-        &:hover {
-            background-color: darken($color-primary-dark, 8%);
-        }
+        font-size: 1rem;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.01);
+        @include hover-scale;
+        @include fade-in(0.5s);
     }
 
     .barra-progreso {
         width: 100%;
-        height: 20px;
-        background: $color-accent;
-        border-radius: 10px;
+        height: 24px;
+        background-color: $color-accent;
+        border-radius: 12px;
         overflow: hidden;
-        margin-top: 0.5rem;
+        margin-top: 1.5rem;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.01);
+        @include fade-in(0.6s);
 
         .relleno {
             height: 100%;
-            background: $color-primary;
+            background: linear-gradient(90deg, $color-primary, $color-primary-dark);
             transition: width 0.4s ease-in-out;
         }
     }
 
     .completado {
         margin-top: 1rem;
-        color: #4CAF50;
+        color: #27AE60;
         font-weight: bold;
+        font-size: 1.1rem;
+        text-align: center;
+        @include fade-in(0.7s);
     }
 
-    .anime, 
-    .anime-visto {
+    .anime, .anime-visto {
         display: flex;
         align-items: center;
         gap: 1rem;
         margin-bottom: 1rem;
-        padding: 0.5rem;
-        border: 1px solid $color-border;
-        border-radius: 0.5rem;
-        background-color: $color-highlight;
-    }
+        padding: 0.9rem 1rem;
+        @include card;
+        @include hover-scale;
+        @include fade-in(0.5s);
 
-    img {
-        width: 50px;
-        height: auto;
-        border-radius: 0.25rem;
-    }
+        img {
+            width: 90px;
+            height: auto;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        }
 
-    .info {
-        flex: 1;
+        .info {
+            flex: 1;
 
-        p {
-            color: $color-secondary-text;
-            margin: 0;
+            p {
+                color: $color-secondary-text;
+                margin: 0;
+                font-size: 1.05rem;
+                font-weight: 500;
+            }
+
+            button {
+                margin-top: 0.5rem;
+                align-self: start;
+            }
         }
     }
 
     h2 {
-        margin-top: 2rem;
+        margin-top: 2.5rem;
         color: $color-text;
+        font-size: 1.6rem;
+        border-bottom: 2px solid $color-border;
+        padding-bottom: 0.5rem;
+        @include fade-in(0.6s);
     }
 
     .reset-button {
-        margin-top: 1rem;
-        background-color: $color-accent;
+        margin-top: 1.5rem;
+        background-color: #FFFFFF;
         color: $color-text;
-        border: 1px solid $color-border;
-        padding: 0.5rem 1rem;
-        border-radius: 0.5rem;
+        border: 1px solid $color-accent;
+        padding: 0.6rem 1.2rem;
+        border-radius: 0.75rem;
         font-weight: 600;
         cursor: pointer;
+        @include hover-scale;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        @include fade-in(0.5s);
 
         &:hover {
-            background-color: darken($color-accent, 10%);
+            background-color: $color-accent;
+            color: #FFFFFF;
         }
     }
 
     .countdown {
-        margin-top: 0.5rem;
+        margin-top: 0.75rem;
         font-style: italic;
         color: $color-secondary-text;
-        font-size: 0.9rem;
+        font-size: 0.95rem;
+        text-align: center;
+        @include fade-in(1s);
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-top: 1rem;
+    }
+}
+
+// =========================
+// ✨ Animaciones
+// =========================
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

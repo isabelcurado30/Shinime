@@ -8,7 +8,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { HeaderComponent } from './pages/header/header.component';
 import { FooterComponent } from './pages/footer/footer.component';
 import { AnimesComponent } from './pages/animes/animes.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AnimeDetailComponent } from './pages/anime-detail/anime-detail.component';
 import { StatusTranslatePipe } from './pipes/status-translate/status-translate.pipe';
@@ -16,6 +16,8 @@ import { RatingTranslatePipe } from './pipes/rating-translate/rating-translate.p
 import { GenresTranslatePipe } from './pipes/genres-translate/genres-translate.pipe';
 import { CommonModule } from '@angular/common';
 import { AnnualChallengeComponent } from './pages/annual-challenge/annual-challenge.component';
+import { LoginComponent } from './pages/login/login.component';
+import { RegistroComponent } from './pages/registro/registro.component';
 
 @NgModule ({
   declarations: [
@@ -28,14 +30,17 @@ import { AnnualChallengeComponent } from './pages/annual-challenge/annual-challe
     StatusTranslatePipe,
     RatingTranslatePipe,
     GenresTranslatePipe,
-    AnnualChallengeComponent
+    AnnualChallengeComponent,
+    LoginComponent,
+    RegistroComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

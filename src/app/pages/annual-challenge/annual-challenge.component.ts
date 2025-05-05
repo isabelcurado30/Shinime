@@ -51,7 +51,10 @@ export class AnnualChallengeComponent implements OnInit {
       confirmButtonColor: '#76C7B7',
       cancelButtonColor: '#D33',
       confirmButtonText: 'Sí, Restablecer',
-      cancelButtonText: 'Cancelar'
+      cancelButtonText: 'Cancelar',
+      customClass: {
+        popup: 'swal2-lexend'
+      }
     }).then ((result) => {
       if (result.isConfirmed) {
         const year = new Date().getFullYear();
@@ -62,11 +65,14 @@ export class AnnualChallengeComponent implements OnInit {
         this.searchQuery = '';
         this.resultadosBusqueda = [];
 
-        Swal.fire (
-          '¡Reiniciado!',
-          'Tu Reto ha Sido Establecido',
-          'success'
-        );
+        Swal.fire({
+          title: '¡Reiniciado!',
+          text: 'Tu Reto ha Sido Establecido',
+          icon: 'success',
+          customClass: {
+            popup: 'swal2-lexend'
+          }
+        });        
       }
     });
   }
@@ -91,7 +97,10 @@ export class AnnualChallengeComponent implements OnInit {
         title: '¡Añadido!',
         text: `"${anime.title}" se ha Añadido a tu Lista de Vistos.`,
         timer: 1500,
-        showConfirmButton: false
+        showConfirmButton: false,
+        customClass: {
+          popup: 'swal2-lexend'
+        }
       });
     } // Fin Si
   }
@@ -105,7 +114,10 @@ export class AnnualChallengeComponent implements OnInit {
       title: 'Eliminado',
       text: `"${anime.title}" se ha Eliminado de tu Lista.`,
       timer: 1500,
-      showConfirmButton: false
+      showConfirmButton: false,
+      customClass: {
+        popup: 'swal2-lexend'
+      }
     });
   }
 
