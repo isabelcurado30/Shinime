@@ -5,6 +5,8 @@ import { AnimesComponent } from './pages/animes/animes.component';
 import { AnimeDetailComponent } from './pages/anime-detail/anime-detail.component';
 import { AnnualChallengeComponent } from './pages/annual-challenge/annual-challenge.component';
 import { RegistroComponent } from './pages/registro/registro.component';
+import { LoginComponent } from './pages/login/login.component';
+import { PerfilComponent } from './pages/perfil/perfil.component';
 
 
 const routes: Routes = [
@@ -12,7 +14,9 @@ const routes: Routes = [
   { path: 'animes', component: AnimesComponent },
   { path: 'animes/:id', component: AnimeDetailComponent},
   { path: 'annual-challenge', component: AnnualChallengeComponent },
-  { path: 'registro', component: RegistroComponent }
+  { path: 'registro', component: RegistroComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'perfil', component: PerfilComponent }
 ];
 
 @NgModule ({

@@ -18,6 +18,7 @@ import { CommonModule } from '@angular/common';
 import { AnnualChallengeComponent } from './pages/annual-challenge/annual-challenge.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegistroComponent } from './pages/registro/registro.component';
+import { PerfilComponent } from './pages/perfil/perfil.component';
 
 @NgModule ({
   declarations: [
@@ -32,7 +33,8 @@ import { RegistroComponent } from './pages/registro/registro.component';
     GenresTranslatePipe,
     AnnualChallengeComponent,
     LoginComponent,
-    RegistroComponent
+    RegistroComponent,
+    PerfilComponent
   ],
   imports: [
     BrowserModule,

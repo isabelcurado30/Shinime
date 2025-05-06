@@ -7,21 +7,15 @@
         <link href = "https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel = "stylesheet">
     </head>
     <body>
-        <h2>Registro</h2>
+        <form (ngSubmit) = "onSubmit()">
+            <input type = "text" [(ngModel)] = "nombre" name = "nombre" placeholder = "Nombre de Usuario" required>
+            <input type = "email" [(ngModel)] = "email" name = "email" placeholder = "Correo Electrónico" required>
+            <input type = "password" [(ngModel)] = "password" name = "password" placeholder = "Contraseña" required>
 
-        <form [formGroup] = "registroForm" (ngSubmit) = "registrar()">
-            <label>Nombre:</label>
-            <input type = "text" formControlName = "nombre">
-
-            <label>Email:</label>
-            <input type = "email" formControlName = "email">
-
-            <label>Contraseña:</label>
-            <input type = "password" formControlName = "password">
-
-            <button type = "submit" [disabled] = "registroForm.invalid">Registrarse</button>
+            <button type = "submit">Registrarse</button>
         </form>
-
-        <p *ngIf = "mensaje" [style.color] = "error ? 'red' : 'green'">{{ mensaje }}</p>
+        
+        <p *ngIf = "mensaje" style = "color: green">{{ mensaje }}</p>
+        <p *ngIf = "error" style = "color: red">{{ error }}</p>
     </body>
 </html>

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Observable, map } from "rxjs";
+import { Observable, firstValueFrom, map } from "rxjs";
 
 @Injectable ({
     providedIn: 'root'
@@ -65,4 +65,31 @@ export class AnimeService {
     getGenres(): Observable <any[]> {
         return this.http.get <any> (`${this.BASE_URL}/genres/anime`).pipe (map (res => res.data));
     }
+
+    async getAllEpisodes(animeId: number): Promise<any[]> {
+        let episodes: any[] = [];
+        let page = 1;
+        let hasNext = true;
+      
+        try {
+          while (hasNext) {
+            const url = `https://api.jikan.moe/v4/anime/${animeId}/episodes?page=${page}`;
+            const response: any = await firstValueFrom(this.http.get(url));
+      
+            episodes.push(...response.data);
+            hasNext = response.pagination?.has_next_page;
+            page++;
+          }
+        } catch (error: any) {
+          // Si el error es 404, simplemente devolvemos una lista vacía
+          if (error.status === 404) {
+            return [];
+          } else {
+            throw error; // otros errores sí los lanzamos
+          }
+        }
+      
+        return episodes;
+      }
+      
 }

@@ -1,38 +1,41 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 
-@Component ({
+@Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.scss']
 })
-
 export class RegistroComponent {
-  registroForm: FormGroup;
-  mensaje: string = '';
-  error: boolean = false;
+  nombre = '';
+  email = '';
+  password = '';
+  mensaje = '';
+  error = '';
 
-  constructor (private fb: FormBuilder, private authService: AuthService) {
-    this.registroForm = this.fb.group ({
-      nombre: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-    });
-  }
+  constructor(private authService: AuthService) {}
 
-  registrar() {
-    if (this.registroForm.invalid) return;
-
-    this.authService.registrar (this.registroForm.value).subscribe ({
-      next: (res: any) => {
-        this.error = res.error;
-        this.mensaje = res.mensaje;
+  onSubmit() {
+    const nuevoUsuario = {
+      nombre: this.nombre,
+      email: this.email,
+      password: this.password
+    };
+  
+    this.authService.registrar(nuevoUsuario).subscribe({
+      next: res => {
+        if (res?.message) {
+          this.authService.guardarSesion({ id: res.id ?? 0, nombre: this.nombre }); // ← aquí se guarda la sesión
+          this.mensaje = res.message;
+          this.error = '';
+        } else {
+          this.error = 'Respuesta inesperada del servidor.';
+          this.mensaje = '';
+        }
       },
-
       error: err => {
-        this.error = true;
-        this.mensaje = 'Error de Red o del Servidor';
+        this.error = err.error?.message || 'Error desconocido';
+        this.mensaje = '';
       }
     });
   }

@@ -41,6 +41,7 @@ export class AnimeDetailComponent implements OnInit {
   anime: Anime | null = null;
   loading = true;
   error = '';
+  episodes: any[] = [];
 
   constructor (
     private route: ActivatedRoute, 
@@ -49,11 +50,22 @@ export class AnimeDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.animeId = Number (this.route.snapshot.paramMap.get ('id'));
+    this.loading = true;
 
     this.animeService.getAnimeDetails (this.animeId).subscribe ({
       next: (data) => {
         this.anime = data;
-        this.loading = false;
+
+        this.animeService.getAllEpisodes (this.animeId)
+          .then ((episodes) => {
+            this.episodes = episodes;
+            this.loading = false;
+          })
+
+          .catch(() => {
+            this.error = 'No se Pudieron Cargar los Episodios';
+            this.loading = false;
+          });
       },
 
       error: () => {

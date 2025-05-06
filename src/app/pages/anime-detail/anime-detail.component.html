@@ -26,5 +26,19 @@
                 {{ anime.synopsis }}
             </div>
         </div>
+
+        <div *ngIf="episodes.length > 0" class="anime-episodes">
+            <h2>Episodios</h2>
+            <ul>
+              <li *ngFor="let ep of episodes">
+                <strong>{{ ep.mal_id }}. {{ ep.title }}</strong>
+                <span *ngIf="ep.aired"> ({{ ep.aired | date:'yyyy-MM-dd' }})</span>
+              </li>
+            </ul>
+          </div>
+
+          <div *ngIf="!loading && episodes.length === 0" class="no-episodes">
+            <p>No se encontraron episodios.</p>
+          </div>
     </body>
 </html>

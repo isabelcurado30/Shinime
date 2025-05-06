@@ -1,0 +1,7 @@
+{
+    "/api": {
+        "target": "http://ruizgijon.ddns.net/sancheza/isaberu/api",
+        "secure": false
+    }
+}
+  
