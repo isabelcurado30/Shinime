@@ -29,7 +29,7 @@ export class RegistroComponent {
           this.mensaje = res.message;
           this.error = '';
         } else {
-          this.error = 'Respuesta inesperada del servidor.';
+          this.error = 'Usuario Creado';
           this.mensaje = '';
         }
       },
