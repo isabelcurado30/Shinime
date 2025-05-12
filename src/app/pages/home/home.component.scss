@@ -1,140 +1,213 @@
-// Variables de Colores
-$color-primary: #A3E4D7;
-$color-primary-dark: #76C7B7;
-$color-accent: #B9B9B9;
-$color-background: #FFFFFF;
-$color-text: #333333;
-$color-secondary-text: #555555;
-$color-border: #DDDDDD;
-$color-highlight: #DAF2EC;
+// =========================
+// 🎨 Variables de Color
+// =========================
 
-// Variables de Espaciados
-$padding-section: 3rem 2rem;
-$border-radius: 12px;
-$transition: all 0.3s ease;
+:root {
+    --color-primary: #A3E4D7;
+    --color-bg: #F4FCFA;
+    --color-surface: #FFFFFF;
+    --color-text-main: #2E4053;
+    --color-text-secondary: #5D6D7E;
+    --color-border: #D6DBDF;
+
+    --color-accent1: #FADBD8;
+    --color-accent2: #FCF3CF;
+    --color-accent3: #D6EAF8;
+}
+
+// =========================
+// ✨ Tipografía Base
+// =========================
+
+body {
+    font-family: 'Lexend', sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text-main);
+    margin: 0;
+    padding: 0;
+}
+
+// =========================
+// 🏠 Página Principal
+// =========================
 
 .home-page {
-    background-color: $color-background;
-    color: $color-text;
-    font-family: 'Lexend', sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    padding: 2rem;
 
-    .hero-static {
-        position: relative;
-        width: 100%;
-        height: 640px;
-        overflow: hidden;
+    @media (max-width: 768px) {
+        padding: 1.5rem;
+        gap: 3rem;
+    }
 
-        img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            display: block;
-        }
+    @media (max-width: 480px) {
+        padding: 1rem;
+        gap: 2rem;
+    }
 
-        .hero-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            color: white;
-        
-            h1 {
-                font-size: 2rem;
-                text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
-                margin-bottom: 1rem;
-                font-family: 'Lexend', sans-serif;
-            }
-        
-            button {
-                background-color: #a3e4d7;
-                border: none;
-                padding: 0.75rem 1.5rem;
-                font-size: 1.2rem;
-                border-radius: 999px;
-                cursor: pointer;
-                color: #000;
-                font-weight: bold;
-                transition: background 0.3s;
-            
-                &:hover {
-                    background-color: #7cd1bf;
-                }
-            }
-        }
+    h1, h2 {
+        font-weight: 600;
+        color: var(--color-text-main);
+        margin: 0;
     }
 
     section {
-        padding: $padding-section;
+        background-color: var(--color-surface);
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 
-        h2 {
+        @media (max-width: 480px) {
+            padding: 1.5rem 1rem;
+        }
+    }
+}
+
+// =========================
+// 🖼️ Hero
+// =========================
+
+.hero-static {
+    position: relative;
+    width: 100%;
+    height: 700px; // Puedes Ajustar este Alto Según lo Visual
+    overflow: hidden;
+
+    img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.85);
+        border-radius: 0; // Elimina Bordes Redondeados
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+
+        h1 {
             font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: $color-primary-dark;
+            font-weight: 700;
+            color: var(--color-text-main);
+            margin-bottom: 1rem;
+            background-color: rgba(255, 255, 255, 0.75);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+        }
+
+        button {
+            background-color: linear-gradient(135deg, var(--color-primary), #7ADBC8);
+            color: #FFF;
+            font-weight: 700;
+            border: none;
+            padding: 0.9rem 1.8rem;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.01);
+
+            &:hover {
+                background-color: linear-gradient(135deg, #7ADBC8, var(--color-primary));
+                transform: scale(1.05);
+                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+            }
+        }
+
+        @media (max-width: 768px) {
+            left: 5%;
+            padding: 1.5rem;
+
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            position: static;
+            transform: none;
+            background-color: transparent;
+            padding: 1rem 0;
+            max-width: 100%;
             text-align: center;
-        }
 
-        .trending-grid,
-        .released-grid,
-        .recommendations-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 1.5rem;
-
-            div {
-                background-color: $color-accent;
-                border: 1px solid $color-border;
-                border-radius: $border-radius;
-                overflow: hidden;
-                text-align: center;
-                transition: $transition;
-                cursor: pointer;
-
-                &:hover {
-                    background-color: $color-highlight;
-                }
-
-                img {
-                    width: 100%;
-                    height: 220px;
-                    object-fit: cover;
-                }
-
-                p {
-                    margin: 0.75rem 0;
-                    font-weight: 600;
-                    color: $color-secondary-text;
-                    padding: 0 0.5rem;
-                }
-
-                small {
-                    color: $color-secondary-text;
-                    font-size: 0.8rem;
-                    display: block;
-                    margin-bottom: 0.75rem;
-                }
+            button {
+                width: 100%;
             }
         }
+    }
+}
 
-        ol {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
+// =========================
+// 🧩 Secciones de Anime
+// =========================
 
-            li {
-                background-color: $color-accent;
-                padding: 1rem;
-                border: 1px solid $color-border;
-                border-radius: $border-radius;
-                transition: $transition;
+.trending, .new-releases, .recommendations {
 
-                &:hover {
-                    background-color: $color-highlight;
-                }
-            }
+    h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .trending-grid,
+    .released-grid,
+    .recommendations-grid {
+        display: grid;
+        grid-auto-flow: row;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        max-width: 1200px;
+        margin: 0 auto; // Central el Grid Completo Horizontalmente
+        gap: 2rem;
+        justify-content: center; // Centra el Contenido de cada Celda
+        padding: 1rem 0;
+
+        @media (max-width: 480px) {
+            grid-template-columns: repeat(auto-fill, minmax(120px, 2fr));
+        }
+    }
+
+    div {
+        background-color: var(--color-accent3);
+        border-radius: 0.75rem;
+        padding: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        text-align: center;
+        transition: transform 0.2s ease-in-out;
+
+        &:hover {
+            transform: translateY(-4px);
+            background-color: var(--color-primary);
+        }
+
+        img {
+            width: 100%;
+            border-radius: 0.5rem;
+            aspect-ratio: 2 / 3;
+            object-fit: cover;
+        }
+
+        p {
+            margin: 0.5rem 0 0;
+            font-weight: 500;
+        }
+
+        small {
+            font-size: 0.75rem;
+            color: var(--color-text-secondary);
         }
     }
 }
