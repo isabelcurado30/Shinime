@@ -1,0 +1,161 @@
+// =========================
+// 🎨 Variables Globales
+// =========================
+$borde-claro: #E0E0E0;
+$fondo-claro: #FFFFFF;
+$text-color: #2C2C2C;
+$color-principal: #A3E4D7;
+$color-principal-hover: darken($color-principal, 10%);
+$color-alerta: #E74C3C;
+$gris-suave: #F9F9FB;
+
+.bloqueo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    background: $gris-suave;
+    border-radius: 1rem;
+    border: 1px solid $borde-claro;
+    padding: 2rem;
+    text-align: center;
+    color: $text-color;
+
+    .bloqueo-mensaje {
+        background: $fondo-claro;
+        border: 1px solid lighten($borde-claro, 10%);
+        padding: 2rem 2.5rem;
+        border-radius: 1rem;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+
+        h2 {
+            margin-bottom: 1rem;
+            font-size: 2rem;
+            color: $color-alerta;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: darken($text-color, 10%);
+        }
+    }
+}
+
+.listas-wrapper {
+    padding: 2rem;
+    color: $text-color;
+
+    h2 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        color: darken($text-color, 10%);
+    }
+
+    button {
+        background-color: $color-principal;
+        border: none;
+        color: #FFFFFF;
+        padding: 0.6rem 1.2rem;
+        font-size: 1rem;
+        border-radius: 0.6rem;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.2s;
+
+        &:hover {
+            background-color: $color-principal-hover;
+            transform: scale(1.05);
+        }
+    }
+
+    .lista {
+        background: $fondo-claro;
+        border: 1px solid $borde-claro;
+        border-radius: 1rem;
+        padding: 1rem 1.5rem;
+        margin-top: 2rem;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+
+        .lista-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            h3 {
+                margin: 0;
+                font-size: 1.4rem;
+                color: $text-color;
+            }
+
+            .acciones {
+                button {
+                    margin-left: 0.5rem;
+                    background-color: transparent;
+                    border: none;
+                    font-size: 1.2rem;
+                    color: #888;
+                    transition: transform 0.2s, color 0.3s;
+
+                    &:hover {
+                        color: $text-color;
+                        transform: scale(1.2);
+                    }
+                }
+            }
+        }
+
+        .animes {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+
+            .anime-card {
+                background: #F4FDFB;
+                padding: 0.8rem;
+                border-radius: 0.8rem;
+                text-align: center;
+                color: $text-color;
+                transition: transform 0.2s;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+
+                &:hover {
+                    transform: translateY(-4px);
+                }
+
+                img {
+                    width: 100%;
+                    height: auto;
+                    border-radius: 0.5rem;
+                    margin-bottom: 0.5rem;
+                }
+
+                span {
+                    display: block;
+                    margin-bottom: 0.5rem;
+                    font-weight: 500;
+                    font-size: 0.95rem;
+                }
+
+                button {
+                    background: $color-alerta;
+                    color: #FFFFFF;
+                    font-size: 0.85rem;
+                    padding: 0.4rem 0.8rem;
+                    border-radius: 0.5rem;
+                    border: none;
+                    transition: background 0.3s;
+
+                    &:hover {
+                        background: darken($color-alerta, 10%);
+                    }
+                }
+            }
+        }
+
+        p {
+            color: #777;
+            font-style: italic;
+            padding: 1rem 0;
+        }
+    }
+}

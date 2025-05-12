@@ -7,6 +7,7 @@ import { AnnualChallengeComponent } from './pages/annual-challenge/annual-challe
 import { RegistroComponent } from './pages/registro/registro.component';
 import { LoginComponent } from './pages/login/login.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
+import { ListasComponent } from './pages/listas/listas.component';
 
 
 const routes: Routes = [
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'annual-challenge', component: AnnualChallengeComponent },
   { path: 'registro', component: RegistroComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'perfil', component: PerfilComponent }
+  { path: 'perfil', component: PerfilComponent },
+  { path: 'listas', component: ListasComponent }
 ];
 
 @NgModule ({

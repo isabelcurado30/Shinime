@@ -1,0 +1,36 @@
+<!-- Si está bloqueado -->
+<div *ngIf="bloqueado" class="bloqueo-container">
+    <div class="bloqueo-mensaje">
+      <h2>Acceso Restringido</h2>
+      <p>Inicia sesión para gestionar tus listas personalizadas.</p>
+    </div>
+  </div>
+  
+  <!-- Si NO está bloqueado -->
+  <div *ngIf="!bloqueado" class="listas-wrapper">
+    <h2>Mis listas personalizadas</h2>
+    <button (click)="crearLista()">➕ Nueva lista</button>
+  
+    <div class="lista" *ngFor="let lista of listas">
+      <div class="lista-header">
+        <h3>{{ lista.nombre }}</h3>
+        <div class="acciones">
+          <button (click)="editarLista(lista)">✏️</button>
+          <button (click)="borrarLista(lista.id)">🗑️</button>
+        </div>
+      </div>
+  
+      <div class="animes" *ngIf="lista.animes.length > 0; else vacia">
+        <div class="anime-card" *ngFor="let anime of lista.animes">
+          <img [src]="anime.imagen" [alt]="anime.titulo">
+          <span>{{ anime.titulo }}</span>
+          <button (click)="eliminarAnime(lista.id, anime.mal_id)">❌ Eliminar</button>
+        </div>
+      </div>
+  
+      <ng-template #vacia>
+        <p>🔍 Esta lista está vacía.</p>
+      </ng-template>
+    </div>
+  </div>
+  

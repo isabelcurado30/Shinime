@@ -30,12 +30,10 @@ $shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     height: 70px;
 }
 
-.logo {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: $color-text;
+.logo img {
+    height: 55px;
     cursor: pointer;
-    font-family: 'Lexend', sans-serif;
+    margin-top: 8px;
 }
 
 .nav-menu {

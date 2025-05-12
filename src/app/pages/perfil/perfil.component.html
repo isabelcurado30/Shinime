@@ -1,10 +1,14 @@
-<div class="perfil-container">
-    <h2>Mi Perfil</h2>
-    <div *ngIf="user">
-      <p><strong>Nombre:</strong> {{ user.nombre }}</p>
-      <p><strong>Correo:</strong> {{ user.email }}</p>
-  
-      <button (click)="logout()">Cerrar Sesión</button>
-    </div>
-  </div>
-  
+<h2>Perfil</h2>
+
+<div *ngIf="user" class="perfil-card">
+  <p>ID: {{ user.id }}</p>
+  <p>Nombre: {{ user.nombre }}</p>
+  <button class="logout-button" (click)="logout()">
+    🔒 Cerrar sesión
+  </button>
+</div>
+
+<div *ngIf="!user" class="sesion-inactiva">
+  <p>No hay sesión activa.</p>
+  <a routerLink="/login">Iniciar sesión</a>
+</div>

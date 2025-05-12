@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { StorageService } from './storage.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private baseUrl = 'https://ruizgijon.ddns.net/sancheza/isaberu/api/controller';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private storage: StorageService) {}
 
   registrar(user: { nombre: string; email: string; password: string }): Observable<any> {
     return this.http.post(`${this.baseUrl}/create.php`, user, {
@@ -21,25 +22,24 @@ export class AuthService {
   }
 
   guardarSesion(usuario: { id: number; nombre: string }) {
-    localStorage.setItem('usuario', JSON.stringify(usuario));
+    this.storage.setUser(usuario);
   }
 
   obtenerUsuario(): { id: number; nombre: string } | null {
-    const data = localStorage.getItem('usuario');
-    return data ? JSON.parse(data) : null;
+    return this.storage.getUser();
   }
 
   cerrarSesion() {
-    localStorage.removeItem('usuario');
+    this.storage.clearUser();
   }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('usuario');
+    return this.storage.isLoggedIn();
   }
 
   getUser() {
     return this.http.get('/api/get-user.php');
-  }  
+  }
 
   logout() {
     return this.http.get('/api/logout.php');

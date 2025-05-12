@@ -206,6 +206,39 @@ $transition: all 0.3s ease;
     }
 }
 
+.bloqueo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    padding: 4rem 2rem;
+    text-align: center;
+    background-color: #FFFFFF;
+    border-radius: 1rem;
+  
+    .bloqueo-mensaje {
+      max-width: 300px;
+      background: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 20px rgba(0,0,0,0.05);
+  
+      h2 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        color: #333;
+        font-family: 'Lexend', sans-serif;
+      }
+  
+      p {
+        font-size: 1rem;
+        color: #666;
+        font-family: 'Lexend', sans-serif;
+      }
+    }
+  }
+  
+
 // =========================
 // ✨ Animaciones
 // =========================

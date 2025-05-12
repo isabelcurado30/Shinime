@@ -19,6 +19,7 @@ import { AnnualChallengeComponent } from './pages/annual-challenge/annual-challe
 import { LoginComponent } from './pages/login/login.component';
 import { RegistroComponent } from './pages/registro/registro.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
+import { ListasComponent } from './pages/listas/listas.component';
 
 @NgModule ({
   declarations: [
@@ -34,7 +35,8 @@ import { PerfilComponent } from './pages/perfil/perfil.component';
     AnnualChallengeComponent,
     LoginComponent,
     RegistroComponent,
-    PerfilComponent
+    PerfilComponent,
+    ListasComponent
   ],
   imports: [
     BrowserModule,
