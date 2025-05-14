@@ -30,7 +30,7 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USER }}
         password: ${{ secrets.FTP_PASS }}
-        local-dir: dist/shinime/browser/
+        local-dir: dist/shinime/
         server-dir: /var/www/html/sancheza/isaberu/shinime/
         dangerous-clean-slate: true
 
