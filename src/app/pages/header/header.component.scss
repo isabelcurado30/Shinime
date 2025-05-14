@@ -1,24 +1,35 @@
-// Variables de Color
-$color-primary: #A3E4D7;
-$color-primary-dark: #76C7B7;
-$color-accent: #B9B9B9;
-$color-background: #FFFFFF;
-$color-text: #333333;
-$color-secondary-text: #555555;
-$color-border: #DDDDDD;
-$color-highlight: #DAF2EC;
+// =========================
+// 🎨 Variables
+// =========================
 
-$shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+$primary-color: #A3E4D7;
+$primary-dark: #7ADBC8;
+$primary-light: #D1F2EB;
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+$secondary-color: #D6C6F2;
+$secondary-dark: #B39DDB;
+$secondary-light: #EDE7F6;
+
+$bg-color: #F4FCFA;
+$surface-color: #FFFFFF;
+$text-main-color: #2E4053;
+$text-secondary-color: #5D6D7E;
+$border-color: #D6DBDF;
+
+$accent-color-1: #FADBD8;
+$accent-color-2: #FCF3CF;
+$accent-color-3: #D6EAF8;
+
+$font-family-base: 'Lexend', sans-serif;
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+// =========================
+// 🔝 Header
+// =========================
 
 .header-container {
-    background-color: $color-primary;
-    box-shadow: $shadow;
+    background-color: $primary-color;
+    box-shadow: $shadow-sm;
     padding: 0.75rem 1.5rem;
     display: flex;
     justify-content: space-between;
@@ -26,101 +37,117 @@ $shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
     z-index: 50;
-    font-family: 'Lexend', sans-serif;
+    font-family: $font-family-base;
     height: 70px;
-}
 
-.logo img {
-    height: 55px;
-    cursor: pointer;
-    margin-top: 8px;
-}
-
-.nav-menu {
-    display: flex;
-    gap: 1.5rem;
-    font-family: 'Lexend', sans-serif;
-
-    a {
-        color: $color-text;
-        font-weight: 500;
-        text-decoration: none;
-
-        &:hover {
-            color: $color-primary-dark;
-            text-decoration: underline;
-        }
-
-        &.active-link {
-            color: $color-primary-dark;
-            border-bottom: 2px solid $color-primary-dark;
-        }
-    }
-}
-
-.auth-buttons {
-    display: flex;
-    gap: 0.5rem;
-    font-family: 'Lexend', sans-serif;
-
-    button {
-        padding: 0.4rem 0.8rem;
-        border-radius: 0.5rem;
-        font-weight: 500;
-        transition: background-color 0.3s;
-        color: $color-background;
-        border: none;
+    .logo img {
+        height: 55px;
         cursor: pointer;
-        font-family: 'Lexend', sans-serif;
-
-        &.login-btn {
-            background-color: $color-primary-dark;
-
-            &:hover {
-                color: $color-text;
-            }
-        }
-
-        &.register-btn {
-            background-color: $color-highlight;
-            color: $color-text;
-
-            &:hover {
-                background-color: $color-primary-dark;
-                color: $color-background;
-            }
-        }
-
-        &.logout-btn {
-            background-color: $color-accent;
-            
-            &:hover {
-                background-color: $color-secondary-text;
-            }
-        }
+        margin-top: 8px;
     }
-}
 
-// Responsividad
-@media (max-width: 768px) {
     .nav-menu {
-        gap: 1rem;
+        display: flex;
+        gap: 1.5rem;
 
         a {
-            font-size: 0.9rem;
+            color: $text-main-color;
+            font-weight: 500;
+            text-decoration: none;
+
+            &:hover {
+                color: $secondary-dark;
+                text-decoration: underline;
+            }
+
+            &.active-link {
+                color: $secondary-dark;
+                border-bottom: 2px solid $secondary-dark;
+            }
         }
     }
 
     .auth-buttons {
-        gap: 0.3rem;
+        display: flex;
+        gap: 0.5rem;
 
         button {
-            padding: 0.3rem 0.6rem;
-            font-size: 0.85rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: background-color 0.3s, color 0.3s;
+            color: $surface-color;
+            border: none;
+            cursor: pointer;
+            font-family: $font-family-base;
+
+            &.login-btn {
+                background-color: $primary-dark;
+
+                &:hover {
+                    color: $text-main-color;
+                }
+            }
+
+            &.register-btn {
+                background-color: $primary-light;
+                color: $text-main-color;
+
+                &:hover {
+                    background-color: $primary-dark;
+                    color: $surface-color;
+                }
+            }
+
+            &.logout-btn {
+                background-color: $accent-color-2;
+                color: $text-main-color;
+
+                &:hover {
+                    background-color: $secondary-light;
+                    color: $text-main-color;
+                }
+            }
         }
     }
+}
 
-    .logo {
-        font-size: 1.5rem;
+// =========================
+// 📱 Header Responsive
+// =========================
+
+@media (max-width: 768px) {
+    .header-container {
+        flex-wrap: wrap;
+        padding: 0.75rem 1rem;
+        height: auto;
+
+        .nav-menu {
+            width: 100%;
+            justify-content: center;
+            gap: 1rem;
+
+            a {
+                font-size: 0.9rem;
+            }
+        }
+
+        .auth-buttons {
+            width: 100%;
+            justify-content: center;
+            margin-top: 0.5rem;
+            gap: 0.3rem;
+
+            button {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        .logo {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
     }
 }
