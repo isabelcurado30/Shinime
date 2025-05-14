@@ -30,7 +30,9 @@ $shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
 .header-container {
     background-color: $primary-color;
     box-shadow: $shadow-sm;
-    padding: 0.75rem 1.5rem;
+    width: 100%;
+    margin: 0;
+    padding: 0.75rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -38,6 +40,7 @@ $shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
     top: 0;
     z-index: 50;
     font-family: $font-family-base;
+    height: 70px;
     height: 70px;
 
     .logo img {
