@@ -1,27 +1,40 @@
-// Variables
-$color-primary: #A3E4D7;
-$color-primary-dark: #76C7B7;
-$color-accent: #B9B9B9;
-$color-background: #FFFFFF;
-$color-text: #333333;
-$color-secondary-text: #555555;
-$color-border: #DDDDDD;
-$color-highlight: #DAF2EC;
+// =========================
+// 🎨 Variables
+// =========================
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+$primary-color: #A3E4D7;
+$primary-dark: #7ADBC8;
+$primary-light: #D1F2EB;
+
+$secondary-color: #D6C6F2;
+$secondary-dark: #B39DDB;
+$secondary-light: #EDE7F6;
+
+$bg-color: #F4FCFA;
+$surface-color: #FFFFFF;
+$text-main-color: #2E4053;
+$text-secondary-color: #5D6D7E;
+$border-color: #D6DBDF;
+
+$accent-color-1: #FADBD8;
+$accent-color-2: #FCF3CF;
+$accent-color-3: #D6EAF8;
+
+$font-family-base: 'Lexend', sans-serif;
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+// =========================
+// 🔻 Footer
+// =========================
 
 .footer-container {
-    background-color: $color-primary;
+    background-color: $primary-color;
     padding: 3rem 1.5rem 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 2rem;
-    font-family: 'Lexend', sans-serif;
+    font-family: $font-family-base;
 }
 
 .footer-content {
@@ -30,22 +43,21 @@ $color-highlight: #DAF2EC;
     gap: 4rem;
     flex-wrap: wrap;
     max-width: 1200px;
-    font-family: 'Lexend', sans-serif;
+    font-family: $font-family-base;
 }
 
 .footer-section {
     flex: 1 1 200px;
     min-width: 200px;
-    font-family: 'Lexend', sans-serif;
 
     h3 {
         font-size: 1.25rem;
-        color: $color-text;
+        color: $text-main-color;
         margin-bottom: 0.75rem;
     }
 
     p {
-        color: $color-secondary-text;
+        color: $text-secondary-color;
         font-size: 0.95rem;
         line-height: 1.5;
     }
@@ -58,13 +70,13 @@ $color-highlight: #DAF2EC;
             margin: 0.5rem 0;
 
             a {
-                color: $color-secondary-text;
+                color: $text-secondary-color;
                 text-decoration: none;
                 font-size: 0.95rem;
                 transition: color 0.3s;
 
                 &:hover {
-                    color: $color-primary-dark;
+                    color: $secondary-dark;
                 }
             }
         }
@@ -73,10 +85,10 @@ $color-highlight: #DAF2EC;
 
 .footer-bottom {
     text-align: center;
-    color: $color-secondary-text;
+    color: $text-secondary-color;
     font-size: 0.85rem;
     line-height: 1.6;
-    font-family: 'Lexend', sans-serif;
+    font-family: $font-family-base;
     margin-top: 38px;
 
     p:first-child {
@@ -85,7 +97,10 @@ $color-highlight: #DAF2EC;
     }
 }
 
-// Responsividad
+// =========================
+// 📱 Footer Responsive
+// =========================
+
 @media (max-width: 768px) {
     .footer-content {
         flex-direction: column;
