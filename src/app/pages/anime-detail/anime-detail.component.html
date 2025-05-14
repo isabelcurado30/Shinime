@@ -27,6 +27,10 @@
             </div>
         </div>
 
+        <div class = "añadir-a-lista">
+          <button (click) = "abrirSelectorDeLista()">Añadir a Una de tus Listas</button>
+        </div>
+
         <div *ngIf="episodes.length > 0" class="anime-episodes">
             <h2>Episodios</h2>
             <ul>
@@ -40,20 +44,5 @@
           <div *ngIf="!loading && episodes.length === 0" class="no-episodes">
             <p>No se encontraron episodios.</p>
           </div>
-        
-          <div class="añadir-a-lista">
-            <label for="selector-lista">Añadir a una de tus listas:</label>
-            <select id="selector-lista" (change)="onListaSeleccionada($event)">
-
-              <option value="" disabled selected>Selecciona una lista</option>
-              <option *ngFor="let lista of listasUsuario" [value]="lista.id">
-                {{ lista.nombre }}
-              </option>
-            </select>
-          </div>
-          
-          
-          
-          
     </body>
 </html>

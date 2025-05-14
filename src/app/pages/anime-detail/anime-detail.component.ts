@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AnimeService } from 'src/app/services/anime.service';
 import { ListasService } from 'src/app/services/listas.service';
 import { StorageService } from 'src/app/services/storage.service';
+import Swal from 'sweetalert2';
 
 interface Genre {
   mal_id: number;
@@ -104,8 +105,50 @@ export class AnimeDetailComponent implements OnInit {
     if (!this.anime) return;
   
     this.listasService.addAnimeToLista(listaId, this.anime.mal_id).subscribe({
-      next: () => alert('✅ Anime añadido a la lista'),
-      error: (err) => console.error('❌ Error al añadir anime:', err)
+      next: () => {
+        Swal.fire ({
+          icon: 'success',
+          title: 'Añadido con Éxito',
+          text: 'El Anime Fue Añadido a la Lista Correctamente',
+          confirmButtonColor: '#7ADBC8'
+        });
+      },
+      error: (err) => {
+        console.error ('Error al Añadir Anime:', err),
+        Swal.fire ('Error', 'No se Pudo Añadir el Anime a la Lista', 'error');
+      }
+    });
+  }
+
+  abrirSelectorDeLista(): void {
+    if (!this.listasUsuario || this.listasUsuario.length === 0) {
+      Swal.fire ('No Tienes Listas Creadas Aún', '', 'info');
+      return;
+    } // Fin Si
+
+    const inputOptions = this.listasUsuario.reduce ((acc, lista) => {
+      acc [lista.id] = lista.nombre;
+      return acc;
+    }, {} as Record <string, string>);
+
+    Swal.fire ({
+      title: 'Añadir a Una de Tus Listas',
+      input: 'select',
+      inputOptions,
+      inputPlaceholder: 'Selecciona una Lista',
+      showCancelButton: true,
+      confirmButtonColor: '#7ADBC8',
+      cancelButtonColor: '#D6C6F2',
+      confirmButtonText: 'Añadir',
+      customClass: {
+        popup: 'sweetalert-popup',
+        input: 'sweetalert-select'
+      }
+    }).then (result => {
+      if (result.isConfirmed && result.value) {
+        const listaId = parseInt (result.value, 10);
+        this.agregarAnime (listaId);
+      } // Fin Si
     });
   }
   
