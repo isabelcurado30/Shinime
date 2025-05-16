@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AnimeService } from 'src/app/services/anime.service';
 import { ListasService } from 'src/app/services/listas.service';
 import { StorageService } from 'src/app/services/storage.service';
+import { EpisodiosService } from 'src/app/services/episodios.service';
 import Swal from 'sweetalert2';
 
 interface Genre {
@@ -41,6 +42,7 @@ export class AnimeDetailComponent implements OnInit {
   loading = true;
   error = '';
   episodes: any[] = [];
+  episodiosVistos: Set<number> = new Set();
   listasUsuario: any[] = [];
   userId: number = 0;
 
@@ -48,11 +50,13 @@ export class AnimeDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private animeService: AnimeService,
     private listasService: ListasService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private episodiosService: EpisodiosService
   ) {}
 
   ngOnInit(): void {
     const user = this.storageService.getUser();
+
     if (user) {
       this.userId = user.id;
     } else {
@@ -61,8 +65,55 @@ export class AnimeDetailComponent implements OnInit {
     }
 
     this.animeId = Number(this.route.snapshot.paramMap.get('id'));
+    this.loadEpisodiosVistos();
     this.loading = true;
 
+    // Cargar detalles, episodios y temporadas relacionadas
+    this.loadAnime();
+
+    // Cargar listas del usuario
+    this.listasService.getListasByUserId(this.userId).subscribe({
+      next: (listas) => {
+        this.listasUsuario = listas;
+      },
+      error: (err) => console.error('❌ Error al obtener listas del usuario:', err)
+    });
+  }
+
+  loadEpisodiosVistos(): void {
+  this.episodiosService.getWatchedEpisodes(this.userId, this.animeId).subscribe({
+    next: (ids) => {
+      if (Array.isArray(ids)) {
+        this.episodiosVistos = new Set(ids);
+      } else {
+        console.warn('⚠️ Respuesta inesperada:', ids);
+      }
+    },
+    error: (err) => {
+      console.error('❌ Error al obtener episodios vistos:', err);
+    }
+  });
+}
+
+
+  toggleVisto(episodeId: number): void {
+  if (this.episodiosVistos.has(episodeId)) {
+    this.episodiosService.unmarkEpisode(this.userId, this.animeId, episodeId).subscribe(() => {
+      this.episodiosVistos.delete(episodeId);
+    });
+  } else {
+    this.episodiosService.markEpisode(this.userId, this.animeId, episodeId).subscribe(() => {
+      this.episodiosVistos.add(episodeId);
+    });
+  }
+}
+
+
+
+  // ========================
+  // Cargar detalles + episodios
+  // ========================
+  loadAnime(): void {
     this.animeService.getAnimeDetails(this.animeId).subscribe({
       next: (data) => {
         this.anime = data;
@@ -82,60 +133,59 @@ export class AnimeDetailComponent implements OnInit {
         this.loading = false;
       }
     });
-
-    this.listasService.getListasByUserId(this.userId).subscribe({
-      next: (listas) => {
-        this.listasUsuario = listas;
-      },
-      error: (err) => console.error('❌ Error al obtener listas del usuario:', err)
-    });
   }
 
+  // ========================
+  // Obtener géneros
+  // ========================
   getGenres(): string {
     return this.anime?.genres?.map((g: Genre) => g.name).join(', ') || '';
   }
 
-  onListaSeleccionada(event: Event) {
+  // ========================
+  // Selector de lista + añadir
+  // ========================
+  onListaSeleccionada(event: Event): void {
     const select = event.target as HTMLSelectElement;
     const listaId = parseInt(select.value, 10);
     this.agregarAnime(listaId);
   }
-  
-  agregarAnime(listaId: number) {
+
+  agregarAnime(listaId: number): void {
     if (!this.anime) return;
-  
+
     this.listasService.addAnimeToLista(listaId, this.anime.mal_id).subscribe({
       next: () => {
-        Swal.fire ({
+        Swal.fire({
           icon: 'success',
           title: 'Añadido con Éxito',
-          text: 'El Anime Fue Añadido a la Lista Correctamente',
+          text: 'El Anime fue añadido a la lista correctamente',
           confirmButtonColor: '#7ADBC8'
         });
       },
       error: (err) => {
-        console.error ('Error al Añadir Anime:', err),
-        Swal.fire ('Error', 'No se Pudo Añadir el Anime a la Lista', 'error');
+        console.error('Error al añadir anime:', err);
+        Swal.fire('Error', 'No se pudo añadir el anime a la lista', 'error');
       }
     });
   }
 
   abrirSelectorDeLista(): void {
     if (!this.listasUsuario || this.listasUsuario.length === 0) {
-      Swal.fire ('No Tienes Listas Creadas Aún', '', 'info');
+      Swal.fire('No tienes listas creadas aún', '', 'info');
       return;
-    } // Fin Si
+    }
 
-    const inputOptions = this.listasUsuario.reduce ((acc, lista) => {
-      acc [lista.id] = lista.nombre;
+    const inputOptions = this.listasUsuario.reduce((acc, lista) => {
+      acc[lista.id] = lista.nombre;
       return acc;
-    }, {} as Record <string, string>);
+    }, {} as Record<string, string>);
 
-    Swal.fire ({
-      title: 'Añadir a Una de Tus Listas',
+    Swal.fire({
+      title: 'Añadir a una de tus listas',
       input: 'select',
       inputOptions,
-      inputPlaceholder: 'Selecciona una Lista',
+      inputPlaceholder: 'Selecciona una lista',
       showCancelButton: true,
       confirmButtonColor: '#7ADBC8',
       cancelButtonColor: '#D6C6F2',
@@ -144,12 +194,11 @@ export class AnimeDetailComponent implements OnInit {
         popup: 'sweetalert-popup',
         input: 'sweetalert-select'
       }
-    }).then (result => {
+    }).then(result => {
       if (result.isConfirmed && result.value) {
-        const listaId = parseInt (result.value, 10);
-        this.agregarAnime (listaId);
-      } // Fin Si
+        const listaId = parseInt(result.value, 10);
+        this.agregarAnime(listaId);
+      }
     });
   }
-  
 }

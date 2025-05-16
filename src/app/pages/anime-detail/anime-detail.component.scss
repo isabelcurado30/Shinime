@@ -1,45 +1,195 @@
 // =========================
-// 🎨 Variables
+// VARIABLES
 // =========================
 
-$primary-color: #A3E4D7;
-$primary-dark: #7ADBC8;
-$primary-light: #D1F2EB;
+$primary-color: #82B8A8;
+$secondary-color: #A1CABE;
+$light-color: #C0DBD4;
+$background-color: #E0EDE9;
+$white: #FFFFFF;
+$text-color: #2E3A3F;
 
-$secondary-color: #D6C6F2;
-$secondary-dark: #B39DDB;
-$secondary-light: #EDE7F6;
+$font-stack: 'Lexend', sans-serif;
 
-$bg-color: #F4FCFA;
-$surface-color: #FFFFFF;
-$text-main-color: #2E4053;
-$text-secondary-color: #5D6D7E;
-$border-color: #D6DBDF;
-
-$accent-color-1: #FADBD8;
-$accent-color-2: #FCF3CF;
-$accent-color-3: #D6EAF8;
-
-$font-family-base: 'Lexend', sans-serif;
+$card-radius: 1rem;
+$shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
 // =========================
-// 🧾 Estilos Base
-// =========================
+// ESTRUCTURA GENERAL
+// ==========================
 
-:host {
-    display: block;
+.anime-detail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: $background-color;
+    color: $text-color;
     padding: 2rem;
-    font-family: $font-family-base;
-    background-color: $bg-color;
-    color: $text-main-color;
+    font-family: $font-stack;
+
+    img {
+        width: 260px;
+        border-radius: 1rem;
+        box-shadow: $shadow;
+        margin-bottom: 2rem;
+    }
+
+    .anime-info {
+        text-align: center;
+        max-width: 700px;
+
+        h1 {
+            font-size: 2.5rem;
+            color: $primary-color;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin: 0.5rem 0;
+
+            strong {
+                color: $secondary-color;
+            }
+        }
+    }
+
+    .synopsis {
+        max-width: 800px;
+        margin-top: 2rem;
+        background-color: $white;
+        padding: 1.5rem;
+        border-radius: $card-radius;
+        box-shadow: $shadow;
+        line-height: 1.6;
+        font-size: 1.05rem;
+    }
 }
+
+// =========================
+// BOTÓN "AÑADIR A LISTA"
+// =========================
+
+.añadir-a-lista {
+    display: flex;
+    justify-content: center;
+    margin: 2rem auto;
+    margin-top: 40px;
+    font-family: $font-stack;
+
+    button {
+        background-color: $primary-color;
+        font-family: $font-stack;
+        color: $white;
+        padding: 0.8rem 1.6rem;
+        border: none;
+        border-radius: 4rem;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: $background-color 0.3s ease, transform 0.2s ease;
+
+        &:hover {
+            background-color: darken($primary-color, 10%);
+            transform: scale(1.05);
+        }
+    }
+}
+
+// =========================
+// EPISODIOS
+// =========================
+
+.anime-episodes {
+    max-width: 900px;
+    margin: 3rem auto 2rem auto;
+    padding: 2rem;
+    font-family: $font-stack;
+    border-radius: $card-radius;
+    box-shadow: $shadow;
+    animation: subtleBackgroundShift 12s ease-in-out infinite alternate;
+    transition: $background-color 1s ease;
+
+    h2 {
+        font-size: 1.8rem;
+        color: $primary-color;
+        margin-bottom: 1rem;
+        text-align: left;
+        border-left: 4px solid $primary-color;
+        padding-left: 0.75rem;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+            background-color: $white;
+            border-left: 5px solid $secondary-color;
+            margin-bottom: 1rem;
+            padding: 1rem 1.2rem;
+            border-radius: $card-radius;
+            box-shadow: $shadow;
+            transition: $background-color 0.2s ease;
+            cursor: pointer;
+
+            &:hover {
+                background-color: $light-color;
+                transform: translateY(-2px);
+            }
+
+            &.visto {
+                background-color: $light-color;
+                transform: translateY(-2px);
+
+                strong, span {
+                    color: $text-color;
+                }
+
+                .check-icon {
+                    color: $primary-color;
+                }
+            }
+
+            strong {
+                font-size: 1.05rem;
+                color: $text-color;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 0.5rem;
+                margin-bottom: 0.3rem;
+            }
+
+            .check-icon {
+                font-size: 1rem;
+            }
+            
+            span {
+                color: darken($text-color, 20%);
+                font-size: 0.9rem;
+            }
+        }
+    }
+}
+
+.no-episodes {
+    text-align: center;
+    margin-top: 2rem;
+    font-style: italic;
+    color: darken($text-color, 25%);
+}
+
+// =========================
+// LOADING Y ERROR
+// =========================
 
 .loading,
 .error {
+    text-align: center;
+    margin-top: 3rem;
     font-size: 1.2rem;
     font-weight: 500;
-    text-align: center;
-    margin-bottom: 2rem;
 }
 
 .error {
@@ -47,151 +197,20 @@ $font-family-base: 'Lexend', sans-serif;
 }
 
 // =========================
-// 📄 Detalle de Anime
+// ANIMACIONES
 // =========================
 
-.anime-detail {
-    max-width: 1000px;
-    margin: 0 auto;
-    background-color: rgba(209, 242, 235, 0.3);
-    border: 1px solid $border-color;
-    border-radius: 20px;
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
-    animation: fadeIn 0.4s ease-in-out;
-    transition: background-color 0.3s ease;
-
-    @media (min-width: 768px) {
-        flex-direction: row;
-        align-items: flex-start;
+@keyframes subtleBackgroundShift {
+    0% {
+        background-color: #E6F1ED;
     }
 
-    img {
-        flex-shrink: 0;
-        width: 100%;
-        max-width: 280px;
-        height: auto;
-        border-radius: 12px;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-        margin: 0 auto;
-
-        @media (min-width: 768px) {
-            margin: 0;
-        }
+    50% {
+        background-color: #E0EDE9;
     }
 
-    .anime-info {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        gap: 0.8rem;
-
-        h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            color: $secondary-dark;
-            margin-bottom: 0.5rem;
-        }
-
-        p {
-            font-size: 1rem;
-            color: $text-secondary-color;
-
-            strong {
-                color: $text-main-color;
-                font-weight: 600;
-            }
-        }
+    100% {
+        background-color: #E6F1ED;
     }
-}
-
-.synopsis {
-    margin-top: 1rem;
-    font-size: 1rem;
-    line-height: 1.8;
-    color: $text-secondary-color;
-    padding-top: 1rem;
-    border-top: 1px solid $border-color;
-}
-
-.añadir-a-lista {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    padding: 1rem;
-    background-color: $primary-color;
-    border-radius: 1rem;
-    margin-top: 30px;
-
-    button {
-        display: inline-block;
-        width: auto;
-        background-color: $secondary-color;
-        color: #FFF;
-        padding: 0.75rem 1.5rem;
-        border: none;
-        border-radius: 1rem;
-        font-weight: 600;
-        font-size: 1rem;
-        cursor: pointer;
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-        transition: all 0.3s ease;
-
-        &:hover {
-            background-color: $secondary-dark;
-            transform: scale(1.03);
-        }
-
-        &:active {
-            transform: scale(0.97);
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-        }
-
-        &:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(0, 191, 166, 0.4);
-        }
-    }
-}
-
-.anime-episodes {
-    margin-top: 2rem;
-
-    h2 {
-        margin-bottom: 1rem;
-        font-size: 1.5rem;
-        border-bottom: 2px solid $secondary-color;
-        color: $primary-dark;
-        padding-bottom: 0.5rem;
-    }
-
-    ul {
-        list-style: none;
-        padding-left: 0;
-
-        li {
-            padding: 0.5rem 0;
-            border-bottom: 1px solid $border-color;
-            color: $text-secondary-color;
-        }
-    }
-}
-
-// =========================
-// 🎞️ Animación
-// =========================
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    
 }

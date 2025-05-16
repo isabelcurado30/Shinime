@@ -66,6 +66,7 @@ export class AnimeService {
         return this.http.get <any> (`${this.BASE_URL}/genres/anime`).pipe (map (res => res.data));
     }
 
+
     async getAllEpisodes(animeId: number): Promise<any[]> {
         let episodes: any[] = [];
         let page = 1;

@@ -28,14 +28,17 @@
         </div>
 
         <div class = "añadir-a-lista">
-          <button (click) = "abrirSelectorDeLista()">Añadir a Una de tus Listas</button>
+          <button (click) = "abrirSelectorDeLista()">Añadir a Lista</button>
         </div>
 
         <div *ngIf="episodes.length > 0" class="anime-episodes">
             <h2>Episodios</h2>
             <ul>
-              <li *ngFor="let ep of episodes">
-                <strong>{{ ep.mal_id }}. {{ ep.title }}</strong>
+              <li *ngFor="let ep of episodes" [class.visto] = "episodiosVistos.has (ep.mal_id)" (click) = "toggleVisto (ep.mal_id)">
+                <strong>
+                  {{ ep.mal_id }}. {{ ep.title }}
+                  <span *ngIf = "episodiosVistos.has(ep.mal_id)" class = "check-icon">✅</span>
+                </strong>
                 <span *ngIf="ep.aired"> ({{ ep.aired | date:'yyyy-MM-dd' }})</span>
               </li>
             </ul>
