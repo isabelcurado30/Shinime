@@ -21,7 +21,7 @@
             <section class = "trending">
                 <h2>Tendencias</h2>
                 <div class = "trending-grid">
-                    <div class= "anime-card" *ngFor = "let anime of trendingAnimes">
+                    <div class= "anime-card" *ngFor = "let anime of trendingAnimes" [routerLink] = "['/animes', anime.mal_id]">
                         <img [src] = "anime.images.jpg.image_url" alt = "{{ anime.title }}">
                         <p>{{ anime.title }}</p>
                     </div>
@@ -32,7 +32,7 @@
             <section class = "new-releases">
                 <h2>Últimos Estrenos</h2>
                 <div class = "released-grid">
-                    <div class = "anime-card" *ngFor = "let anime of newReleases">
+                    <div class = "anime-card" *ngFor = "let anime of newReleases" [routerLink] = "['/animes', anime.mal_id]">
                         <img [src] = "anime.images.jpg.image_url" alt = "{{ anime.title }}">
                         <p>{{ anime.title }}</p>
                         <small>{{ anime.aired.from | date }}</small>
@@ -44,7 +44,7 @@
             <section class = "recommendations">
                 <h2>Recomendaciones</h2>
                 <div class = "recommendations-grid">
-                    <div class = "anime-card" *ngFor = "let anime of recommendedAnimes">
+                    <div class = "anime-card" *ngFor = "let anime of recommendedAnimes" [routerLink] = "['/animes', anime.mal_id]">
                         <img [src] = "anime.images.jpg.image_url" alt = "{{ anime.title }}">
                         <p>{{ anime.title }}</p>
                     </div>
