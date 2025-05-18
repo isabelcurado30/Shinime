@@ -212,5 +212,77 @@ $shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     100% {
         background-color: #E6F1ED;
     }
-    
+}
+
+// =========================
+// RESULTADOS DE BÚSQUEDA (Reto Anual)
+// =========================
+
+.resultados {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-top: 2rem;
+
+  .anime {
+    background-color: $white;
+    border-radius: $card-radius;
+    box-shadow: $shadow;
+    padding: 1rem;
+    width: 180px;
+    text-align: center;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      border-radius: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      p {
+        font-weight: 600;
+        color: $text-color;
+        font-size: 0.95rem;
+        margin-bottom: 0.5rem;
+      }
+
+      button {
+        background-color: $secondary-color;
+        color: $text-color;
+        border: none;
+        padding: 0.4rem 1rem;
+        border-radius: 2rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: darken($secondary-color, 10%);
+        }
+      }
+    }
+  }
+}
+
+// =========================
+// BUSCADOR DEL RETO ANUAL
+// =========================
+
+.buscador .form-group input {
+  height: 260px;
+  object-fit: cover;
+  border-radius: 0.5rem;
 }

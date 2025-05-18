@@ -30,7 +30,7 @@
         </div>
 
         <div class = "animes" *ngIf = "lista.animes.length > 0; else vacia">
-          <div class = "anime-card" *ngFor = "let anime of lista.animes">
+          <div class = "anime-card" *ngFor = "let anime of lista.animes" [routerLink] = "['/animes', anime.mal_id]">
             <img [src] = "anime.imagen" [alt] = "anime.titulo">
             <span>{{ anime.titulo }}</span>
             <button (click) = "eliminarAnime (lista.id, anime.mal_id)">X Eliminar</button>
