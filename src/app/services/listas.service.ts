@@ -10,49 +10,43 @@ export class ListasService {
   constructor(private http: HttpClient) {}
 
   getListasByUserId(userId: number) {
-    const body = new URLSearchParams();
-    body.set('action', 'getByUserId');
-    body.set('user_id', userId.toString());
-
     return this.http.post<any[]>(
       this.apiUrl,
-      body.toString(),
       {
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        action: 'getByUserId',
+        user_id: userId
       }
     );
   }
 
   createLista(nombre: string, userId: number) {
-    const body = new URLSearchParams();
-    body.set('action', 'createCustomList');
-    body.set('user_id', userId.toString());
-    body.set('nombre', nombre);
-
     return this.http.post(
       this.apiUrl,
-      body.toString(),
       {
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        action: 'createCustomList',
+        user_id: userId,
+        nombre: nombre
       }
     );
   }
 
-  addAnimeToLista(listaId: number, malId: number, estado?: string, puntuacion?: number) {
-    const body = new URLSearchParams();
-    body.set('action', 'addAnime');
-    body.set('lista_id', listaId.toString());
-    body.set('mal_id', malId.toString());
-    if (estado) body.set('estado', estado);
-    if (puntuacion !== undefined) body.set('puntuacion', puntuacion.toString());
+  /**
+   * Este método ahora acepta un objeto con `mal_id`, `titulo` e `imagen`,
+   * y los envía al backend para guardar todo desde el principio.
+   */
+  addAnimeToLista(listaId: number, anime: { mal_id: number, titulo: string, imagen: string }, estado?: string, puntuacion?: number) {
+    const body: any = {
+      action: 'addAnime',
+      lista_id: listaId,
+      mal_id: anime.mal_id,
+      titulo: anime.titulo,
+      imagen: anime.imagen
+    };
 
-    return this.http.post(
-      this.apiUrl,
-      body.toString(),
-      {
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-      }
-    );
+    if (estado) body.estado = estado;
+    if (puntuacion !== undefined) body.puntuacion = puntuacion;
+
+    return this.http.post(this.apiUrl, body);
   }
 
   updateLista(listaId: number, nuevoNombre: string) {
@@ -62,13 +56,13 @@ export class ListasService {
       nombre: nuevoNombre
     });
   }
-  
+
   deleteLista(listaId: number) {
     return this.http.post(this.apiUrl, {
       action: 'delete',
       lista_id: listaId
     });
-  }  
+  }
 
   removeAnimeFromLista(listaId: number, malId: number) {
     return this.http.post(this.apiUrl, {
@@ -77,5 +71,4 @@ export class ListasService {
       mal_id: malId
     });
   }
-  
 }

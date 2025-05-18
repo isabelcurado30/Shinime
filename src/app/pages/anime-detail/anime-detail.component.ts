@@ -152,23 +152,30 @@ export class AnimeDetailComponent implements OnInit {
   }
 
   agregarAnime(listaId: number): void {
-    if (!this.anime) return;
+  if (!this.anime) return;
 
-    this.listasService.addAnimeToLista(listaId, this.anime.mal_id).subscribe({
-      next: () => {
-        Swal.fire({
-          icon: 'success',
-          title: 'Añadido con Éxito',
-          text: 'El Anime fue añadido a la lista correctamente',
-          confirmButtonColor: '#7ADBC8'
-        });
-      },
-      error: (err) => {
-        console.error('Error al añadir anime:', err);
-        Swal.fire('Error', 'No se pudo añadir el anime a la lista', 'error');
-      }
-    });
-  }
+  const animeParaLista = {
+    mal_id: this.anime.mal_id,
+    titulo: this.anime.title,
+    imagen: this.anime.images.jpg.image_url
+  };
+
+  this.listasService.addAnimeToLista(listaId, animeParaLista).subscribe({
+    next: () => {
+      Swal.fire({
+        icon: 'success',
+        title: 'Añadido con Éxito',
+        text: 'El Anime fue añadido a la lista correctamente',
+        confirmButtonColor: '#7ADBC8'
+      });
+    },
+    error: (err) => {
+      console.error('Error al añadir anime:', err);
+      Swal.fire('Error', 'No se pudo añadir el anime a la lista', 'error');
+    }
+  });
+}
+
 
   abrirSelectorDeLista(): void {
     if (!this.listasUsuario || this.listasUsuario.length === 0) {
