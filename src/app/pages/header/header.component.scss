@@ -1,152 +1,185 @@
 // =========================
-// 🎨 Variables
+// VARIABLES
 // =========================
 
-$primary-color: #A3E4D7;
-$primary-dark: #7ADBC8;
-$primary-light: #D1F2EB;
+$primary-color: #82B8A8;
+$secondary-color: #A1CABE;
+$light-color: #C0DBD4;
+$background-color: #E0EDE9;
+$white: #FFFFFF;
+$text-color: #2E3A3F;
 
-$secondary-color: #D6C6F2;
-$secondary-dark: #B39DDB;
-$secondary-light: #EDE7F6;
+$font-stack: 'Lexend', sans-serif;
 
-$bg-color: #F4FCFA;
-$surface-color: #FFFFFF;
-$text-main-color: #2E4053;
-$text-secondary-color: #5D6D7E;
-$border-color: #D6DBDF;
-
-$accent-color-1: #FADBD8;
-$accent-color-2: #FCF3CF;
-$accent-color-3: #D6EAF8;
-
-$font-family-base: 'Lexend', sans-serif;
-$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+$card-radius: 1rem;
+$shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
 // =========================
-// 🔝 Header
+// HEADER PRINCIPAL
 // =========================
 
 .header-container {
-    background-color: $primary-color;
-    box-shadow: $shadow-sm;
-    padding: 0.75rem 1.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 1rem 2rem;
+    background: linear-gradient(to right, $primary-color, $secondary-color);
+    box-shadow: $shadow;
+    font-family: $font-stack;
     position: sticky;
     top: 0;
-    z-index: 50;
-    font-family: $font-family-base;
-    height: 110px;
+    z-index: 1000;
+}
 
-    .logo img {
+// =========================
+// LOGO
+// =========================
+
+.logo {
+    cursor: pointer;
+    margin-top: 10px;
+
+    img {
         height: 55px;
-        cursor: pointer;
-        margin-top: 8px;
+        transition: transform 0.3s ease;
+
+        &:hover {
+            transform: scale(1.05);
+        }
     }
+}
 
-    .nav-menu {
-        display: flex;
-        gap: 1.5rem;
+// =========================
+// MENÚ DE NAVEGACIÓN
+// =========================
 
-        a {
-            color: $text-main-color;
-            font-weight: 500;
-            text-decoration: none;
+.nav-menu {
+    display: flex;
+    gap: 2rem;
 
-            &:hover {
-                color: $secondary-dark;
-            }
+    a {
+        color: $white;
+        font-weight: 500;
+        text-decoration: none;
+        position: relative;
+        transition: all 0.3s ease;
 
-            &.active-link {
-                color: $secondary-dark;
-                border-bottom: 2px solid $secondary-dark;
+        &::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            left: 0;
+            bottom: -4px;
+            background-color: $white;
+            transition: width 0.3s ease;
+        }
+
+        &:hover,
+        &.active-link {
+            color: $white;
+
+            &::after {
+                width: 100%;
             }
         }
     }
+}
 
-    .auth-buttons {
-        display: flex;
-        gap: 0.5rem;
+.auth-buttons {
+    display: flex;
+    gap: 1rem;
 
-        button {
-            padding: 0.4rem 0.8rem;
-            border-radius: 0.5rem;
-            font-weight: 500;
-            transition: background-color 0.3s, color 0.3s;
-            color: $surface-color;
-            border: none;
-            cursor: pointer;
-            font-family: $font-family-base;
+    button {
+        font-family: $font-stack;
+        font-weight: 500;
+        border: none;
+        border-radius: $card-radius;
+        padding: 0.5rem 1.2rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
 
-            &.login-btn {
-                background-color: $primary-dark;
+        &:hover {
+            transform: translateY(-2px);
+        }
 
-                &:hover {
-                    color: $text-main-color;
-                }
+        // Iniciar Sesión
+        &.login-btn {
+            background-color: $primary-color;
+            color: $text-color;
+            font-weight: 900;
+
+            &:hover {
+                background-color: $secondary-color;
+                color: $white;
             }
+        }
 
-            &.register-btn {
-                background-color: $primary-light;
-                color: $text-main-color;
+        // Registrarse
+        &.register-btn {
+            background-color: $secondary-color;
+            color: $white;
 
-                &:hover {
-                    background-color: $primary-dark;
-                    color: $surface-color;
-                }
+            &:hover {
+                background-color: $primary-color;
+                color: $text-color;
+                font-weight: 900;
             }
+        }
 
-            &.logout-btn {
-                background-color: $accent-color-2;
-                color: $text-main-color;
+        // Cerrar Sesión
+        &.logout-btn {
+            background-color: $text-color;
+            color: $white;
 
-                &:hover {
-                    background-color: $secondary-light;
-                    color: $text-main-color;
-                }
+            &:hover {
+                background-color: darken($text-color, 10%);
             }
         }
     }
 }
 
 // =========================
-// 📱 Header Responsive
+// RESPONSIVE HEADER
 // =========================
-
 @media (max-width: 768px) {
-    .header-container {
-        flex-wrap: wrap;
-        padding: 0.75rem 1rem;
-        height: auto;
+  .header-container {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+  }
 
-        .nav-menu {
-            width: 100%;
-            justify-content: center;
-            gap: 1rem;
+  .logo {
+    align-self: center;
+    margin-bottom: 1rem;
 
-            a {
-                font-size: 0.9rem;
-            }
-        }
-
-        .auth-buttons {
-            width: 100%;
-            justify-content: center;
-            margin-top: 0.5rem;
-            gap: 0.3rem;
-
-            button {
-                padding: 0.3rem 0.6rem;
-                font-size: 0.85rem;
-            }
-        }
-
-        .logo {
-            width: 100%;
-            text-align: center;
-            margin-bottom: 0.5rem;
-        }
+    img {
+      height: 50px;
     }
+  }
+
+  .nav-menu {
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+    margin-bottom: 1rem;
+
+    a {
+      display: block;
+      width: 100%;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+  }
+
+  .auth-buttons {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.75rem;
+
+    button {
+      width: 100%;
+      text-align: center;
+    }
+  }
 }
