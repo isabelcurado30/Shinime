@@ -1,110 +1,122 @@
 // =========================
-// 🎨 Variables
+// VARIABLES
 // =========================
 
-$primary-color: #A3E4D7;
-$primary-dark: #7ADBC8;
-$primary-light: #D1F2EB;
+$primary-color: #82B8A8;
+$secondary-color: #A1CABE;
+$light-color: #C0DBD4;
+$background-color: #E0EDE9;
+$white: #FFFFFF;
+$text-color: #2E3A3F;
 
-$secondary-color: #D6C6F2;
-$secondary-dark: #B39DDB;
-$secondary-light: #EDE7F6;
+$font-stack: 'Lexend', sans-serif;
 
-$bg-color: #F4FCFA;
-$surface-color: #FFFFFF;
-$text-main-color: #2E4053;
-$text-secondary-color: #5D6D7E;
-$border-color: #D6DBDF;
+$card-radius: 1rem;
+$shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
-$accent-color-1: #FADBD8;
-$accent-color-2: #FCF3CF;
-$accent-color-3: #D6EAF8;
-
-$font-family-base: 'Lexend', sans-serif;
-$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
 
 // =========================
-// 🔻 Footer
+// FOOTER PRINCIPAL
 // =========================
 
 .footer-container {
-    background-color: $primary-color;
-    padding: 3rem 1.5rem 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-    font-family: $font-family-base;
-}
+  background-color: $background-color;
+  color: $text-color;
+  padding: 3rem 2rem 2rem;
+  font-family: $font-stack;
+  box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.05);
+  border-top: 4px solid $primary-color;
 
-.footer-content {
-    display: flex;
-    justify-content: center;
-    gap: 4rem;
-    flex-wrap: wrap;
+  .footer-content {
     max-width: 1200px;
-    font-family: $font-family-base;
-}
-
-.footer-section {
-    flex: 1 1 200px;
-    min-width: 200px;
-
-    h3 {
-        font-size: 1.25rem;
-        color: $text-main-color;
-        margin-bottom: 0.75rem;
-    }
-
-    p {
-        color: $text-secondary-color;
-        font-size: 0.95rem;
-        line-height: 1.5;
-    }
-
-    ul {
-        list-style: none;
-        padding: 0;
-
-        li {
-            margin: 0.5rem 0;
-
-            a {
-                color: $text-secondary-color;
-                text-decoration: none;
-                font-size: 0.95rem;
-                transition: color 0.3s;
-
-                &:hover {
-                    color: $secondary-dark;
-                }
-            }
-        }
-    }
-}
-
-.footer-bottom {
-    text-align: center;
-    color: $text-secondary-color;
-    font-size: 0.85rem;
-    line-height: 1.6;
-    font-family: $font-family-base;
-    margin-top: 38px;
-
-    p:first-child {
-        font-style: italic;
-        margin-bottom: 0.5rem;
-    }
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
 }
 
 // =========================
-// 📱 Footer Responsive
+// SECCIONES DEL FOOTER
+// =========================
+
+.footer-section {
+  flex: 1 1 250px;
+
+  h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: $primary-color;
+    border-left: 4px solid $primary-color;
+    padding-left: 0.5rem;
+  }
+
+  p, ul {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      margin-bottom: 0.5rem;
+
+      a {
+        text-decoration: none;
+        color: $text-color;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: $primary-color;
+        }
+      }
+    }
+  }
+}
+
+// =========================
+// PIE DEL FOOTER
+// =========================
+
+.footer-bottom {
+  text-align: center;
+  width: 100%;
+  margin-top: 2rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  padding-top: 1rem;
+  font-size: 0.85rem;
+  color: darken($text-color, 20%);
+}
+
+// =========================
+// RESPONSIVE FOOTER
 // =========================
 
 @media (max-width: 768px) {
-    .footer-content {
-        flex-direction: column;
-        align-items: center;
-        gap: 2rem;
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-section {
+    h3 {
+      text-align: center;
     }
+
+    ul {
+      li {
+        a {
+          display: inline-block;
+        }
+      }
+    }
+  }
+
+  .footer-bottom {
+    font-size: 0.8rem;
+  }
 }
