@@ -29,6 +29,11 @@ export class AuthService {
     return this.storage.getUser();
   }
 
+  guardarUsuario(usuario: any): void {
+  localStorage.setItem('usuario', JSON.stringify(usuario));
+}
+
+
   cerrarSesion() {
     this.storage.clearUser();
   }

@@ -1,14 +1,73 @@
-<h2>Perfil</h2>
+<div *ngIf="user; else noSesion" class="perfil-container">
+  <h2>Bienvenido, {{ user.nombre }}</h2>
 
-<div *ngIf="user" class="perfil-card">
-  <p>ID: {{ user.id }}</p>
-  <p>Nombre: {{ user.nombre }}</p>
-  <button class="logout-button" (click)="logout()">
-    🔒 Cerrar sesión
+  <!-- Icono actual -->
+  <div class="icono-actual">
+    <h3>Icono Actual</h3>
+    <img [src]="user.icono" alt="Icono Actual" class="icono-preview" />
+  </div>
+
+  <!-- Botón para abrir modal -->
+  <button class="cambiar-icono-btn" (click)="mostrarSelector = true">
+    🖼️ Cambiar Icono
   </button>
+
+  <!-- Modal de selección de icono -->
+  <div class="modal-overlay" *ngIf="mostrarSelector" (click)="cerrarModal()">
+    <div class="modal-contenido" (click)="$event.stopPropagation()">
+      <h3>Selecciona un nuevo icono:</h3>
+
+      <!-- Attack on Titan -->
+      <h4 class="grupo-titulo">Attack on Titan</h4>
+      <div class="galeria-iconos">
+        <img
+          *ngFor="let icono of iconos.attackOnTitan"
+          [src]="icono"
+          [alt]="icono"
+          [class.seleccionado]="icono === iconoSeleccionado"
+          (click)="seleccionarIcono(icono)"
+        />
+      </div>
+
+      <!-- Black Clover -->
+      <h4 class="grupo-titulo">Black Clover</h4>
+      <div class="galeria-iconos">
+        <img
+          *ngFor="let icono of iconos.blackClover"
+          [src]="icono"
+          [alt]="icono"
+          [class.seleccionado]="icono === iconoSeleccionado"
+          (click)="seleccionarIcono(icono)"
+        />
+      </div>
+
+      <!-- Chainsaw Man -->
+      <h4 class="grupo-titulo">Chainsaw Man</h4>
+      <div class="galeria-iconos">
+        <img
+          *ngFor="let icono of iconos.chainsawMan"
+          [src]="icono"
+          [alt]="icono"
+          [class.seleccionado]="icono === iconoSeleccionado"
+          (click)="seleccionarIcono(icono)"
+        />
+      </div>
+
+      <div class="acciones-modal">
+        <button class="confirmar-btn" (click)="actualizarIcono()">✅ Confirmar</button>
+        <button class="cerrar-btn" (click)="cerrarModal()">❌ Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cerrar sesión -->
+  <button class="logout-btn" (click)="logout()">🔒 Cerrar Sesión</button>
 </div>
 
-<div *ngIf="!user" class="sesion-inactiva">
-  <p>No hay sesión activa.</p>
-  <a routerLink="/login">Iniciar sesión</a>
-</div>
+<!-- Si no hay sesión -->
+<ng-template #noSesion>
+  <div class="no-sesion">
+    <p>No hay sesión activa.</p>
+    <a routerLink="/login">Iniciar sesión</a>
+  </div>
+</ng-template>
