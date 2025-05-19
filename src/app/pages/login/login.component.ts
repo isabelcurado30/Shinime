@@ -18,7 +18,7 @@ export class LoginComponent {
     this.authService.login(this.nombre, this.password).subscribe({
       next: res => {
         if (res.success) {
-          this.authService.guardarSesion({ id: res.id, nombre: res.nombre });
+          this.authService.guardarSesion({ id: res.id, nombre: res.nombre, icono: res.icono });
           this.mensaje = `Bienvenido, ${res.nombre}`;
           this.error = '';
           // Puedes navegar a otra página aquí si quieres:

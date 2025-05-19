@@ -4,8 +4,9 @@
   <!-- Icono actual -->
   <div class="icono-actual">
     <h3>Icono Actual</h3>
-    <img [src]="user.icono" alt="Icono Actual" class="icono-preview" />
+    <img [src]="user.icono || 'assets/img/icons/icon-predeterminado.png'" alt="Icono Actual" class="icono-preview" />
   </div>
+
 
   <!-- Botón para abrir modal -->
   <button class="cambiar-icono-btn" (click)="mostrarSelector = true">
@@ -46,6 +47,18 @@
       <div class="galeria-iconos">
         <img
           *ngFor="let icono of iconos.chainsawMan"
+          [src]="icono"
+          [alt]="icono"
+          [class.seleccionado]="icono === iconoSeleccionado"
+          (click)="seleccionarIcono(icono)"
+        />
+      </div>
+
+      <!-- Jujutsu Kaisen -->
+      <h4 class="grupo-titulo">Jujutsu Kaisen</h4>
+      <div class="galeria-iconos">
+        <img
+          *ngFor="let icono of iconos.jujutsuKaisen"
           [src]="icono"
           [alt]="icono"
           [class.seleccionado]="icono === iconoSeleccionado"

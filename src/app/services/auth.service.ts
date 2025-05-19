@@ -1,52 +1,58 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { StorageService } from './storage.service';
+import { Injectable } from '@angular/core';
 
-@Injectable({ providedIn: 'root' })
+
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthService {
-  private baseUrl = 'https://ruizgijon.ddns.net/sancheza/isaberu/api/controller';
+  private apiUrl = 'https://ruizgijon.ddns.net/sancheza/isaberu/api/user.php';
 
-  constructor(private http: HttpClient, private storage: StorageService) {}
-
-  registrar(user: { nombre: string; email: string; password: string }): Observable<any> {
-    return this.http.post(`${this.baseUrl}/create.php`, user, {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    });
-  }
+  constructor(private http: HttpClient) {}
 
   login(nombre: string, password: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/login.php`, { nombre, password }, {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    });
+    const formData = new FormData();
+    formData.append('action', 'login');
+    formData.append('nombre', nombre);
+    formData.append('password', password);
+    return this.http.post<any>(this.apiUrl, formData);
   }
 
-  guardarSesion(usuario: { id: number; nombre: string }) {
-    this.storage.setUser(usuario);
-  }
+  registrar(usuario: any): Observable<any> {
+  const formData = new FormData();
+  formData.append('action', 'register');
+  formData.append('nombre', usuario.nombre);
+  formData.append('password', usuario.password);
+  // Agrega más campos si tu formulario los tiene
 
-  obtenerUsuario(): { id: number; nombre: string } | null {
-    return this.storage.getUser();
+  return this.http.post<any>(this.apiUrl, formData);
+}
+
+
+  updateIcono(userId: string, icono: string): Observable<any> {
+    const formData = new FormData();
+    formData.append('action', 'updateIcono');
+    formData.append('userId', userId);
+    formData.append('icono', icono);
+    return this.http.post<any>(this.apiUrl, formData);
   }
 
   guardarUsuario(usuario: any): void {
-  localStorage.setItem('usuario', JSON.stringify(usuario));
-}
-
-
-  cerrarSesion() {
-    this.storage.clearUser();
+    localStorage.setItem('usuario', JSON.stringify(usuario)); // ✅ CORRECTO
   }
 
-  isLoggedIn(): boolean {
-    return this.storage.isLoggedIn();
+  obtenerUsuario(): any {
+    const datos = localStorage.getItem('usuario');
+    return datos ? JSON.parse(datos) : null;
   }
 
-  getUser() {
-    return this.http.get('/api/get-user.php');
+  cerrarSesion(): void {
+    localStorage.removeItem('usuario');
   }
 
-  logout() {
-    return this.http.get('/api/logout.php');
+  guardarSesion(usuario: any): void {
+    this.guardarUsuario(usuario); // ✅ Esto ya no es recursivo
   }
 }
+

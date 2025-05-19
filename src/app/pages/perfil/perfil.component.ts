@@ -56,9 +56,17 @@ export class PerfilComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-    this.user = this.authService.obtenerUsuario();
-    this.iconoSeleccionado = this.user?.icono || '';
+  this.user = this.authService.obtenerUsuario();
+
+  // Solo poner icono por defecto si el usuario NO tiene uno
+  if (!this.user.icono || this.user.icono.trim() === '') {
+    this.user.icono = 'assets/img/icons/icon-predeterminado.png';
   }
+
+  this.iconoSeleccionado = this.user.icono;
+}
+
+
 
   logout() {
     this.authService.cerrarSesion();
@@ -93,24 +101,22 @@ export class PerfilComponent implements OnInit {
         formData.append('userId', this.user.id);
         formData.append('icono', this.iconoSeleccionado);
 
-        fetch('https://ruizgijon.ddns.net/sancheza/isaberu/api/user.php', {
-          method: 'POST',
-          body: formData
-        })
-          .then(res => res.json())
-          .then(res => {
-            if (res.success) {
-              this.user.icono = this.iconoSeleccionado;
-              this.authService.guardarUsuario(this.user);
-              Swal.fire('Actualizado', 'Tu icono ha sido cambiado correctamente', 'success');
-            } else {
-              Swal.fire('Error', 'No se pudo actualizar el icono', 'error');
-            }
-          })
-          .catch(err => {
-            console.error('Error al actualizar icono:', err);
-            Swal.fire('Error del servidor', 'Inténtalo más tarde', 'error');
-          });
+        this.authService.updateIcono(this.user.id, this.iconoSeleccionado).subscribe({
+  next: (res: any) => {
+    if (res.success) {
+      this.user.icono = this.iconoSeleccionado;
+      this.authService.guardarUsuario(this.user);
+      Swal.fire('Actualizado', 'Tu icono ha sido cambiado correctamente', 'success');
+    } else {
+      Swal.fire('Error', 'No se pudo actualizar el icono', 'error');
+    }
+  },
+  error: (err: any) => {
+    console.error('Error al actualizar icono:', err);
+    Swal.fire('Error del servidor', 'Inténtalo más tarde', 'error');
+  }
+});
+
       }
     });
   }
