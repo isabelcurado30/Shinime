@@ -27,13 +27,10 @@ export class AuthService {
     return this.http.post<any>(this.apiUrl, formData);
   }
 
-  updateIcono(userId: string, icono: string): Observable<any> {
-    const formData = new FormData();
-    formData.append('action', 'updateIcono');
-    formData.append('userId', userId);
-    formData.append('icono', icono);
-    return this.http.post<any>(this.apiUrl, formData);
-  }
+  updateIcono(formData: FormData) {
+  return this.http.post<any>('https://ruizgijon.ddns.net/sancheza/isaberu/api/user.php', formData);
+}
+
 
   guardarUsuario(usuario: any): void {
     localStorage.setItem('usuario', JSON.stringify(usuario));

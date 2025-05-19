@@ -79,48 +79,48 @@ this.iconoSeleccionado = this.user.icono;
   }
 
   actualizarIcono(): void {
-    if (!this.user || !this.iconoSeleccionado) return;
+  if (!this.user || !this.iconoSeleccionado) return;
 
-    // Cerramos el modal antes del Swal para evitar que quede colgado
-    this.cerrarModal();
+  this.cerrarModal();
 
-    Swal.fire({
-      title: '¿Actualizar Icono?',
-      text: '¿Estás seguro de que quieres cambiar tu icono de perfil?',
-      imageUrl: this.iconoSeleccionado,
-      imageWidth: 100,
-      confirmButtonText: 'Sí, actualizar',
-      cancelButtonText: 'Cancelar',
-      showCancelButton: true,
-      reverseButtons: true,
-      confirmButtonColor: '#82B8A8',
-      cancelButtonColor: '#D33'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const formData = new FormData();
-        formData.append('action', 'updateIcono');
-        formData.append('userId', this.user.id);
-        formData.append('icono', this.iconoSeleccionado);
+  Swal.fire({
+    title: '¿Actualizar Icono?',
+    text: '¿Estás seguro de que quieres cambiar tu icono de perfil?',
+    imageUrl: this.iconoSeleccionado,
+    imageWidth: 100,
+    confirmButtonText: 'Sí, actualizar',
+    cancelButtonText: 'Cancelar',
+    showCancelButton: true,
+    reverseButtons: true,
+    confirmButtonColor: '#82B8A8',
+    cancelButtonColor: '#D33'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const formData = new FormData();
+      formData.append('action', 'updateIcono');
+      formData.append('userId', this.user.id);
+      formData.append('icono', this.iconoSeleccionado);
 
-        this.authService.updateIcono(this.user.id, this.iconoSeleccionado).subscribe({
-  next: (res: any) => {
-    if (res.success) {
-      this.user.icono = this.iconoSeleccionado;
-      this.authService.guardarUsuario(this.user);
-      Swal.fire('Actualizado', 'Tu icono ha sido cambiado correctamente', 'success');
-    } else {
-      Swal.fire('Error', 'No se pudo actualizar el icono', 'error');
+      this.authService.updateIcono(formData).subscribe({
+        next: (res: any) => {
+          console.log('💬 Respuesta del backend:', res);
+          if (res.success) {
+            this.user.icono = this.iconoSeleccionado;
+            this.authService.guardarUsuario(this.user);
+            Swal.fire('Actualizado', 'Tu icono ha sido cambiado correctamente', 'success');
+          } else {
+            Swal.fire('Error', 'No se pudo actualizar el icono', 'error');
+          }
+        },
+        error: (err: any) => {
+          console.error('Error al actualizar icono:', err);
+          Swal.fire('Error del servidor', 'Inténtalo más tarde', 'error');
+        }
+      });
     }
-  },
-  error: (err: any) => {
-    console.error('Error al actualizar icono:', err);
-    Swal.fire('Error del servidor', 'Inténtalo más tarde', 'error');
-  }
-});
+  });
+}
 
-      }
-    });
-  }
 
   editarPerfil(): void {
     console.log('Editar perfil aún no implementado');
