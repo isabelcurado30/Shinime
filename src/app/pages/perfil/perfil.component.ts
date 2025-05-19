@@ -58,12 +58,13 @@ export class PerfilComponent implements OnInit {
   ngOnInit() {
   this.user = this.authService.obtenerUsuario();
 
-  // Solo poner icono por defecto si el usuario NO tiene uno
-  if (!this.user.icono || this.user.icono.trim() === '') {
-    this.user.icono = 'assets/img/icons/icon-predeterminado.png';
-  }
+if (!this.user || !this.user.icono || this.user.icono.trim() === '') {
+  this.user = this.user || {}; // asegúrate de que no sea null
+  this.user.icono = 'assets/img/icons/icon-predeterminado.png';
+}
 
-  this.iconoSeleccionado = this.user.icono;
+this.iconoSeleccionado = this.user.icono;
+
 }
 
 

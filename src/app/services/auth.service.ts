@@ -1,7 +1,6 @@
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Injectable } from '@angular/core';
-
 
 @Injectable({
   providedIn: 'root'
@@ -19,16 +18,14 @@ export class AuthService {
     return this.http.post<any>(this.apiUrl, formData);
   }
 
-  registrar(usuario: any): Observable<any> {
-  const formData = new FormData();
-  formData.append('action', 'register');
-  formData.append('nombre', usuario.nombre);
-  formData.append('password', usuario.password);
-  // Agrega más campos si tu formulario los tiene
-
-  return this.http.post<any>(this.apiUrl, formData);
-}
-
+  registrar(usuario: { nombre: string; email: string; password: string }): Observable<any> {
+    const formData = new FormData();
+    formData.append('action', 'register');
+    formData.append('nombre', usuario.nombre);
+    formData.append('email', usuario.email);
+    formData.append('password', usuario.password);
+    return this.http.post<any>(this.apiUrl, formData);
+  }
 
   updateIcono(userId: string, icono: string): Observable<any> {
     const formData = new FormData();
@@ -39,7 +36,7 @@ export class AuthService {
   }
 
   guardarUsuario(usuario: any): void {
-    localStorage.setItem('usuario', JSON.stringify(usuario)); // ✅ CORRECTO
+    localStorage.setItem('usuario', JSON.stringify(usuario));
   }
 
   obtenerUsuario(): any {
@@ -52,7 +49,6 @@ export class AuthService {
   }
 
   guardarSesion(usuario: any): void {
-    this.guardarUsuario(usuario); // ✅ Esto ya no es recursivo
+    this.guardarUsuario(usuario);
   }
 }
-

@@ -53,6 +53,17 @@ $shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
 }
 
+.icono-perfil {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #333;
+}
+
+
+
+
 .cambiar-icono-btn,
 .logout-btn {
   background-color: $primary-color;
