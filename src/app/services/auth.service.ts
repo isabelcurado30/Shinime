@@ -48,4 +48,8 @@ export class AuthService {
   guardarSesion(usuario: any): void {
     this.guardarUsuario(usuario);
   }
+
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem ('usuario');
+  }
 }

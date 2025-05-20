@@ -19,7 +19,7 @@ export class LoginComponent {
       next: res => {
         if (res.success) {
           this.authService.guardarSesion({ id: res.id, nombre: res.nombre, icono: res.icono });
-          this.mensaje = `Bienvenido, ${res.nombre}`;
+          this.mensaje = `Bienvenido/a, ${res.nombre}`;
           this.error = '';
           // Puedes navegar a otra página aquí si quieres:
           // this.router.navigate(['/home']);
