@@ -111,6 +111,23 @@ body {
   }
 }
 
+.btn-add-list {
+  margin-top: 8px;
+  padding: 6px 10px;
+  background-color: #7ADBC8;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: darken(#7ADBC8, 10%);
+  }
+}
+
+
 // =========================
 // ESTADOS
 // =========================

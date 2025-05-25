@@ -7,6 +7,8 @@
         <link href = "https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel = "stylesheet">
     </head>
     <body>
+
+        <!-- Filtro por Género -->
         <div class = "filters-container">
             <label for = "genre-select">Filtrar por Género:</label>
             <select id = "genre-select" [(ngModel)] = "selectedGenre" (change) = "onGenreChange()">
@@ -17,15 +19,14 @@
             </select>
         </div>
 
+        <!-- Barra de Búsqueda -->
         <div class = "search-container">
             <input [(ngModel)] = "query" placeholder = "Buscar Anime...">
             <button (click) = "searchAnime()">Buscar</button>
         </div>
 
-        <div *ngIf = "loading">Buscando Animes...</div>
-        <div *ngIf = "error" class = "error">{{ error }}</div>
-
-        <div  *ngIf = "animes.length > 0" class = "anime-list">
+        <!-- Lista de Animes -->
+        <div *ngIf = "animes.length > 0" class = "anime-list">
             <div
                 *ngFor = "let anime of animes"
                 class = "anime-card"
@@ -34,6 +35,14 @@
                 <img [src] = "anime.images.jpg.image_url" [alt] = "anime.title">
                 <h3>{{ anime.title }}</h3>
                 <p>Puntuación: {{ anime.score || 'N/A' }}</p>
+
+                <!-- Botón para Añadir a la Lista -->
+                <button 
+                    (click) = "agregarAnimeLista (anime); $event.stopPropagation()"
+                    class = "btn-add-list"
+                >
+                    + Añadir a Lista
+                </button>
             </div>
         </div>
     </body>
