@@ -152,22 +152,49 @@ export class AnimeDetailComponent implements OnInit {
   }
 
   agregarAnime(listaId: number): void {
-  if (!this.anime) return;
+  if (!this.anime) return; // Salimos si no hay anime cargado
 
+  // Buscar la Lista Seleccionada
+  const listaSeleccionada = this.listasUsuario.find(lista => lista.id === listaId);
+
+  if (!listaSeleccionada) {
+    Swal.fire('Error', 'No se encontró la lista seleccionada', 'error');
+    return;
+  }
+
+  // Comprobar si el Anime ya está en la Lista
+  const yaExiste = listaSeleccionada.animes?.some((anime: any) => anime.mal_id === this.anime!.mal_id);
+
+  if (yaExiste) {
+    Swal.fire({
+      icon: 'info',
+      title: 'Ya está en la lista',
+      text: 'Este Anime ya Fue Añadido Previamente a Esta Lista',
+      confirmButtonColor: '#7ADBC8'
+    });
+    return;
+  }
+
+  // Crear un Objeto a Añadir
   const animeParaLista = {
     mal_id: this.anime.mal_id,
     titulo: this.anime.title,
-    imagen: this.anime.images.jpg.image_url
+    imagen: this.anime.images.jpg?.image_url
   };
 
+  // Añadir al Backend
   this.listasService.addAnimeToLista(listaId, animeParaLista).subscribe({
     next: () => {
       Swal.fire({
         icon: 'success',
-        title: 'Añadido con Éxito',
-        text: 'El Anime fue añadido a la lista correctamente',
+        title: 'Añadido con éxito',
+        text: 'El anime fue Añadido a la Lista Correctamente',
         confirmButtonColor: '#7ADBC8'
       });
+
+      // Añadir al Array Local también para evitar recarga
+      listaSeleccionada.animes = listaSeleccionada.animes || [];
+      listaSeleccionada.animes.push(animeParaLista);
     },
     error: (err) => {
       console.error('Error al añadir anime:', err);

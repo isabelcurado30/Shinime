@@ -18,7 +18,7 @@ export class ListasComponent implements OnInit {
   constructor(
     private listasService: ListasService,
     private http: HttpClient,
-    private storageService: StorageService,
+    private storageService: StorageService, 
     private authService: AuthService
   ) {}
 
@@ -26,7 +26,7 @@ export class ListasComponent implements OnInit {
     const usuario = this.authService.obtenerUsuario();
     if (!usuario) {
       this.bloqueado = true;
-      Swal.fire({
+      Swal.fire ({
         icon: 'warning',
         title: 'Acceso Denegado',
         text: 'Debes iniciar sesión para ver tus listas.',
@@ -57,77 +57,23 @@ export class ListasComponent implements OnInit {
   }
 
   crearLista() {
-    Swal.fire({
-      title: 'Crear nueva lista',
-      input: 'text',
-      inputLabel: 'Nombre de la lista',
-      inputPlaceholder: 'Escribe un nombre...',
-      showCancelButton: true,
-      confirmButtonText: 'Crear',
-      cancelButtonText: 'Cancelar',
-      customClass: { popup: 'swal2-lexend' }
-    }).then(result => {
-      if (result.isConfirmed && result.value) {
-        this.listasService.createLista(result.value, this.userId).subscribe(() => {
-          this.ngOnInit();
-          Swal.fire({
-            icon: 'success',
-            title: '¡Lista creada!',
-            text: `La lista "${result.value}" fue añadida correctamente.`,
-            customClass: { popup: 'swal2-lexend' }
-          });
-        });
-      }
-    });
+    const nombre = prompt('Nombre de la nueva lista:');
+    if (nombre) {
+      this.listasService.createLista(nombre, this.userId).subscribe(() => this.ngOnInit());
+    }
   }
 
   editarLista(lista: any) {
-    Swal.fire({
-      title: 'Editar nombre de la lista',
-      input: 'text',
-      inputLabel: 'Nuevo nombre',
-      inputValue: lista.nombre,
-      showCancelButton: true,
-      confirmButtonText: 'Guardar',
-      cancelButtonText: 'Cancelar',
-      customClass: { popup: 'swal2-lexend' }
-    }).then(result => {
-      if (result.isConfirmed && result.value && result.value !== lista.nombre) {
-        this.listasService.updateLista(lista.id, result.value).subscribe(() => {
-          this.ngOnInit();
-          Swal.fire({
-            icon: 'success',
-            title: '¡Lista actualizada!',
-            text: `El nuevo nombre es "${result.value}".`,
-            customClass: { popup: 'swal2-lexend' }
-          });
-        });
-      }
-    });
+    const nuevoNombre = prompt('Nuevo nombre para la lista:', lista.nombre);
+    if (nuevoNombre && nuevoNombre !== lista.nombre) {
+      this.listasService.updateLista(lista.id, nuevoNombre).subscribe(() => this.ngOnInit());
+    }
   }
 
   borrarLista(listaId: number) {
-    Swal.fire({
-      title: '¿Borrar esta lista?',
-      text: 'Esta acción no se puede deshacer.',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Sí, borrar',
-      cancelButtonText: 'Cancelar',
-      customClass: { popup: 'swal2-lexend' }
-    }).then(result => {
-      if (result.isConfirmed) {
-        this.listasService.deleteLista(listaId).subscribe(() => {
-          this.ngOnInit();
-          Swal.fire({
-            icon: 'success',
-            title: 'Lista eliminada',
-            text: 'La lista se eliminó correctamente.',
-            customClass: { popup: 'swal2-lexend' }
-          });
-        });
-      }
-    });
+    if (confirm('¿Estás seguro de que quieres borrar esta lista?')) {
+      this.listasService.deleteLista(listaId).subscribe(() => this.ngOnInit());
+    }
   }
 
   eliminarAnime(listaId: number, malId: number) {
@@ -137,12 +83,6 @@ export class ListasComponent implements OnInit {
         if (lista) {
           lista.animes = lista.animes.filter((a: any) => a.mal_id !== malId);
         }
-        Swal.fire({
-          icon: 'success',
-          title: 'Anime eliminado',
-          text: 'El anime ha sido eliminado de la lista.',
-          customClass: { popup: 'swal2-lexend' }
-        });
       },
       error: (err) => console.error('❌ Error al eliminar anime:', err)
     });
