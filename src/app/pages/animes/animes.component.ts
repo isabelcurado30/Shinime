@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { AnimeService } from 'src/app/services/anime.service';
-import { Router } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { AnimeService } from "src/app/services/anime.service";
+import { Router } from "@angular/router";
+import { StorageService } from "src/app/services/storage.service";
 
 @Component ({
   selector: 'app-animes',
@@ -8,8 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./animes.component.scss']
 })
 
-export class AnimesComponent implements OnInit{
-  
+export class AnimesComponent implements OnInit {
   query: string = '';
   animes: any[] = [];
   loading = false;
@@ -18,11 +18,28 @@ export class AnimesComponent implements OnInit{
   genres: any[] = [];
   selectedGenre: number | null = null;
 
-  constructor (private animeService: AnimeService, private router: Router) {}
+  constructor (
+    private animeService: AnimeService,
+    private router: Router,
+    private storageService: StorageService
+  ) {}
 
   ngOnInit(): void {
     this.loadGenres();
-    this.loadInitialAnimes();
+
+    // Recuperar Última Búsqueda y Posición Scroll
+    const { query, genero, posY} = this.storageService.getBusqueda();
+    this.query = query;
+    this.selectedGenre = genero;
+
+    if (query || genero !== null) {
+      this.searchAnime();
+      setTimeout (() => {
+        window.scrollTo ({ top: posY, behavior: 'smooth' });
+      }, 100);
+    } else {
+      this.loadInitialAnimes();
+    } // Fin Si
   }
 
   loadGenres() {
@@ -55,10 +72,10 @@ export class AnimesComponent implements OnInit{
 
     if (!query && !this.selectedGenre) {
       this.loadInitialAnimes();
-      return;
+      return; 
     } // Fin Si
 
-    this.animeService.searchAnime (query, 1, this.selectedGenre !== null ? this.selectedGenre: undefined).subscribe ({
+    this.animeService.searchAnime (query, 1, this.selectedGenre !== null ? this.selectedGenre : undefined).subscribe ({
       next: (res) => {
         this.animes = res;
         this.loading = false;
@@ -76,6 +93,8 @@ export class AnimesComponent implements OnInit{
   }
 
   goToDetail (id: number) {
-    this.router.navigate (['/animes', id])
+    // Guardar Búsqueda y Scroll Antes de Navegar
+    this.storageService.setBusqueda (this.query, this.selectedGenre, window.scrollY);
+    this.router.navigate (['/animes', id]);
   }
 }

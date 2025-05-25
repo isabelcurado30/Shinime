@@ -198,7 +198,7 @@ export class AnimeDetailComponent implements OnInit {
     },
     error: (err) => {
       console.error('Error al añadir anime:', err);
-      Swal.fire('Error', 'No se pudo añadir el anime a la lista', 'error');
+      Swal.fire('Error', 'No se Pudo Añadir el Anime a la Lista', 'error');
     }
   });
 }
@@ -206,7 +206,7 @@ export class AnimeDetailComponent implements OnInit {
 
   abrirSelectorDeLista(): void {
     if (!this.listasUsuario || this.listasUsuario.length === 0) {
-      Swal.fire('No tienes listas creadas aún', '', 'info');
+      Swal.fire('No tienes listas Creadas Aún', '', 'info');
       return;
     }
 
