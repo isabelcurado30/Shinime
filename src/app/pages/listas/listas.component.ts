@@ -26,10 +26,10 @@ export class ListasComponent implements OnInit {
     const usuario = this.authService.obtenerUsuario();
     if (!usuario) {
       this.bloqueado = true;
-      Swal.fire ({
+      Swal.fire({
         icon: 'warning',
         title: 'Acceso Denegado',
-        text: 'Debes iniciar sesión para ver tus listas.',
+        text: 'Debes Iniciar Sesión para Ver tus Listas.',
         customClass: { popup: 'swal2-lexend' }
       });
       return;
@@ -52,39 +52,106 @@ export class ListasComponent implements OnInit {
           }
         }
       },
-      error: (err) => console.error('❌ Error al obtener listas:', err)
+      error: (err) => {
+        console.error('❌ Error al Obtener Listas:', err);
+        Swal.fire('Error', 'No se Pudieron Cargar tus Listas.', 'error');
+      }
     });
   }
 
   crearLista() {
-    const nombre = prompt('Nombre de la nueva lista:');
-    if (nombre) {
-      this.listasService.createLista(nombre, this.userId).subscribe(() => this.ngOnInit());
-    }
+    Swal.fire({
+      title: 'Crear Nueva Lista',
+      input: 'text',
+      inputLabel: 'Nombre de la Lista',
+      showCancelButton: true,
+      confirmButtonText: 'Crear',
+      cancelButtonText: 'Cancelar',
+      inputValidator: (value) => {
+        if (!value) return 'Debes Ingresar un Nombre';
+        return null;
+      }
+    }).then(result => {
+      if (result.isConfirmed && result.value) {
+        this.listasService.createLista(result.value, this.userId).subscribe({
+          next: () => {
+            Swal.fire('Lista Creada', '', 'success');
+            this.ngOnInit();
+          },
+          error: () => Swal.fire('Error', 'No se Pudo Crear la Lista.', 'error')
+        });
+      }
+    });
   }
 
   editarLista(lista: any) {
-    const nuevoNombre = prompt('Nuevo nombre para la lista:', lista.nombre);
-    if (nuevoNombre && nuevoNombre !== lista.nombre) {
-      this.listasService.updateLista(lista.id, nuevoNombre).subscribe(() => this.ngOnInit());
-    }
+    Swal.fire({
+      title: 'Editar Lista',
+      input: 'text',
+      inputLabel: 'Nuevo Nombre',
+      inputValue: lista.nombre,
+      showCancelButton: true,
+      confirmButtonText: 'Actualizar',
+      cancelButtonText: 'Cancelar',
+      inputValidator: (value) => {
+        if (!value) return 'El nombre no puede estar vacío';
+        return null;
+      }
+    }).then(result => {
+      if (result.isConfirmed && result.value !== lista.nombre) {
+        this.listasService.updateLista(lista.id, result.value).subscribe({
+          next: () => {
+            Swal.fire('Lista Actualizada', '', 'success');
+            this.ngOnInit();
+          },
+          error: () => Swal.fire('Error', 'No se Pudo Actualizar la Lista.', 'error')
+        });
+      }
+    });
   }
 
   borrarLista(listaId: number) {
-    if (confirm('¿Estás seguro de que quieres borrar esta lista?')) {
-      this.listasService.deleteLista(listaId).subscribe(() => this.ngOnInit());
-    }
+    Swal.fire({
+      title: '¿Estás Seguro/a?',
+      text: 'Esta Acción Eliminará la Lista Permanentemente.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, Borrar',
+      cancelButtonText: 'Cancelar'
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.listasService.deleteLista(listaId).subscribe({
+          next: () => {
+            Swal.fire('Lista Eliminada', '', 'success');
+            this.ngOnInit();
+          },
+          error: () => Swal.fire('Error', 'No se pudo Eliminar la Lista.', 'error')
+        });
+      }
+    });
   }
 
   eliminarAnime(listaId: number, malId: number) {
-    this.listasService.removeAnimeFromLista(listaId, malId).subscribe({
-      next: () => {
-        const lista = this.listas.find(l => l.id === listaId);
-        if (lista) {
-          lista.animes = lista.animes.filter((a: any) => a.mal_id !== malId);
-        }
-      },
-      error: (err) => console.error('❌ Error al eliminar anime:', err)
+    Swal.fire({
+      title: '¿Eliminar anime?',
+      text: '¿Deseas Quitar este Anime de la Lista?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.listasService.removeAnimeFromLista(listaId, malId).subscribe({
+          next: () => {
+            const lista = this.listas.find(l => l.id === listaId);
+            if (lista) {
+              lista.animes = lista.animes.filter((a: any) => a.mal_id !== malId);
+            }
+            Swal.fire('Anime Eliminado', '', 'success');
+          },
+          error: () => Swal.fire('Error', 'No se Pudo Eliminar el Anime.', 'error')
+        });
+      }
     });
   }
 }
