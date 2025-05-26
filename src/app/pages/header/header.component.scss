@@ -129,11 +129,11 @@ $shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
         // Cerrar Sesión
         &.logout-btn {
-            background-color: $text-color;
+            background-color: $primary-color;
             color: $white;
 
             &:hover {
-                background-color: darken($text-color, 10%);
+                background-color: darken($primary-color, 10%);
             }
         }
     }

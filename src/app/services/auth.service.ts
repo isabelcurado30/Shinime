@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private apiUrl = 'https://ruizgijon.ddns.net/sancheza/isaberu/api/user.php';
+  private usuarioSubject = new BehaviorSubject<any>(this.obtenerUsuario());
+  usuario$ = this.usuarioSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -33,8 +35,9 @@ export class AuthService {
 
 
   guardarUsuario(usuario: any): void {
-    localStorage.setItem('usuario', JSON.stringify(usuario));
-  }
+  localStorage.setItem('usuario', JSON.stringify(usuario));
+  this.usuarioSubject.next(usuario); // ← notifica cambio
+}
 
   obtenerUsuario(): any {
     const datos = localStorage.getItem('usuario');
@@ -42,8 +45,9 @@ export class AuthService {
   }
 
   cerrarSesion(): void {
-    localStorage.removeItem('usuario');
-  }
+  localStorage.removeItem('usuario');
+  this.usuarioSubject.next(null); // ← notifica logout
+}
 
   guardarSesion(usuario: any): void {
     this.guardarUsuario(usuario);
