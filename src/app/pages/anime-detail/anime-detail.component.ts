@@ -4,6 +4,7 @@ import { AnimeService } from 'src/app/services/anime.service';
 import { ListasService } from 'src/app/services/listas.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { EpisodiosService } from 'src/app/services/episodios.service';
+import { DomSanitizer } from '@angular/platform-browser';
 import Swal from 'sweetalert2';
 
 interface Genre {
@@ -29,7 +30,13 @@ interface Anime {
     };
   };
   genres: Genre[];
+  trailer?: {
+    youtube_id: string;
+    url: string;
+    embed_url: string;
+  };
 }
+
 
 @Component({
   selector: 'app-anime-detail',
@@ -45,14 +52,18 @@ export class AnimeDetailComponent implements OnInit {
   episodiosVistos: Set<number> = new Set();
   listasUsuario: any[] = [];
   userId: number = 0;
+  trailerUrl: any = null;
+
 
   constructor(
-    private route: ActivatedRoute,
-    private animeService: AnimeService,
-    private listasService: ListasService,
-    private storageService: StorageService,
-    private episodiosService: EpisodiosService
-  ) {}
+  private route: ActivatedRoute,
+  private animeService: AnimeService,
+  private listasService: ListasService,
+  private storageService: StorageService,
+  private episodiosService: EpisodiosService,
+  public sanitizer: DomSanitizer
+) {}
+
 
   ngOnInit(): void {
     const user = this.storageService.getUser();
@@ -114,26 +125,31 @@ export class AnimeDetailComponent implements OnInit {
   // Cargar detalles + episodios
   // ========================
   loadAnime(): void {
-    this.animeService.getAnimeDetails(this.animeId).subscribe({
-      next: (data) => {
-        this.anime = data;
+  this.animeService.getAnimeDetails(this.animeId).subscribe({
+    next: (data) => {
+      this.anime = data;
 
-        this.animeService.getAllEpisodes(this.animeId)
-          .then((episodes) => {
-            this.episodes = episodes;
-            this.loading = false;
-          })
-          .catch(() => {
-            this.error = 'No se pudieron cargar los episodios';
-            this.loading = false;
-          });
-      },
-      error: () => {
-        this.error = 'No se pudo cargar la información del anime';
-        this.loading = false;
+      if (data.trailer?.embed_url) {
+        this.trailerUrl = this.sanitizer.bypassSecurityTrustResourceUrl(data.trailer.embed_url);
       }
-    });
-  }
+
+      this.animeService.getAllEpisodes(this.animeId)
+        .then((episodes) => {
+          this.episodes = episodes;
+          this.loading = false;
+        })
+        .catch(() => {
+          this.error = 'No se pudieron cargar los episodios';
+          this.loading = false;
+        });
+    },
+    error: () => {
+      this.error = 'No se pudo cargar la información del anime';
+      this.loading = false;
+    }
+  });
+}
+
 
   // ========================
   // Obtener géneros
