@@ -1,109 +1,93 @@
-<!DOCTYPE html>
-<html lang = "es">
-    <head>
-        <meta charset = "UTF-8">
-        <meta name = "viewport" content = "width = device-width, initial-scale = 1-0">
-        <title>Reto Anual - Shinime</title>
-        <link href = "https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel = "stylesheet">
-    </head>
-    <body>
-        <div class *ngIf = "bloqueado" class = "bloqueo-container">
-            <div class = "bloqueo-mensaje">
-                <h2>Debes Iniciar Sesión</h2>
-                <p>Inicia Sesión para Acceder a tu Reto Anual y Registrar tu Progreso</p>
-            </div>
+<div *ngIf="bloqueado" class="bloqueo-container">
+  <div class="bloqueo-mensaje">
+    <h2>Debes Iniciar Sesión</h2>
+    <p>Inicia sesión para acceder a tu Reto Anual y registrar tu progreso</p>
+  </div>
+</div>
+
+<div *ngIf="!bloqueado">
+  <div class="reto-container">
+    
+    <h1 class="titulo">Una Lista Larga y Tiempo para Tacharla</h1>
+    <p class="descripcion">
+      Establece un objetivo de animes para este año y haz un seguimiento de tu progreso hasta completarlo.
+    </p>
+
+    <!-- Iniciar reto -->
+    <div class="inicio-reto" *ngIf="!retoIniciado">
+      <label for="animeCount">¿Cuántos animes quieres ver este año?</label>
+      <div class="form-group">
+        <input
+          type="number"
+          id="animeCount"
+          [(ngModel)]="animeCount"
+          min="1"
+          placeholder="Ej: 50"
+        />
+        <button (click)="iniciarReto()">¡Empezar!</button>
+      </div>
+    </div>
+
+    <!-- Progreso -->
+    <div class="contenido-reto" *ngIf="retoIniciado">
+      <div class="progreso">
+        <p>
+          Has visto <strong>{{ animesVistos.length }}</strong> de
+          <strong>{{ animeCount }}</strong> animes
+        </p>
+
+        <div class="barra-progreso">
+          <div class="relleno" [style.width.%]="progreso"></div>
         </div>
 
-        <div *ngIf = "!bloqueado">
-            <div class = "reto-container">
-                <!-- Título Principal -->
-                <h1 class = "titulo">Una Lista Larga y Tiempo para Tacharla</h1>
+        <p *ngIf="progreso >= 100" class="completado">¡Reto Completado!</p>
+        <p class="countdown">Tiempo restante: {{ timeLeft }}</p>
+      </div>
 
-                <!-- Descripción del Reto -->
-                <p class = "descripcion">
-                    Establece un objetivo de animes para este año y haz un seguimiento de tu progreso hasta completarlo.
-                </p>
+      <button class="reset-button" (click)="restablecerReto()">Restablecer Reto</button>
+    </div>
 
-                <!-- Formulario para Iniciar el Reto -->
-                <div class = "inicio-reto" *ngIf = "!retoIniciado">
-                    <label for = "animeCount">¿Cuántos Animes Quieres Ver este Año?</label>
-                    <div class = "form-group">
-                        <input
-                            type = "number"
-                            id = "animeCount"
-                            [(ngModel)] = "animeCount"
-                            min = "1"
-                            placeholder = "Ej: 50"
-                        >
-                        <button (click) = "iniciarReto()">¡Empezar!</button>
-                    </div>
-                </div>
+    <!-- Buscador -->
+    <div *ngIf="animeCount > 0; else bloqueadoBusqueda" class="buscador">
+      <div class="form-group">
+        <input
+          type="text"
+          [(ngModel)]="searchQuery"
+          placeholder="Buscar animes..."
+        />
+        <button (click)="buscarAnimes()">Buscar</button>
+      </div>
+    </div>
 
-                <!-- Contenido del Reto -->
-                <div class = "contenido-reto" *ngIf = "retoIniciado">
-                    <div class = "progreso">
-                        <p>
-                            Has Visto <strong>{{ animesVistos.length }}</strong> de
-                            <strong>{{ animeCount }}</strong> Animes
-                        </p>
+    <ng-template #bloqueadoBusqueda>
+      <div class="mensaje-bloqueado">
+        <p>Debes establecer primero tu objetivo anual para buscar y añadir animes</p>
+      </div>
+    </ng-template>
 
-                        <div class = "barra-progreso">
-                            <div class = "relleno" [style.width.%] = "progreso"></div>
-                        </div>
+    <!-- Resultados de búsqueda -->
+<div class="resultados" *ngIf="resultadosBusqueda.length > 0">
+  <div class="anime" *ngFor="let anime of resultadosBusqueda">
+    <img [src]="anime.images?.jpg?.image_url" alt="{{ anime.title }}">
+    <div class="info">
+      <p>{{ anime.title }}</p>
+      <button [disabled]="animeCount <= 0" (click)="agregarAnime(anime)">Añadir a Vistos</button>
+    </div>
+  </div>
+</div>
 
-                        <p *ngIf = "progreso >= 100" class = "completado">¡Reto Completado!</p>
-                        <p class = "countdown">Tiempo Restante: {{ timeLeft }}</p>
-                    </div>
+<!-- Animes Vistos -->
+<div class="vistos" *ngIf="animesVistos.length > 0">
+  <h2>Animes Vistos</h2>
+  <div class="anime-visto" *ngFor="let anime of animesVistos">
+    <img [src]="anime.imagen" alt="{{ anime.titulo }}">
+    <div class="info">
+      <p>{{ anime.titulo }}</p>
+      <button (click)="eliminarAnime(anime)">Eliminar</button>
+    </div>
+  </div>
+</div>
 
-                    <button class = "reset-button" (click) = "restablecerReto()">Restablecer Reto</button>
-                </div>
-
-                <!-- Buscador Bloqueado o Activo -->
-                <div  *ngIf = "animeCount > 0; else bloqueadoBusqueda" class = "buscador">
-                    <div class = "form-group">
-                        <input 
-                            type = "text"
-                            [(ngModel)] = "searchQuery"
-                            placeholder = "Buscar Animes..."
-                        >
-                        <button (click) = "buscarAnimes()">Buscar</button>
-                    </div>
-                </div>
-
-                <ng-template #bloqueadoBusqueda>
-                    <div class = "mensaje-bloqueado">
-                        <p>Debes Establecer Primero tu Objetivo Anual para Buscar y Añadir Animes</p>
-                    </div>
-                </ng-template>
-
-                <!-- Resultados -->
-                <div class = "resultados" *ngIf = "resultadosBusqueda.length > 0">
-                    <div class = "anime" *ngFor = "let anime of resultadosBusqueda">
-                        <img [src] = "anime.images.jpg.image_url" alt = "{{ anime.title }}">
-                        <div class = "info">
-                            <p>{{ anime.title }}</p>
-                            <button
-                                [disabled] = "animeCount <= 0"
-                                (click) = "agregarAnime (anime)"
-                            >
-                                Añadir a Vistos
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Animes Vistos -->
-                <div class = "vistos" *ngIf = "animesVistos.length > 0">
-                    <h2>Animes Vistos</h2>
-                    <div class = "anime-visto" *ngFor = "let anime of animesVistos">
-                        <img [src] = "anime.images.jpg.image_url" alt = "{{ anime.title }}">
-                        <div class = "info">
-                            <p>{{ anime.title }}</p>
-                            <button (click) = "eliminarAnime (anime)">Eliminar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
+    
+  </div>
+</div>
