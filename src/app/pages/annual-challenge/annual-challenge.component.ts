@@ -127,7 +127,9 @@ export class AnnualChallengeComponent implements OnInit {
   }
 
   agregarAnime (anime: any): void {
-    if (!this.retoIniciado) return;
+    if (!this.animeCount || this.animesVistos.length >= this.animeCount) {
+      return;
+    }
 
     const yaExiste = this.animesVistos.some (a => a.mal_id === anime.mal_id);
 
@@ -144,23 +146,21 @@ export class AnnualChallengeComponent implements OnInit {
       return;
     } // Fin Si
 
-    if (!this.animesVistos.some (a => a.mal_id)) {
-      this.animesVistos.push (anime);
-      this.resultadosBusqueda = [];
-      this.searchQuery = '';
-      this.guardarEstado();
+    this.animesVistos.push (anime);
+    this.resultadosBusqueda = [];
+    this.searchQuery = '';
+    this.guardarEstado();
 
-      Swal.fire ({
-        icon: 'success',
-        title: '¡Añadido!',
-        text: `Has Agregado "${anime.title}" a tu Reto Anual`,
-        timer: 1500,
-        showConfirmButton: false,
-        customClass: { 
-          popup: 'swal2-lexend' 
-        }
-      });
-    } // Fin Si
+    Swal.fire ({
+      icon: 'success',
+      title: '¡Añadido!',
+      text: `Has Agregado "${anime.title}" a tu Reto Anual`,
+      timer: 1500,
+      showConfirmButton: false,
+      customClass: { 
+        popup: 'swal2-lexend' 
+      }
+    });
   }
 
   eliminarAnime (anime: any): void {
