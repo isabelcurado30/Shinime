@@ -40,9 +40,10 @@ export class AuthService {
 }
 
   obtenerUsuario(): any {
-    const datos = localStorage.getItem('usuario');
-    return datos ? JSON.parse(datos) : null;
-  }
+  const datos = localStorage.getItem('usuario');
+  return datos ? JSON.parse(datos) : null; // esto debe ser null si no hay sesión
+}
+
 
   cerrarSesion(): void {
   localStorage.removeItem('usuario');

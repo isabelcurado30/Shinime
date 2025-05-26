@@ -1,39 +1,39 @@
 <!DOCTYPE html>
-<html lang = "es">
+<html lang="es">
   <head>
-    <meta charset="UTF-8">
-    <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Listas - Shinime</title>
-    <link href = "https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel = "stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <!-- Si Está Bloqueado -->
-    <div  *ngIf = "bloqueado" class = "bloqueo-container">
-      <div class = "bloqueo-mensaje">
-        <h2>Acceso Restringido</h2>
-        <p>Inicia Sesión para Gestionar tus Listas</p>
-      </div>
-    </div>
-
-    <!-- Si NO Está Bloqueado -->
-    <div *ngIf = "!bloqueado" class = "listas-wrapper">
+    <div class="listas-wrapper">
       <h2>Mis Listas</h2>
-      <button (click) = "crearLista()">+ Nueva Lista</button>
+      <button (click)="crearLista()">+ Nueva Lista</button>
 
-      <div class = "lista" *ngFor = "let lista of listas">
-        <div class = "lista-header">
+      <div class="lista" *ngFor="let lista of listas">
+        <div class="lista-header">
           <h3>{{ lista.nombre }}</h3>
-          <div class = "acciones">
-            <button (click) = "editarLista (lista)">Editar</button>
-            <button (click) = "borrarLista (lista.id)">Eliminar</button>
+          <div class="acciones">
+            <button (click)="editarLista(lista)">Editar</button>
+            <button (click)="borrarLista(lista.id)">Eliminar</button>
           </div>
         </div>
 
-        <div class = "animes" *ngIf = "lista.animes.length > 0; else vacia">
-          <div class = "anime-card" *ngFor = "let anime of lista.animes" [routerLink] = "['/animes', anime.mal_id]">
-            <img [src] = "anime.imagen" [alt] = "anime.titulo">
+        <div class="animes" *ngIf="lista.animes.length > 0; else vacia">
+          <div
+            class="anime-card"
+            *ngFor="let anime of lista.animes"
+            [routerLink]="['/animes', anime.mal_id]"
+          >
+            <img [src]="anime.imagen" [alt]="anime.titulo" />
             <span>{{ anime.titulo }}</span>
-            <button (click) = "eliminarAnime (lista.id, anime.mal_id, $event)">X Eliminar</button>
+            <button (click)="eliminarAnime(lista.id, anime.mal_id, $event)">
+              X Eliminar
+            </button>
           </div>
         </div>
 

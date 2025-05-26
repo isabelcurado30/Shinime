@@ -8,17 +8,18 @@ import { RegistroComponent } from './pages/registro/registro.component';
 import { LoginComponent } from './pages/login/login.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import { ListasComponent } from './pages/listas/listas.component';
+import { AuthGuard } from './guards/auth.guard';
 
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'animes', component: AnimesComponent },
   { path: 'animes/:id', component: AnimeDetailComponent},
-  { path: 'annual-challenge', component: AnnualChallengeComponent },
+  { path: 'annual-challenge', component: AnnualChallengeComponent, canActivate: [AuthGuard] },
   { path: 'registro', component: RegistroComponent },
   { path: 'login', component: LoginComponent },
   { path: 'perfil', component: PerfilComponent },
-  { path: 'listas', component: ListasComponent }
+  { path: 'listas', component: ListasComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule ({

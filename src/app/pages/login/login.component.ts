@@ -1,36 +1,62 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   nombre = '';
   password = '';
-  mensaje = '';
-  error = '';
+  returnUrl: string = '/';
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+
+    // Si vino redirigido desde el AuthGuard, muestra alerta
+    if (this.route.snapshot.queryParams['returnUrl']) {
+      Swal.fire({
+        icon: 'info',
+        title: 'Inicia sesión',
+        text: 'Debes iniciar sesión para acceder a esta sección.',
+        customClass: { popup: 'swal2-lexend' }
+      });
+    }
+  }
 
   onSubmit() {
     this.authService.login(this.nombre, this.password).subscribe({
       next: res => {
         if (res.success) {
-          this.authService.guardarSesion({ id: res.id, nombre: res.nombre, icono: res.icono });
-          this.mensaje = `Bienvenido/a, ${res.nombre}`;
-          this.error = '';
-          // Puedes navegar a otra página aquí si quieres:
-          // this.router.navigate(['/home']);
+          this.authService.guardarSesion({
+            id: res.id,
+            nombre: res.nombre,
+            icono: res.icono
+          });
+
+          Swal.fire({
+            title: `¡Bienvenido/a, ${res.nombre}!`,
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false
+          });
+
+          this.router.navigateByUrl(this.returnUrl);
         } else {
-          this.error = res.message || 'Credenciales incorrectas';
-          this.mensaje = '';
+          Swal.fire('Error', res.message || 'Credenciales incorrectas', 'error');
         }
       },
       error: err => {
-        this.error = err.error?.message || 'Error desconocido';
-        this.mensaje = '';
+        Swal.fire('Error', err.error?.message || 'Error desconocido', 'error');
       }
     });
   }
