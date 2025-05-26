@@ -84,6 +84,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
+  min-height: 400px;
+  height: 100%;
 
   &:hover {
     transform: translateY(-5px);
@@ -103,16 +106,22 @@ body {
     font-weight: 600;
     margin-bottom: 0.5rem;
     color: $text-color;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
   }
 
   p {
     font-size: 0.95rem;
     color: darken($text-color, 20%);
+    margin-bottom: 0.8rem;
   }
 }
 
 .btn-add-list {
-  margin-top: 8px;
+  margin-top: auto;
   padding: 6px 10px;
   background-color: $primary-color;
   border: none;
@@ -121,6 +130,7 @@ body {
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  font-family: $font-stack;o
 
   &:hover {
     background-color: darken($primary-color, 10%);
