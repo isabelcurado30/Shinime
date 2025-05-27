@@ -57,6 +57,11 @@ export class PerfilComponent implements OnInit {
   iconoSeleccionado: string = '';
   mostrarSelector = false;
 
+  estadisticas = {
+    listasCreadas: 0,
+    progresoReto: 0,
+  };
+
   constructor (
     private authService: AuthService,
     private router: Router
@@ -83,7 +88,27 @@ export class PerfilComponent implements OnInit {
     } // Fin Si
 
     this.iconoSeleccionado = this.user.icono;
+
+    this.cargarEstadisticas();
   }
+
+  cargarEstadisticas(): void {
+  this.authService.getEstadisticas(this.user.id).subscribe({
+    next: (res) => {
+      console.log('Respuesta:', res); // ✅ te mostrará si llega null
+      if (res && res.success) {
+        this.estadisticas = res.data;
+      } else {
+        Swal.fire('Error', 'No se pudieron cargar tus estadísticas', 'error');
+      }
+    },
+    error: (err) => {
+      console.error('Error al conectar:', err);
+      Swal.fire('Error', 'Error al conectar con el servidor', 'error');
+    }
+  });
+}
+
 
   logout() {
     this.authService.cerrarSesion();
@@ -136,10 +161,6 @@ export class PerfilComponent implements OnInit {
         });
       }
     });
-  }
-
-  editarPerfil(): void {
-    console.log ('Editar Perfil aún NO Implementado');
   }
 
   cerrarModal(): void {

@@ -29,32 +29,38 @@ export class AuthService {
     return this.http.post<any>(this.apiUrl, formData);
   }
 
-  updateIcono(formData: FormData) {
-  return this.http.post<any>('https://ruizgijon.ddns.net/sancheza/isaberu/api/user.php', formData);
-}
+  updateIcono(formData: FormData): Observable<any> {
+    return this.http.post<any>(this.apiUrl, formData);
+  }
 
+  getEstadisticas(userId: number): Observable<any> {
+    const formData = new FormData();
+    formData.append('action', 'getEstadisticas');
+    formData.append('userId', userId.toString());
+    return this.http.post<any>(this.apiUrl, formData);
+  }
 
   guardarUsuario(usuario: any): void {
-  localStorage.setItem('usuario', JSON.stringify(usuario));
-  this.usuarioSubject.next(usuario); // ← notifica cambio
-}
+    localStorage.setItem('usuario', JSON.stringify(usuario));
+    this.usuarioSubject.next(usuario);
+  }
 
   obtenerUsuario(): any {
-  const datos = localStorage.getItem('usuario');
-  return datos ? JSON.parse(datos) : null; // esto debe ser null si no hay sesión
-}
-
+    const datos = localStorage.getItem('usuario');
+    return datos ? JSON.parse(datos) : null;
+  }
 
   cerrarSesion(): void {
-  localStorage.removeItem('usuario');
-  this.usuarioSubject.next(null); // ← notifica logout
-}
+    localStorage.removeItem('usuario');
+    this.usuarioSubject.next(null);
+  }
 
   guardarSesion(usuario: any): void {
     this.guardarUsuario(usuario);
   }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem ('usuario');
+    return !!localStorage.getItem('usuario');
   }
+
 }

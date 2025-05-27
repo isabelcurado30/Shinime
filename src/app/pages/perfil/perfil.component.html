@@ -1,99 +1,118 @@
 <!DOCTYPE html>
-<html lang = "es">
-    <head>
-        <meta charset = "UTF-8">
-        <meta name = "viewport" content = "width = device-width, initial-scale = 1-0">
-        <title>Perfil - Shinime</title>
-        <link href = "https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel = "stylesheet">
-    </head>
-    <body>
-        <div *ngIf = "user; else noSesion" class = "perfil-container">
-          <h2>Bienvenido/a, {{ user.nombre }}</h2>
-          <!-- Icono Actual -->
-          <div class = "icono-atual">
-            <img 
-              [src] = "user?.icono" 
-              (error) = "user.icono = 'assets/img/icons/icon-predeterminado.png'" 
-              alt = "Perfil" 
-              class = "icono-perfil"
-            >
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Perfil - Shinime</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div *ngIf="user; else noSesion" class="perfil-container">
+      <h2>Bienvenido/a, {{ user.nombre }}</h2>
+
+      <!-- Icono Actual -->
+      <div class="icono-atual">
+        <img
+          [src]="user?.icono"
+          (error)="user.icono = 'assets/img/icons/icon-predeterminado.png'"
+          alt="Perfil"
+          class="icono-perfil"
+        />
+      </div>
+
+      <!-- Botón para Abrir Modal -->
+      <button class="cambiar-icono-btn" (click)="mostrarSelector = true">
+        Cambiar Icono
+      </button>
+
+      <!-- Modal de Selección de Icono -->
+      <div
+        class="modal-overlay"
+        *ngIf="mostrarSelector"
+        (click)="cerrarModal()"
+      >
+        <div class="modal-contenido" (click)="$event.stopPropagation()">
+          <h3>Selecciona un Nuevo Icono:</h3>
+
+          <!-- Attack on Titan -->
+          <h4 class="grupo-titulo">Attack on Titan</h4>
+          <div class="galeria-iconos">
+            <img
+              *ngFor="let icono of iconos.attackOnTitan"
+              [src]="icono"
+              [alt]="icono"
+              [class.seleccionado]="icono === iconoSeleccionado"
+              (click)="seleccionarIcono(icono)"
+            />
           </div>
 
-          <!-- Botón para Abrir Modal -->
-          <button class = "cambiar-icono-btn" (click) = "mostrarSelector = true">
-            Cambiar Icono
-          </button>
-
-          <!-- Modal de Selección de Icono -->
-          <div class = "modal-overlay" *ngIf = "mostrarSelector" (click) = "cerrarModal()">
-            <div class = "modal-contenido" (click) = "$event.stopPropagation()">
-              <h3>Selecciona un Nuevo Icono:</h3>
-
-              <!-- Attack on Titan -->
-              <h4 class = "grupo-titulo">Attack on Titan</h4>
-              <div class = "galeria-iconos">
-                <img
-                  *ngFor = "let icono of iconos.attackOnTitan"
-                  [src] = "icono"
-                  [alt] = "icono"
-                  [class.seleccionado] = "icono === iconoSeleccionado"
-                  (click) = "seleccionarIcono (icono)"
-                >
-              </div>
-
-              <!-- Black Clover -->
-              <h4 class = "grupo-titulo">Black Clover</h4>
-              <div class = "galeria-iconos">
-                <img
-                  *ngFor = "let icono of iconos.blackClover"
-                  [src] = "icono"
-                  [alt] = "icono"
-                  [class.seleccionado] = "icono === iconoSeleccionado"
-                  (click) = "seleccionarIcono (icono)"
-                >
-              </div>
-
-              <!-- Chainsaw Man -->
-              <h4 class = "grupo-titulo">Chainsaw Man</h4>
-              <div class = "galeria-iconos">
-                <img
-                  *ngFor = "let icono of iconos.chainsawMan"
-                  [src] = "icono"
-                  [alt] = "icono"
-                  [class.seleccionado] = "icono === iconoSeleccionado"
-                  (click) = "seleccionarIcono (icono)"
-                >
-              </div>
-
-              <!-- Jujutsu Kaisen -->
-              <h4 class = "grupo-titulo">Jujutsu Kaisen</h4>
-              <div class = "galeria-iconos">
-                <img
-                  *ngFor = "let icono of iconos.jujutsuKaisen"
-                  [src] = "icono"
-                  [alt] = "icono"
-                  [class.seleccionado] = "icono === iconoSeleccionado"
-                  (click) = "seleccionarIcono (icono)"
-                >
-              </div>
-
-              <div class = "acciones-modal">
-                <button class = "confirmar-btn" (click) = "actualizarIcono()">Confirmar</button>
-                <button class = "cerrar-btn" (click) = "cerrarModal()">Cerrar</button>
-              </div>
-            </div>
+          <!-- Black Clover -->
+          <h4 class="grupo-titulo">Black Clover</h4>
+          <div class="galeria-iconos">
+            <img
+              *ngFor="let icono of iconos.blackClover"
+              [src]="icono"
+              [alt]="icono"
+              [class.seleccionado]="icono === iconoSeleccionado"
+              (click)="seleccionarIcono(icono)"
+            />
           </div>
 
-          <!-- Cerrar Sesión -->
-          <button class = "logout-btn" (click) = "logout()">Cerrar Sesión</button>
+          <!-- Chainsaw Man -->
+          <h4 class="grupo-titulo">Chainsaw Man</h4>
+          <div class="galeria-iconos">
+            <img
+              *ngFor="let icono of iconos.chainsawMan"
+              [src]="icono"
+              [alt]="icono"
+              [class.seleccionado]="icono === iconoSeleccionado"
+              (click)="seleccionarIcono(icono)"
+            />
+          </div>
+
+          <!-- Jujutsu Kaisen -->
+          <h4 class="grupo-titulo">Jujutsu Kaisen</h4>
+          <div class="galeria-iconos">
+            <img
+              *ngFor="let icono of iconos.jujutsuKaisen"
+              [src]="icono"
+              [alt]="icono"
+              [class.seleccionado]="icono === iconoSeleccionado"
+              (click)="seleccionarIcono(icono)"
+            />
+          </div>
+
+          <div class="acciones-modal">
+            <button class="confirmar-btn" (click)="actualizarIcono()">
+              Confirmar
+            </button>
+            <button class="cerrar-btn" (click)="cerrarModal()">Cerrar</button>
+          </div>
         </div>
+      </div>
 
-        <!-- Si NO Hay Sesión -->
-        <ng-template #noSesion>
-          <div class = "no-sesion">
-            <p>No Hay Sesión Activa</p>
-            <a routerLink = "/login">Iniciar Sesión</a>
-          </div>
-        </ng-template>
-    </body>
+      <!-- Estadísticas -->
+      <div class="estadisticas-usuario">
+        <h3>Estadísticas</h3>
+        <ul>
+          <li>Listas Creadas: {{ estadisticas.listasCreadas }}</li>
+          <li>Progreso del Reto Anual: {{ estadisticas.progresoReto }}%</li>
+        </ul>
+      </div>
+
+      <!-- Cerrar Sesión -->
+      <button class="logout-btn" (click)="logout()">Cerrar Sesión</button>
+    </div>
+
+    <!-- Si NO Hay Sesión -->
+    <ng-template #noSesion>
+      <div class="no-sesion">
+        <p>No Hay Sesión Activa</p>
+        <a routerLink="/login">Iniciar Sesión</a>
+      </div>
+    </ng-template>
+  </body>
 </html>

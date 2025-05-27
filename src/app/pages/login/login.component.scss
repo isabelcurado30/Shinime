@@ -1,7 +1,3 @@
-// =========================
-// VARIABLES
-// =========================
-
 $primary-color: #82B8A8;
 $secondary-color: #A1CABE;
 $light-color: #C0DBD4;
@@ -10,113 +6,92 @@ $white: #FFFFFF;
 $text-color: #2E3A3F;
 
 $font-stack: 'Lexend', sans-serif;
-$card-radius: 1rem;
-$shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
 body {
-  font-family: $font-stack;
-  background-color: $background-color;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
   margin: 0;
-  padding: 1rem;
-  background-size: cover;
-  background-position: center;
-}
-
-form {
-  background: rgba($white, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  padding: 2rem;
-  border-radius: $card-radius;
-  box-shadow: $shadow;
-  width: 100%;
-  max-width: 400px;
+  padding: 0;
+  background: linear-gradient(135deg, $background-color, $light-color);
+  font-family: $font-stack;
   display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  animation: fadeIn 0.5s ease-in-out;
-
-  input {
-    padding: 0.75rem 1rem;
-    border: 2px solid transparent;
-    border-radius: $card-radius;
-    background-color: $light-color;
-    font-family: $font-stack;
-    font-size: 1rem;
-    color: $text-color;
-    transition: all 0.3s ease;
-
-    &:focus {
-      border-color: $primary-color;
-      background-color: $white;
-      box-shadow: 0 0 0 3px rgba($primary-color, 0.25);
-      outline: none;
-    }
-
-    &::placeholder {
-      color: $text-color;
-      opacity: 0.6;
-    }
-  }
-
-  button {
-    background-color: $primary-color;
-    color: $white;
-    border: none;
-    padding: 0.75rem 1rem;
-    border-radius: $card-radius;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-
-    &:hover {
-      background-color: darken($primary-color, 10%);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba($primary-color, 0.4);
-    }
-  }
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
 }
 
-p {
+.login-form {
+  background-color: $white;
+  padding: 3rem 2.5rem;
+  border-radius: 2rem;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 420px;
   text-align: center;
-  margin-top: 1rem;
-  font-weight: 500;
+  animation: fadeIn 0.8s ease-out;
 
-  &[style*="green"] {
-    color: $primary-color !important;
+  h2 {
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    color: $text-color;
+    font-weight: 700;
+    letter-spacing: 0.5px;
   }
 
-  &[style*="red"] {
-    color: #d33 !important;
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+
+    input {
+      padding: 0.85rem 1.2rem;
+      font-size: 1rem;
+      border: 2px solid $light-color;
+      border-radius: 1rem;
+      background-color: lighten($light-color, 20%);
+      transition: all 0.3s ease;
+      font-family: $font-stack;
+
+      &:focus {
+        border-color: $primary-color;
+        background-color: $white;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba($primary-color, 0.2);
+      }
+    }
+
+    button {
+      font-family: $font-stack;
+      margin-top: 1rem;
+      background-color: $primary-color;
+      color: $white;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 0.85rem 1.5rem;
+      border: none;
+      border-radius: 2rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+
+      &:hover {
+        background-color: darken($primary-color, 10%);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba($primary-color, 0.4);
+      }
+
+      &:active {
+        transform: scale(0.97);
+      }
+    }
   }
 }
 
-// Animación de entrada
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(15px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-// Responsive
-@media (max-width: 500px) {
-  form {
-    padding: 1.5rem;
-  }
-
-  input,
-  button {
-    font-size: 0.95rem;
-    padding: 0.65rem 0.9rem;
   }
 }

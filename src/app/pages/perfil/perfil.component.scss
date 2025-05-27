@@ -1,7 +1,6 @@
 // =========================
-// VARIABLES
+// VARIABLES (YA DEFINIDAS)
 // =========================
-
 $primary-color: #82B8A8;
 $secondary-color: #A1CABE;
 $light-color: #C0DBD4;
@@ -56,11 +55,14 @@ $shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border: 2px solid #333;
 }
 
-
-
+// =========================
+// BOTONES PRINCIPALES
+// =========================
 
 .cambiar-icono-btn,
-.logout-btn {
+.logout-btn,
+.editar-btn,
+.cambiar-pass-btn {
   background-color: $primary-color;
   color: $white;
   border: none;
@@ -77,7 +79,7 @@ $shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 // =========================
-// MODAL
+// MODAL GENÉRICO
 // =========================
 
 .modal-overlay {
@@ -109,46 +111,169 @@ $shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     color: $text-color;
   }
 
-  .galeria-iconos {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  label {
+    display: block;
+    text-align: left;
+    margin: 1rem 0 0.3rem;
+    font-weight: 600;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid $light-color;
+    margin-bottom: 1rem;
+    font-family: $font-stack;
+  }
+
+  .acciones-modal {
+    display: flex;
+    justify-content: center;
     gap: 1rem;
-    margin-bottom: 1.5rem;
 
-    // Nuevo: límite de altura y scroll
-    max-height: 300px;
-    overflow-y: auto;
-    padding-right: 0.5rem; // espacio para evitar que el scroll tape contenido
-
-    img {
-      margin-top: 1rem;
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      border: 3px solid transparent;
-      box-shadow: $shadow;
-      object-fit: cover;
+    button {
+      background-color: $primary-color;
+      color: $white;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 2rem;
       cursor: pointer;
-      transition: transform 0.2s, border 0.2s;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
 
       &:hover {
-        transform: scale(1.05);
-      }
-
-      &.seleccionado {
-        border-color: $primary-color;
+        background-color: darken($primary-color, 10%);
       }
     }
   }
+}
 
-  .confirmar-btn,
-  .cerrar-btn {
+// =========================
+// GALERÍA DE ICONOS
+// =========================
+
+.galeria-iconos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+
+  img {
+    margin-top: 1rem;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    box-shadow: $shadow;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.2s, border 0.2s;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+
+    &.seleccionado {
+      border-color: $primary-color;
+    }
+  }
+}
+
+// =========================
+// ESTADÍSTICAS DE USUARIO
+// =========================
+
+.estadisticas-usuario {
+  margin: 2rem auto;
+  background-color: $white;
+  border-radius: $card-radius;
+  padding: 1.5rem;
+  box-shadow: $shadow;
+  max-width: 600px;
+  text-align: left;
+
+  h3 {
+    margin-bottom: 1rem;
+    color: $primary-color;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      margin: 0.5rem 0;
+      font-weight: 500;
+    }
+  }
+}
+
+// =========================
+// NIVEL DEL USUARIO
+// =========================
+
+.nivel-usuario {
+  margin: 1.5rem auto;
+  max-width: 600px;
+  text-align: left;
+
+  h3 {
+    margin-bottom: 0.5rem;
+    color: $primary-color;
+  }
+
+  .barra-nivel {
+    background-color: $light-color;
+    height: 14px;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+
+    .progreso {
+      height: 100%;
+      background-color: $primary-color;
+      width: 0%;
+      transition: width 0.4s ease-in-out;
+    }
+  }
+}
+
+// =========================
+// BIOGRAFÍA
+// =========================
+
+.bio-usuario {
+  margin: 2rem auto;
+  max-width: 600px;
+  text-align: left;
+
+  h3 {
+    color: $primary-color;
+    margin-bottom: 0.5rem;
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 0.7rem;
+    font-family: $font-stack;
+    border-radius: 0.5rem;
+    border: 1px solid $light-color;
+    resize: vertical;
+  }
+
+  button {
+    margin-top: 0.7rem;
     background-color: $primary-color;
     color: $white;
     border: none;
     padding: 0.5rem 1.2rem;
     border-radius: 2rem;
-    margin: 0 0.5rem;
     cursor: pointer;
     font-weight: 600;
     transition: background-color 0.3s ease;
