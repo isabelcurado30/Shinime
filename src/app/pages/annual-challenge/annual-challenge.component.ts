@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { AuthService } from "src/app/services/auth.service";
-import { StorageService } from "src/app/services/storage.service";
 import { ChallengeService } from "src/app/services/challenge.service";
 import Swal from "sweetalert2";
 
@@ -20,10 +19,11 @@ export class AnnualChallengeComponent implements OnInit {
   userId!: number;
   bloqueado = false;
 
+  private readonly STORAGE_KEY = 'reto_anual';
+
   constructor(
     private http: HttpClient,
     private authService: AuthService,
-    private storageService: StorageService,
     private challengeService: ChallengeService
   ) {}
 
@@ -43,67 +43,64 @@ export class AnnualChallengeComponent implements OnInit {
 
     this.userId = usuario.id;
 
-    // Primero intento cargar del localStorage
-    const retoLocal = this.storageService.getRetoAnual(this.userId);
-
-    if (retoLocal) {
-      this.animeCount = retoLocal.animeCount || 0;
-      this.animesVistos = retoLocal.animesVistos || [];
-      this.retoIniciado = this.animeCount > 0;
-    } 
-
-    // Luego sincronizo con backend para evitar desincronización
     this.challengeService.getChallenge(this.userId).subscribe((reto: any) => {
-      if (reto) {
+      if (reto && reto.goal && reto.goal > 0) {
         this.retoIniciado = true;
-        this.animeCount = reto.goal || this.animeCount;
+        this.animeCount = reto.goal;
 
         this.challengeService.getWatchedAnimes(this.userId).subscribe((animes: any[]) => {
           this.animesVistos = (animes || []).filter(anime => anime.titulo && anime.imagen);
-
-          // Guardar en localStorage para tener sincronizado
-          this.storageService.setRetoAnual(this.userId, {
-            animeCount: this.animeCount,
-            animesVistos: this.animesVistos
-          });
+          this.guardarEstado();  // sincronizamos localStorage con datos backend
         });
+      } else {
+        // No hay reto o reto reseteado
+        this.retoIniciado = false;
+        this.animeCount = 0;
+        this.animesVistos = [];
+        localStorage.removeItem(this.STORAGE_KEY);
       }
     });
-
-    this.actualizarTiempoRestante();
   }
+
 
   iniciarReto(): void {
     if (this.animeCount > 0) {
       this.retoIniciado = true;
       this.guardarEstado();
+
+      this.http.post('https://ruizgijon.ddns.net/sancheza/isaberu/api/challenge.php', {
+        action: 'reset',
+        user_id: this.userId,
+        goal: this.animeCount
+      }).subscribe({
+        next: res => console.log('Reto guardado en backend:', res),
+        error: err => console.error('Error guardando reto en backend:', err)
+      });
     }
   }
 
   restablecerReto(): void {
     Swal.fire({
-      title: '¿Estás Seguro/a?',
-      text: 'Esto Restablecerá tu Reto y se Perderá el Progreso Actual',
+      title: '¿Quieres reiniciar el reto anual?',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#76C7B7',
-      cancelButtonColor: '#D33',
-      confirmButtonText: 'Sí, Restablecer',
-      cancelButtonText: 'Cancelar',
-      customClass: { popup: 'swal2-lexend' }
-    }).then(result => {
+      confirmButtonText: 'Sí, reiniciar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
       if (result.isConfirmed) {
-        // Limpia localStorage
-        this.storageService.clearRetoAnual(this.userId);
+        this.http.post('https://ruizgijon.ddns.net/sancheza/isaberu/api/challenge.php', {
+          action: 'reset',
+          user_id: this.userId,
+          goal: 0
+        }).subscribe({
+          next: (res) => {
+            console.log('Reto restablecido en backend:', res);
 
-        // Limpia backend
-        this.challengeService.resetChallenge(this.userId).subscribe({
-          next: () => {
+            // Solo tras confirmar backend limpiamos localStorage y reseteamos estado
+            localStorage.removeItem(this.STORAGE_KEY);
             this.animeCount = 0;
             this.animesVistos = [];
             this.retoIniciado = false;
-            this.searchQuery = '';
-            this.resultadosBusqueda = [];
 
             Swal.fire({
               title: '¡Reiniciado!',
@@ -112,35 +109,16 @@ export class AnnualChallengeComponent implements OnInit {
               customClass: { popup: 'swal2-lexend' }
             });
           },
-          error: () => {
+          error: (err) => {
+            console.error('Error restableciendo reto en backend:', err);
             Swal.fire({
               title: 'Error',
-              text: 'No se pudo restablecer el reto en el servidor',
-              icon: 'error',
-              customClass: { popup: 'swal2-lexend' }
+              text: 'No se pudo reiniciar el reto. Inténtalo de nuevo.',
+              icon: 'error'
             });
           }
         });
       }
-    });
-  }
-
-  buscarAnimes(): void {
-    if (!this.retoIniciado) {
-      Swal.fire({
-        icon: 'info',
-        title: 'Pulsa ¡Empezar!',
-        text: 'Primero Debes Iniciar el Reto Antes de Buscar Animes',
-        customClass: { popup: 'swal2-lexend' }
-      });
-      return;
-    }
-
-    if (!this.searchQuery.trim()) return;
-
-    const url = `https://api.jikan.moe/v4/anime?q=${this.searchQuery}`;
-    this.http.get<any>(url).subscribe((res) => {
-      this.resultadosBusqueda = res.data || [];
     });
   }
 
@@ -169,12 +147,11 @@ export class AnnualChallengeComponent implements OnInit {
 
     this.challengeService.addWatchedAnime(this.userId, animeBackend).subscribe({
       next: res => {
-        console.log('✅ Anime Backend que se guarda:', animeBackend);
-        console.log('📦 Respuesta del backend:', res);
+        console.log('Anime añadido al backend:', animeBackend);
         this.animesVistos.push(animeBackend);
-        this.guardarEstado();
+        this.guardarEstado();  // guardar estado actualizado
       },
-      error: err => console.error('❌ Error al Añadir Anime al Backend:', err)
+      error: err => console.error('Error añadiendo anime al backend:', err)
     });
 
     Swal.fire({
@@ -202,21 +179,23 @@ export class AnnualChallengeComponent implements OnInit {
   }
 
   guardarEstado(): void {
-    // Guardar en localStorage
-    this.storageService.setRetoAnual(this.userId, {
+    const retoParaGuardar = {
       animeCount: this.animeCount,
       animesVistos: this.animesVistos
-    });
+    };
 
-    // Guardar en backend
+    // Guardar en localStorage para persistencia local
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(retoParaGuardar));
+
+    // Guardar en backend para persistencia remota y sincronización
     this.http.post('https://ruizgijon.ddns.net/sancheza/isaberu/api/challenge.php', {
       action: 'updateProgress',
       user_id: this.userId,
       animeCount: this.animeCount,
       animesVistos: this.animesVistos
     }).subscribe({
-      next: res => console.log('Progreso Sincronizado con Backend:', res),
-      error: err => console.error('Error al Sincronizar con Backend:', err)
+      next: res => console.log('Progreso sincronizado con backend:', res),
+      error: err => console.error('Error sincronizando con backend:', err)
     });
   }
 
@@ -244,5 +223,34 @@ export class AnnualChallengeComponent implements OnInit {
 
       this.timeLeft = `${dias}d ${horas}h ${minutos}m ${segundos}s`;
     }, 1000);
+  }
+
+  buscarAnimes(): void {
+    if (!this.searchQuery.trim()) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Busca algo primero',
+        text: 'Por favor, escribe un término para buscar animes.',
+        customClass: { popup: 'swal2-lexend' }
+      });
+      return;
+    }
+
+    const url = `https://api.jikan.moe/v4/anime?q=${encodeURIComponent(this.searchQuery)}&limit=10`;
+
+    this.http.get<any>(url).subscribe({
+      next: data => {
+        this.resultadosBusqueda = data.data || [];
+      },
+      error: err => {
+        console.error('Error buscando animes:', err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error en la búsqueda',
+          text: 'No se pudieron obtener resultados. Intenta más tarde.',
+          customClass: { popup: 'swal2-lexend' }
+        });
+      }
+    });
   }
 }

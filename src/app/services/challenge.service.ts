@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ChallengeService {
   private apiUrl = 'https://ruizgijon.ddns.net/sancheza/isaberu/api/challenge.php';
@@ -11,25 +11,41 @@ export class ChallengeService {
   constructor(private http: HttpClient) {}
 
   getChallenge(userId: number): Observable<any> {
-    return this.http.post<any>(this.apiUrl, { action: 'getChallenge', user_id: userId });
+    return this.http.post<any>(this.apiUrl, {
+      action: 'getByUserId',
+      user_id: userId,
+    });
   }
 
   getWatchedAnimes(userId: number): Observable<any[]> {
-    return this.http.post<any[]>(this.apiUrl, { action: 'getWatchedAnimes', user_id: userId });
+    return this.http.post<any[]>(this.apiUrl, {
+      action: 'getWatchedAnimes',
+      user_id: userId,
+    });
   }
 
   addWatchedAnime(userId: number, anime: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, {
       action: 'addWatchedAnime',
       user_id: userId,
-      anime: anime
+      anime: anime,
     });
   }
 
   resetChallenge(userId: number): Observable<any> {
     return this.http.post<any>(this.apiUrl, {
       action: 'reset',
-      user_id: userId
+      user_id: userId,
+      goal: 0,
+    });
+  }
+
+  updateProgress(userId: number, animeCount: number, animesVistos: any[]): Observable<any> {
+    return this.http.post<any>(this.apiUrl, {
+      action: 'updateProgress',
+      user_id: userId,
+      animeCount,
+      animesVistos,
     });
   }
 }
