@@ -73,24 +73,53 @@ $shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         animation: fadeInUp 1s ease forwards;
 
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
         }
 
         button {
             font-family: $font-stack;
-            padding: 1rem 2rem;
+            padding: 1rem 2.5rem;
             background-color: $primary-color;
             color: $white;
             border: none;
             border-radius: 5rem;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: $background-color 0.3s ease, transform 0.2s ease;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+            transition: all 0.3s ease;
+
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: rgba($white, 0.1);
+                transform: skewX(-20deg);
+                transition: left 0.5s ease;
+                z-index: 0;
+            }
+
+            &:hover::before {
+                left: 200%;
+            }
 
             &:hover {
-                background-color: darken($primary-color, 10%);
+                background-color: darken($primary-color, 7%);
                 transform: scale(1.05);
+                box-shadow: 0 0 20px rgba($primary-color, 0.8);
+            }
+
+            span {
+                position: relative;
+                z-index: 1;
             }
         }
     }
@@ -101,59 +130,114 @@ $shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 // =========================
 
 section {
-    padding: 0 3vw;
+    padding: 0.5rem 2vw;
     max-width: 1200px;
     margin: 0 auto;
 
     h2 {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
     }
 
     .anime-card {
-        background-color: $white;
-        border-radius: $card-radius;
-        box-shadow: $shadow;
-        padding: 1rem;
-        max-width: 100%;
-        text-align: center;
-        cursor: pointer;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        opacity: 0;
-        transform: translateY(20px);
-        animation: fadeInCard 0.8s ease forwards;
-        animation-delay: 0.2s;
+  position: relative;
+  background-color: white;
+  border-radius: $card-radius;
+  box-shadow: $shadow;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 355px; // Más compacto
 
-        img {
-            width: 100%;
-            height: 235px;
-            object-fit: cover;
-            border-radius: $card-radius;
-            transition: transform 0.3s ease, filter 0.3s ease;
-        }
+  img {
+    width: 100%;
+    height: 260px; // Imagen también más pequeña
+    object-fit: cover;
+    display: block;
+    flex-shrink: 0;
+  }
 
-        p {
-            margin-top: 0.5rem;
-            font-weight: 500;
-        }
+  p, small {
+    margin: 0;
+    color: $secondary-color;
+    font-family: $font-stack;
+    text-align: center;
+    width: 100%;
+  }
 
-        small {
-            display: block;
-            margin-top: 0.3rem;
-            font-size: 0.85rem;
-            color: darken($text-color, 20%)
-        }
+  p {
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.5rem 0.8rem 0;
+    flex-grow: 0;
+  }
 
-        &:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  small {
+    font-size: 0.8rem;
+    opacity: 0.7;
+    padding: 0.3rem 0.8rem 1rem;
+    margin-top: auto;
+  }
 
-            img {
-                filter: brightness(1.08);
-                transform: scale(1.02);
-            }
-        }
-    }
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+  }
+
+  // Aquí dentro está bien:
+  &.new-release::before {
+    content: "★ NUEVO";
+    position: absolute;
+    top: 0.8rem;
+    left: -0.7rem;
+    background-color: $background-color; 
+    color: $secondary-color;
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 0.3rem 0.8rem;
+    transform: rotate(-10deg);
+    border-radius: 0.2rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    z-index: 1;
+  }
+
+  &.trending-tag::before {
+  content: "🔥 TENDENCIA";
+  position: absolute;
+  top: 0.8rem;
+  left: -0.7rem;
+  background-color: $background-color;
+  color: $secondary-color;
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 0.3rem 0.8rem;
+  transform: rotate(-10deg);
+  border-radius: 0.2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  z-index: 1;
 }
+
+&.recommended-tag::before {
+  content: "💡 RECOMENDADO";
+  position: absolute;
+  top: 0.8rem;
+  left: -0.7rem;
+  background-color: $background-color;
+  color: $secondary-color;
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 0.3rem 0.8rem;
+  transform: rotate(-10deg);
+  border-radius: 0.2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  z-index: 1;
+}
+
+}
+}
+
+
 
 // =========================
 // GRIDS DE CADA SECCIÓN
@@ -241,3 +325,5 @@ section {
         height: 140px;
     }
 }
+
+

@@ -2,7 +2,7 @@
 <html lang = "es">
     <head>
         <meta charset = "UTF-8">
-        <meta name = "viewport" content = "width = device-width, initial-scale = 1-0">
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
         <title>Inicio - Shinime</title>
         <link href = "https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel = "stylesheet">
     </head>
@@ -14,7 +14,7 @@
                 <img src = "assets/img/JujutsuHero.png" alt = "Hero Image">
                 <div class = "hero-content">
                     <h1>Haz Espacio para las Buenas Historias</h1>
-                    <button routerLink = "/animes">Descubrir Animes</button>
+                    <button routerLink = "/animes"><span>Descubrir Animes</span></button>
                 </div> 
             </div>
 
@@ -22,7 +22,7 @@
             <section class = "trending">
                 <h2>Tendencias</h2>
                 <div class = "trending-grid">
-                    <div class= "anime-card" *ngFor = "let anime of trendingAnimes" [routerLink] = "['/animes', anime.mal_id]">
+                    <div class= "anime-card trending-tag" *ngFor = "let anime of trendingAnimes" [routerLink] = "['/animes', anime.mal_id]">
                         <img [src] = "anime.images.jpg.image_url" alt = "{{ anime.title }}">
                         <p>{{ anime.title }}</p>
                     </div>
@@ -33,7 +33,7 @@
             <section class = "new-releases">
                 <h2>Últimos Estrenos</h2>
                 <div class = "released-grid">
-                    <div class = "anime-card" *ngFor = "let anime of newReleases" [routerLink] = "['/animes', anime.mal_id]">
+                    <div class = "anime-card new-release" *ngFor = "let anime of newReleases" [routerLink] = "['/animes', anime.mal_id]">
                         <img [src] = "anime.images.jpg.image_url" alt = "{{ anime.title }}">
                         <p>{{ anime.title }}</p>
                         <small>{{ anime.aired.from | date }}</small>
@@ -45,7 +45,7 @@
             <section class = "recommendations">
                 <h2>Recomendaciones</h2>
                 <div class = "recommendations-grid">
-                    <div class = "anime-card" *ngFor = "let anime of recommendedAnimes" [routerLink] = "['/animes', anime.mal_id]">
+                    <div class = "anime-card recommended-tag" *ngFor = "let anime of recommendedAnimes" [routerLink] = "['/animes', anime.mal_id]">
                         <img [src] = "anime.images.jpg.image_url" alt = "{{ anime.title }}">
                         <p>{{ anime.title }}</p>
                     </div>
