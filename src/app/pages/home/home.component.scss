@@ -1,7 +1,4 @@
-// =========================
-// VARIABLES
-// =========================
-
+// Variables
 $primary-color: #82B8A8;
 $secondary-color: #A1CABE;
 $light-color: #C0DBD4;
@@ -14,10 +11,7 @@ $font-stack: 'Lexend', sans-serif;
 $card-radius: 1rem;
 $shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
-// =========================
-// ESTRUCTURA GENERAL DE LA PÁGINA
-// =========================
-
+// Estructura General de la Página
 .home-page {
     font-family: $font-stack;
     background-color: $background-color;
@@ -37,10 +31,7 @@ $shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 }
 
-// =========================
-// HERO PRINCIPAL (PORTADA INICIAL)
-// =========================
-
+// Hero Principal (Portada Principal)
 .hero-static {
     position: relative;
     height: 100vh;
@@ -125,10 +116,7 @@ $shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 }
 
-// =========================
-// SECCIONES GENERALES (Tendencias, Estrenos, Recomendaciones)
-// =========================
-
+// Secciones Generales (Tendencias, Estrenos y Recomendaciones)
 section {
     padding: 0.5rem 2vw;
     max-width: 1200px;
@@ -139,110 +127,103 @@ section {
     }
 
     .anime-card {
-  position: relative;
-  background-color: white;
-  border-radius: $card-radius;
-  box-shadow: $shadow;
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  height: 355px; // Más compacto
+        position: relative;
+        background-color: white;
+        border-radius: $card-radius;
+        box-shadow: $shadow;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        height: 355px;
 
-  img {
-    width: 100%;
-    height: 260px; // Imagen también más pequeña
-    object-fit: cover;
-    display: block;
-    flex-shrink: 0;
-  }
+        img {
+            width: 100%;
+            height: 260px; 
+            object-fit: cover;
+            display: block;
+            flex-shrink: 0;
+        }
 
-  p, small {
-    margin: 0;
-    color: $secondary-color;
-    font-family: $font-stack;
-    text-align: center;
-    width: 100%;
-  }
+        p, small {
+            margin: 0;
+            color: $secondary-color;
+            font-family: $font-stack;
+            text-align: center;
+            width: 100%;
+        }
 
-  p {
-    font-weight: 600;
-    font-size: 1rem;
-    padding: 0.5rem 0.8rem 0;
-    flex-grow: 0;
-  }
+        p {
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 0.5rem 0.8rem 0;
+            flex-grow: 0;
+        }
 
-  small {
-    font-size: 0.8rem;
-    opacity: 0.7;
-    padding: 0.3rem 0.8rem 1rem;
-    margin-top: auto;
-  }
+        small {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            padding: 0.3rem 0.8rem 1rem;
+            margin-top: auto;
+        }
 
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
-  }
+        &:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+        }
 
-  // Aquí dentro está bien:
-  &.new-release::before {
-    content: "★ NUEVO";
-    position: absolute;
-    top: 0.8rem;
-    left: -0.7rem;
-    background-color: $background-color; 
-    color: $secondary-color;
-    font-size: 0.7rem;
-    font-weight: bold;
-    padding: 0.3rem 0.8rem;
-    transform: rotate(-10deg);
-    border-radius: 0.2rem;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-    z-index: 1;
-  }
+        &.new-release::before {
+            content: "★ NUEVO";
+            position: absolute;
+            top: 0.8rem;
+            left: -0.7rem;
+            background-color: $background-color; 
+            color: $secondary-color;
+            font-size: 0.7rem;
+            font-weight: bold;
+            padding: 0.3rem 0.8rem;
+            transform: rotate(-10deg);
+            border-radius: 0.2rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+            z-index: 1;
+        }
 
-  &.trending-tag::before {
-  content: "🔥 TENDENCIA";
-  position: absolute;
-  top: 0.8rem;
-  left: -0.7rem;
-  background-color: $background-color;
-  color: $secondary-color;
-  font-size: 0.7rem;
-  font-weight: bold;
-  padding: 0.3rem 0.8rem;
-  transform: rotate(-10deg);
-  border-radius: 0.2rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-  z-index: 1;
+        &.trending-tag::before {
+            content: "🔥 TENDENCIA";
+            position: absolute;
+            top: 0.8rem;
+            left: -0.7rem;
+            background-color: $background-color;
+            color: $secondary-color;
+            font-size: 0.7rem;
+            font-weight: bold;
+            padding: 0.3rem 0.8rem;
+            transform: rotate(-10deg);
+            border-radius: 0.2rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+            z-index: 1;
+        }
+
+        &.recommended-tag::before {
+            content: "💡 RECOMENDADO";
+            position: absolute;
+            top: 0.8rem;
+            left: -0.7rem;
+            background-color: $background-color;
+            color: $secondary-color;
+            font-size: 0.7rem;
+            font-weight: bold;
+            padding: 0.3rem 0.8rem;
+            transform: rotate(-10deg);
+            border-radius: 0.2rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+            z-index: 1;
+        }
+    }
 }
 
-&.recommended-tag::before {
-  content: "💡 RECOMENDADO";
-  position: absolute;
-  top: 0.8rem;
-  left: -0.7rem;
-  background-color: $background-color;
-  color: $secondary-color;
-  font-size: 0.7rem;
-  font-weight: bold;
-  padding: 0.3rem 0.8rem;
-  transform: rotate(-10deg);
-  border-radius: 0.2rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-  z-index: 1;
-}
-
-}
-}
-
-
-
-// =========================
-// GRIDS DE CADA SECCIÓN
-// =========================
-
+// Grids de cada Sección
 .trending-grid,
 .released-grid,
 .recommendations-grid {
@@ -252,10 +233,7 @@ section {
     margin-bottom: 2rem;
 }
 
-// =========================
-// ANIMACIONES
-// =========================
-
+// Animaciones
 @keyframes fadeInUp {
     0% {
         opacity: 0;
@@ -280,49 +258,141 @@ section {
     }
 }
 
-// =========================
-// RESPONSIVE DESIGN
-// =========================
-
+// Responsive Desing
 @media (max-width: 768px) {
     .hero-static {
         height: 50vh;
 
-        .hero-content h1 {
+        .hero-content {
+            padding: 0 1rem;
+
+            h1 {
                 font-size: 2rem;
-        }
+                text-align: center;
+            }
 
-        .hero-content button {
-            font-size: 0.9rem;
+            button {
+                font-size: 0.9rem;
+                padding: 0.7rem 1.5rem;
+            }
         }
     }
 
-    section h2 {
-        font-size: 1.4rem;
+    section {
+        padding: 0.5rem 1rem;
+
+        h2 {
+            font-size: 1.4rem;
+            padding-left: 0.8rem;
+        }
     }
 
-    .anime-card img {
-        height: 160px;
+    .trending-grid,
+    .released-grid,
+    .recommendations-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 1rem;
+    }
+
+    .anime-card {
+        height: 300px;
+
+        img {
+            height: 180px;
+        }
+
+        p {
+            font-size: 0.95rem;
+        }
+
+        small {
+            font-size: 0.75rem;
+        }
     }
 }
 
+// Responsive para móviles pequeños (≤480px)
 @media (max-width: 480px) {
     .hero-static {
-        margin: 1rem;
+        margin: 0.5rem;
         height: 45vh;
+
+        .hero-content {
+            padding: 0 0.5rem;
+
+            h1 {
+                font-size: 1.5rem;
+                text-align: center;
+            }
+
+            button {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.85rem;
+            }
+        }
     }
 
+    section {
+        padding: 0.5rem;
+
+        h2 {
+            font-size: 1.2rem;
+            padding-left: 0.6rem;
+        }
+    }
+
+    .trending-grid,
+    .released-grid,
+    .recommendations-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem;
+    }
+
+    .anime-card {
+        height: 260px;
+
+        img {
+            height: 150px;
+        }
+
+        p {
+            font-size: 0.9rem;
+        }
+
+        small {
+            font-size: 0.7rem;
+        }
+    }
+}
+
+// Opcional: Responsive para pantallas más grandes (≥1200px)
+@media (min-width: 1200px) {
     .hero-content h1 {
-        font-size: 1.5rem;
+        font-size: 3rem;
     }
 
     .hero-content button {
-        padding: 0.6rem 1.2rem;
-        font-size: 0.85rem;
+        font-size: 1.4rem;
     }
 
-    .anime-card img {
-        height: 140px;
+    section h2 {
+        font-size: 2rem;
+    }
+
+    .anime-card {
+        height: 370px;
+
+        img {
+            height: 250px;
+        }
+
+        p {
+            font-size: 1.1rem;
+        }
+
+        small {
+            font-size: 0.85rem;
+        }
     }
 }
 
