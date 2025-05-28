@@ -33,19 +33,18 @@ export class ChallengeService {
   }
 
   resetChallenge(userId: number): Observable<any> {
-    return this.http.post<any>(this.apiUrl, {
-      action: 'reset',
-      user_id: userId,
-      goal: 0,
-    });
+    console.log('[ChallengeService] resetChallenge llamado para userId:', userId);
+    return this.http.post<any>(`${this.apiUrl}/reset`, { user_id: userId });
   }
 
   updateProgress(userId: number, animeCount: number, animesVistos: any[]): Observable<any> {
-    return this.http.post<any>(this.apiUrl, {
-      action: 'updateProgress',
+    const body = {
+      action: 'updateProgress',      // <<-- IMPORTANTE
       user_id: userId,
       animeCount,
       animesVistos,
-    });
+    };
+    console.log('[ChallengeService] updateProgress llamado:', body);
+    return this.http.post<any>(`${this.apiUrl}/updateProgress`, body);
   }
 }

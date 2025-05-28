@@ -64,20 +64,18 @@ export class AnnualChallengeComponent implements OnInit {
 
 
   iniciarReto(): void {
-    if (this.animeCount > 0) {
-      this.retoIniciado = true;
-      this.guardarEstado();
+  if (this.animeCount > 0) {
+    this.retoIniciado = true;
+    this.guardarEstado();
 
-      this.http.post('https://ruizgijon.ddns.net/sancheza/isaberu/api/challenge.php', {
-        action: 'reset',
-        user_id: this.userId,
-        goal: this.animeCount
-      }).subscribe({
-        next: res => console.log('Reto guardado en backend:', res),
-        error: err => console.error('Error guardando reto en backend:', err)
-      });
-    }
+    console.log('[Componente] Llamando resetChallenge...');
+    this.challengeService.resetChallenge(this.userId).subscribe({
+      next: res => console.log('Reto guardado en backend:', res),
+      error: err => console.error('Error guardando reto en backend:', err)
+    });
   }
+}
+
 
   restablecerReto(): void {
     Swal.fire({
@@ -88,20 +86,13 @@ export class AnnualChallengeComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.http.post('https://ruizgijon.ddns.net/sancheza/isaberu/api/challenge.php', {
-          action: 'reset',
-          user_id: this.userId,
-          goal: 0
-        }).subscribe({
+        this.challengeService.resetChallenge(this.userId).subscribe({
           next: (res) => {
             console.log('Reto restablecido en backend:', res);
-
-            // Solo tras confirmar backend limpiamos localStorage y reseteamos estado
             localStorage.removeItem(this.STORAGE_KEY);
             this.animeCount = 0;
             this.animesVistos = [];
             this.retoIniciado = false;
-
             Swal.fire({
               title: '¡Reiniciado!',
               text: 'Tu Reto Anual ha sido Reiniciado',
@@ -121,6 +112,8 @@ export class AnnualChallengeComponent implements OnInit {
       }
     });
   }
+
+  
 
   agregarAnime(anime: any): void {
     if (!this.animeCount || this.animesVistos.length >= this.animeCount) return;
@@ -166,17 +159,41 @@ export class AnnualChallengeComponent implements OnInit {
 
   eliminarAnime(anime: any): void {
     this.animesVistos = this.animesVistos.filter(a => a.mal_id !== anime.mal_id);
-    this.guardarEstado();
 
-    Swal.fire({
-      icon: 'info',
-      title: 'Eliminado',
-      text: `${anime.titulo} se Ha Eliminado de tu Lista`,
-      timer: 1500,
-      showConfirmButton: false,
-      customClass: { popup: 'swal2-lexend' }
+    this.challengeService.updateProgress(this.userId, this.animeCount, this.animesVistos).subscribe({
+      next: res => {
+        console.log('Progreso actualizado tras eliminar anime:', res);
+        this.guardarEstadoLocal();
+        Swal.fire({
+          icon: 'info',
+          title: 'Eliminado',
+          text: `${anime.titulo} se Ha Eliminado de tu Lista`,
+          timer: 1500,
+          showConfirmButton: false,
+          customClass: { popup: 'swal2-lexend' }
+        });
+      },
+      error: err => {
+        console.error('Error actualizando progreso tras eliminar anime:', err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'No se pudo eliminar el anime. Intenta de nuevo.',
+          customClass: { popup: 'swal2-lexend' }
+        });
+      }
     });
   }
+
+private guardarEstadoLocal(): void {
+  const retoParaGuardar = {
+    animeCount: this.animeCount,
+    animesVistos: this.animesVistos
+  };
+  localStorage.setItem(this.STORAGE_KEY, JSON.stringify(retoParaGuardar));
+}
+
+
 
   guardarEstado(): void {
     const retoParaGuardar = {
@@ -184,16 +201,9 @@ export class AnnualChallengeComponent implements OnInit {
       animesVistos: this.animesVistos
     };
 
-    // Guardar en localStorage para persistencia local
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(retoParaGuardar));
 
-    // Guardar en backend para persistencia remota y sincronización
-    this.http.post('https://ruizgijon.ddns.net/sancheza/isaberu/api/challenge.php', {
-      action: 'updateProgress',
-      user_id: this.userId,
-      animeCount: this.animeCount,
-      animesVistos: this.animesVistos
-    }).subscribe({
+    this.challengeService.updateProgress(this.userId, this.animeCount, this.animesVistos).subscribe({
       next: res => console.log('Progreso sincronizado con backend:', res),
       error: err => console.error('Error sincronizando con backend:', err)
     });

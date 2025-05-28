@@ -46,8 +46,8 @@ export class AuthService {
   }
 
   obtenerUsuario(): any {
-    const datos = localStorage.getItem('usuario');
-    return datos ? JSON.parse(datos) : null;
+    const usuarioStr = localStorage.getItem('usuario');
+    return usuarioStr ? JSON.parse(usuarioStr) : null;
   }
 
   cerrarSesion(): void {
