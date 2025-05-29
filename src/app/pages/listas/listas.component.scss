@@ -14,17 +14,25 @@ $radius: 1rem;
 $shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
 // =========================
-// WRAPPER PRINCIPAL
+// BASE
 // =========================
+
 body {
   background-color: $background-color;
+  font-family: $font-stack;
+  margin: 0;
+  padding: 0;
 }
+
+// =========================
+// LISTAS WRAPPER
+// =========================
+
 .listas-wrapper {
   padding: 2.5rem 3rem;
   background-color: $background-color;
   border-radius: 1.2rem;
   box-shadow: 0 8px 20px rgba(130, 184, 168, 0.15);
-  font-family: $font-stack;
 
   h2 {
     font-size: 1.5rem;
@@ -71,6 +79,10 @@ body {
   }
 }
 
+// =========================
+// LISTA
+// =========================
+
 .lista {
   margin-top: 3rem;
   padding: 2rem;
@@ -87,6 +99,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
 
     h3 {
       font-size: 1.5rem;
@@ -111,6 +125,7 @@ body {
     .acciones {
       display: flex;
       gap: 1rem;
+      flex-wrap: wrap;
 
       button {
         background-color: transparent;
@@ -168,7 +183,6 @@ body {
         border-radius: 1.5rem;
         box-shadow: 0 8px 25px rgba(130, 184, 168, 0.25);
         transition: transform 0.5s ease;
-
       }
 
       span {
@@ -207,7 +221,6 @@ body {
     }
   }
 
-
   p {
     color: $text-color;
     font-weight: 500;
@@ -242,5 +255,73 @@ body {
     p {
       color: $text-color;
     }
+  }
+}
+
+// =========================
+// MEDIA QUERIES RESPONSIVE
+// =========================
+
+@media (max-width: 1200px) {
+  .listas-wrapper {
+    padding: 2rem 2rem;
+  }
+
+  .lista .animes .anime-card {
+    width: 180px;
+  }
+}
+
+@media (max-width: 768px) {
+  .listas-wrapper {
+    padding: 1.5rem;
+  }
+
+  .lista-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .lista .animes {
+    gap: 1.5rem;
+  }
+
+  .lista .animes .anime-card {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .lista-header h3 {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .listas-wrapper {
+    padding: 1rem;
+  }
+
+  .lista .animes .anime-card {
+    width: 100%;
+    max-width: 90%;
+    min-height: auto;
+
+    img {
+      height: 200px;
+    }
+
+    span {
+      font-size: 1rem;
+    }
+  }
+
+  .lista-header {
+    gap: 0.5rem;
+  }
+
+  .lista-header .acciones {
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
   }
 }
