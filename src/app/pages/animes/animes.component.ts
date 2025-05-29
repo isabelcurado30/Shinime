@@ -10,7 +10,6 @@ import Swal from "sweetalert2";
   templateUrl: './animes.component.html',
   styleUrls: ['./animes.component.scss']
 })
-
 export class AnimesComponent implements OnInit {
   query: string = '';
   animes: any[] = [];
@@ -44,7 +43,7 @@ export class AnimesComponent implements OnInit {
       }, 100);
     } else {
       this.loadInitialAnimes();
-    } // Fin Si
+    }
 
     const user = this.storageService.getUser();
     if (user) {
@@ -69,7 +68,6 @@ export class AnimesComponent implements OnInit {
         this.animes = res;
         this.loading = false;
       },
-
       error: () => {
         this.error = 'Error al Cargar Animes';
         this.loading = false;
@@ -86,14 +84,13 @@ export class AnimesComponent implements OnInit {
     if (!query && !this.selectedGenre) {
       this.loadInitialAnimes();
       return; 
-    } // Fin Si
+    }
 
     this.animeService.searchAnime (query, 1, this.selectedGenre !== null ? this.selectedGenre : undefined).subscribe ({
       next: (res) => {
         this.animes = res;
         this.loading = false;
       },
-
       error: () => {
         this.error = 'Error al Buscar Animes';
         this.loading = false;
@@ -106,7 +103,6 @@ export class AnimesComponent implements OnInit {
   }
 
   goToDetail (id: number) {
-    // Guardar Búsqueda y Scroll Antes de Navegar
     this.storageService.setBusqueda (this.query, this.selectedGenre, window.scrollY);
     this.router.navigate (['/animes', id]);
   }
@@ -115,7 +111,7 @@ export class AnimesComponent implements OnInit {
     if (!this.listasUsuario.length) {
       Swal.fire ('No Tienes Listas Creadas Aún', '', 'info');
       return;
-    } // Fin Si
+    }
 
     const inputOptions = this.listasUsuario.reduce ((acc, lista) => {
       acc [lista.id] = lista.nombre;
@@ -166,11 +162,9 @@ export class AnimesComponent implements OnInit {
               confirmButtonColor: '#7ADBC8'
             });
 
-            // Actualizar Localmente
             listaSeleccionada.animes = listaSeleccionada.animes || [];
             listaSeleccionada.animes.push (animeParaLista);
           },
-
           error: () => {
             Swal.fire ('Error', 'No se Pudo Añadir el Anime a la Lista', 'error');
           }

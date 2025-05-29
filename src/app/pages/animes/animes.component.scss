@@ -87,6 +87,49 @@ body {
   justify-content: space-between;
   min-height: 400px;
   height: 100%;
+  position: relative;
+
+  .btn-favorito {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+    transition: color 0.3s ease;
+
+    svg {
+      transition: fill 0.3s ease, stroke 0.3s ease;
+      stroke: #aaa;
+      fill: none;
+      width: 28px;
+      height: 28px;
+    }
+
+    &.favorito svg {
+      fill: #e0245e; /* rojo corazón */
+      stroke: #e0245e;
+      filter: drop-shadow(0 0 2px #e0245e);
+      transform: scale(1.2);
+      transition: fill 0.3s ease, stroke 0.3s ease, transform 0.3s ease;
+    }
+
+    &:hover {
+      color: #e0245e;
+
+      svg {
+        stroke: #e0245e;
+        transform: scale(1.1);
+      }
+    }
+  }
+
 
   &:hover {
     transform: translateY(-5px);

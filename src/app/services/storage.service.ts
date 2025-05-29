@@ -5,10 +5,7 @@ import { Injectable } from "@angular/core";
 })
 
 export class StorageService {
-  // ======================
-  // 🔐 Usuario
-  // ======================
-
+  // Usuario
   setUser (usuario: { id: number, nombre: string }): void {
     localStorage.setItem ('usuario', JSON.stringify (usuario));
   }
@@ -26,10 +23,7 @@ export class StorageService {
     return this.getUser() !== null;
   }
 
-  // ======================
-  // 📈 Reto Anual por Usuario + Año
-  // ======================
-
+  // Reto Anual por Usuario + Año
   setRetoAnual (userId: number, data: { animeCount: number, animesVistos: any[] }): void {
     const year = new Date().getFullYear();
     const key = `retoAnual-${userId}-${year}`;
@@ -38,7 +32,7 @@ export class StorageService {
 
   getRetoAnual (userId: number): { animeCount: number, animesVistos: any[] } | null {
     const year = new Date().getFullYear();
-    const key = `retoAnual-[userId}-${year}`;
+    const key = `retoAnual-[userId]-${year}`;
     const data = localStorage.getItem (key);
     return data ? JSON.parse (data) : null;
   }
@@ -49,25 +43,22 @@ export class StorageService {
     localStorage.removeItem (key);
   }
 
-  // ======================
-  // 🔍 Estado Temporal de Búsqueda de Animes
-  // ======================
-
+  // Estado Temporal de Búsqueda de Animes
   private ultimaBusqueda: string = '';
   private ultimoGenero: number | null = null;
-  private ultimaPosY: number = 0;
+  private ultimoPosY: number = 0;
 
-  setBusqueda (query: string, genero: number | null, posY: number): void {
-    this.ultimaBusqueda = query;
-    this.ultimoGenero = genero;
-    this.ultimaPosY = posY;
+  setBusqueda (query: string, genero: number | null, posY: number) {
+    this.ultimaBusqueda = query,
+    this.ultimoGenero = genero,
+    this.ultimoPosY = posY
   }
 
   getBusqueda(): { query: string, genero: number | null, posY: number } {
     return {
       query: this.ultimaBusqueda,
       genero: this.ultimoGenero,
-      posY: this.ultimaPosY
+      posY: this.ultimoPosY
     };
   }
 }
