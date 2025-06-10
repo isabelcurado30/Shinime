@@ -1,7 +1,4 @@
-// =========================
-// VARIABLES
-// =========================
-
+// Variables
 $primary-color: #82B8A8;
 $secondary-color: #A1CABE;
 $light-color: #C0DBD4;
@@ -11,296 +8,313 @@ $text-color: #2E3A3F;
 
 $font-stack: 'Lexend', sans-serif;
 
-$card-radius: 1rem;
-$shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
-// =========================
-// ESTRUCTURA GENERAL
-// ==========================
-
-.anime-detail {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+// Estilos Generales
+body {
     background-color: $background-color;
     color: $text-color;
-    padding: 2rem;
     font-family: $font-stack;
+    line-height: 1.5;
+    padding: 1rem;
+}
 
-    img {
-        width: 260px;
-        border-radius: 1rem;
-        box-shadow: $shadow;
-        margin-bottom: 2rem;
-    }
+main.anime-detail {
+  max-width: 900px;
+  margin: 2rem auto;
+  background-color: darken($background-color, 3%);
+  border-radius: 15px;
+  padding: 2.5rem 3rem;
+  box-shadow: 0 8px 24px rgba(130, 184, 168, 0.15);
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 2.5rem;
+  align-items: start;
 
-    .anime-info {
-        text-align: center;
-        max-width: 700px;
-
-        h1 {
-            font-size: 2.5rem;
-            color: $primary-color;
-            margin-bottom: 1rem;
-        }
-
-        p {
-            font-size: 1.1rem;
-            margin: 0.5rem 0;
-
-            strong {
-                color: $secondary-color;
-            }
-        }
-    }
-
-    .synopsis {
-        max-width: 800px;
-        margin-top: 2rem;
-        background-color: $white;
-        padding: 1.5rem;
-        border-radius: $card-radius;
-        box-shadow: $shadow;
-        line-height: 1.6;
-        font-size: 1.05rem;
-    }
-
-    .trailer-container {
-        h2 {
-            font-size: 1.8rem;
-            color: $primary-color;
-            margin-bottom: 1rem;
-            border-left: 4px solid $primary-color;
-            padding-left: 0.75rem;
-        }
-  margin-top: 2rem;
-  iframe {
-    width: 800px;
-    height: 400px;
+  img {
+    width: 100%;
     border-radius: 12px;
-    box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+  }
+
+  .anime-info {
+    h1 {
+      color: $primary-color;
+      font-weight: 800;
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+      text-align: left;
+      border-left: 6px solid $secondary-color;
+      padding-left: 1rem;
+    }
+
+    p {
+      margin-bottom: 0.75rem;
+      font-size: 1.1rem;
+      line-height: 1.4;
+
+      strong {
+        color: $secondary-color;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .synopsis {
+    grid-column: 1 / -1; 
+    margin-top: 2rem;
+
+    h2 {
+      color: $primary-color;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      border-bottom: 2px solid $secondary-color;
+      padding-bottom: 0.3rem;
+    }
+
+    p {
+      font-size: 1rem;
+      color: $text-color;
+      white-space: pre-line;
+    }
+  }
+
+  .trailer-container {
+    grid-column: 1 / -1; 
+    margin-top: 2rem;
+
+    h2 {
+      color: $primary-color;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid $secondary-color;
+      padding-bottom: 0.3rem;
+      text-align: center;
+    }
+
+    iframe {
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+      height: 400px;
+    }
   }
 }
 
-}
-
-// =========================
-// BOTÓN "AÑADIR A LISTA"
-// =========================
 
 .añadir-a-lista {
-    display: flex;
-    justify-content: center;
-    margin: 2rem auto;
-    margin-top: 40px;
-    font-family: $font-stack;
+    text-align: center;
+    margin: 2rem 0;
 
     button {
         background-color: $primary-color;
-        font-family: $font-stack;
         color: $white;
-        padding: 0.8rem 1.6rem;
         border: none;
-        border-radius: 4rem;
-        font-size: 1.2rem;
+        padding: 0.75rem 1.5rem;
+        border-radius: 5px;
+        font-family: $font-stack;
+        font-weight: 600;
         cursor: pointer;
-        transition: $background-color 0.3s ease, transform 0.2s ease;
+        transition: background-color 0.3s ease;
 
-        &:hover {
-            background-color: darken($primary-color, 10%);
-            transform: scale(1.05);
+        &:hover,
+        &:focus {
+            background-color: $secondary-color;
+            outline: none;
         }
     }
 }
 
-// =========================
-// EPISODIOS
-// =========================
-
 .anime-episodes {
     max-width: 900px;
-    margin: 3rem auto 2rem auto;
+    margin: 0 auto 3rem auto;
+    background-color: $white;
+    border-radius: 10px;
     padding: 2rem;
-    font-family: $font-stack;
-    border-radius: $card-radius;
-    box-shadow: $shadow;
-    animation: subtleBackgroundShift 12s ease-in-out infinite alternate;
-    transition: $background-color 1s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
     h2 {
-        font-size: 1.8rem;
         color: $primary-color;
+        font-weight: 700;
         margin-bottom: 1rem;
-        text-align: left;
-        border-left: 4px solid $primary-color;
-        padding-left: 0.75rem;
+        border-bottom: 2px solid $secondary-color;
+        padding-bottom: 0.3rem;
+        text-align: center;
     }
 
     ul {
         list-style: none;
-        padding: 0;
-        margin: 0;
+        padding-left: 0;
 
         li {
-            background-color: $white;
-            border-left: 5px solid $secondary-color;
-            margin-bottom: 1rem;
-            padding: 1rem 1.2rem;
-            border-radius: $card-radius;
-            box-shadow: $shadow;
-            transition: $background-color 0.2s ease;
+            padding: 0-75rem 1rem;
+            border-bottom: 1px solid $light-color;
             cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
 
-            &:hover {
-                background-color: $light-color;
-                transform: translateY(-2px);
+            strong {
+                font-weight: 600;
+                color: $text-color;
+            }
+
+            span.check-icon {
+                margin-left: 0.5rem;
             }
 
             &.visto {
+                background-color: $secondary-color;
+                color: $white;
+
+                span.check-icon {
+                    color: $white;
+                }
+            }
+
+            &:hover {
                 background-color: $light-color;
-                transform: translateY(-2px);
-
-                strong, span {
-                    color: $text-color;
-                }
-
-                .check-icon {
-                    color: $primary-color;
-                }
-            }
-
-            strong {
-                font-size: 1.05rem;
-                color: $text-color;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                gap: 0.5rem;
-                margin-bottom: 0.3rem;
-            }
-
-            .check-icon {
-                font-size: 1rem;
-            }
-            
-            span {
-                color: darken($text-color, 20%);
-                font-size: 0.9rem;
             }
         }
     }
 }
 
 .no-episodes {
-    text-align: center;
-    margin-top: 2rem;
-    font-style: italic;
-    color: darken($text-color, 25%);
-}
-
-// =========================
-// LOADING Y ERROR
-// =========================
-
-.loading,
-.error {
-    text-align: center;
-    margin-top: 3rem;
-    font-size: 1.2rem;
-    font-weight: 500;
-}
-
-.error {
-    color: red;
-}
-
-// =========================
-// ANIMACIONES
-// =========================
-
-@keyframes subtleBackgroundShift {
-    0% {
-        background-color: #E6F1ED;
-    }
-
-    50% {
-        background-color: #E0EDE9;
-    }
-
-    100% {
-        background-color: #E6F1ED;
-    }
-}
-
-// =========================
-// RESULTADOS DE BÚSQUEDA (Reto Anual)
-// =========================
-
-.resultados {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  justify-content: center;
-  margin-top: 2rem;
-
-  .anime {
+    max-width: 900px;
+    margin: 2rem auto;
     background-color: $white;
-    border-radius: $card-radius;
-    box-shadow: $shadow;
-    padding: 1rem;
-    width: 180px;
+    border-radius: 10px;
+    padding: 1.5rem;
     text-align: center;
-    transition: transform 0.3s ease;
-    cursor: pointer;
+    color: $text-color;
+    font-style: italic;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
 
-    &:hover {
-      transform: translateY(-5px);
-    }
+// Responsive
+@media (max-width: 768px) {
+  main.anime-detail {
+    grid-template-columns: 1fr; // Una sola columna en tablet y móvil
+    padding: 2rem 1.5rem;
 
     img {
-      width: 100%;
-      height: 260px;
-      object-fit: cover;
-      border-radius: 0.5rem;
-      margin-bottom: 0.5rem;
+      border-radius: 10px;
+      height: auto;
     }
 
-    .info {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      p {
-        font-weight: 600;
-        color: $text-color;
-        font-size: 0.95rem;
-        margin-bottom: 0.5rem;
+    .anime-info {
+      h1 {
+        font-size: 1.8rem;
+        border-left: none;
+        padding-left: 0;
+        text-align: center;
       }
 
-      button {
-        background-color: $secondary-color;
-        color: $text-color;
-        border: none;
-        padding: 0.4rem 1rem;
-        border-radius: 2rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
+      p {
+        font-size: 1rem;
+        text-align: center;
+      }
+    }
 
-        &:hover {
-          background-color: darken($secondary-color, 10%);
+    .synopsis {
+      margin-top: 1.5rem;
+
+      h2 {
+        text-align: center;
+      }
+
+      p {
+        font-size: 0.95rem;
+      }
+    }
+
+    .trailer-container {
+      margin-top: 1.5rem;
+
+      h2 {
+        text-align: center;
+        font-size: 1.3rem;
+      }
+
+      iframe {
+        height: 250px;
+      }
+    }
+  }
+
+  .añadir-a-lista {
+    margin: 1.5rem 0;
+
+    button {
+      width: 100%;
+      padding: 1rem 0;
+      font-size: 1.1rem;
+    }
+  }
+
+  .anime-episodes {
+    max-width: 100%;
+    padding: 1.5rem;
+
+    ul {
+      li {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.95rem;
+        flex-direction: column;
+        align-items: flex-start;
+
+        span.check-icon {
+          margin-left: 0;
+          margin-top: 0.3rem;
         }
       }
     }
   }
+
+  .no-episodes {
+    max-width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+  }
 }
 
-// =========================
-// BUSCADOR DEL RETO ANUAL
-// =========================
+@media (max-width: 480px) {
+  main.anime-detail {
+    padding: 1.5rem 1rem;
 
-.buscador .form-group input {
-  height: 260px;
-  object-fit: cover;
-  border-radius: 0.5rem;
+    .anime-info {
+      h1 {
+        font-size: 1.6rem;
+      }
+
+      p {
+        font-size: 0.9rem;
+      }
+    }
+
+    .synopsis {
+      h2 {
+        font-size: 1.1rem;
+      }
+
+      p {
+        font-size: 0.9rem;
+      }
+    }
+
+    .trailer-container {
+      iframe {
+        height: 200px;
+      }
+    }
+  }
+
+  .añadir-a-lista button {
+    font-size: 1rem;
+  }
+
+  .anime-episodes ul li {
+    font-size: 0.9rem;
+  }
 }

@@ -20,6 +20,9 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegistroComponent } from './pages/registro/registro.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import { ListasComponent } from './pages/listas/listas.component';
+import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
+import { TermsAndConditionsComponent } from './pages/terms-and-conditions/terms-and-conditions.component';
+import { SoporteComponent } from './pages/soporte/soporte.component';
 
 @NgModule ({
   declarations: [
@@ -36,7 +39,10 @@ import { ListasComponent } from './pages/listas/listas.component';
     LoginComponent,
     RegistroComponent,
     PerfilComponent,
-    ListasComponent
+    ListasComponent,
+    PrivacyPolicyComponent,
+    TermsAndConditionsComponent,
+    SoporteComponent
   ],
   imports: [
     BrowserModule,

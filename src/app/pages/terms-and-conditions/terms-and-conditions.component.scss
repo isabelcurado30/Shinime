@@ -1,0 +1,89 @@
+$primary-color: #82B8A8;
+$secondary-color: #A1CABE;
+$light-color: #C0DBD4;
+$background-color: #E0EDE9;
+$white: #FFFFFF;
+$text-color: #2E3A3F;
+
+$font-stack: 'Lexend', sans-serif;
+
+
+.terms-and-conditions {
+    font-family: $font-stack;
+  background-color: $background-color;
+  color: $text-color;
+  padding: 2.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  max-width: 950px;
+  margin: 4rem auto;
+  line-height: 1.8;
+  font-size: 1.1rem;
+  animation: fadeIn 0.4s ease;
+
+  .title {
+    font-size: 2.4rem;
+    color: $primary-color;
+    font-weight: 700;
+    position: relative;
+    margin-bottom: 2rem;
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 60px;
+      height: 3px;
+      background-color: $primary-color;
+      border-radius: 4px;
+    }
+  }
+
+  h2 {
+    font-size: 1.6rem;
+    margin-top: 2.5rem;
+    color: $secondary-color;
+    font-weight: 600;
+    padding-left: 0.5rem;
+    border-left: 4px solid $primary-color;
+  }
+
+  p {
+    margin-top: 1rem;
+    font-size: 1.05rem;
+    color: lighten($text-color, 5%);
+  }
+
+  strong {
+    color: $primary-color;
+    font-weight: 600;
+  }
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+
+    .title {
+      font-size: 2rem;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

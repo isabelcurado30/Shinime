@@ -9,6 +9,9 @@ import { LoginComponent } from './pages/login/login.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import { ListasComponent } from './pages/listas/listas.component';
 import { AuthGuard } from './guards/auth.guard';
+import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
+import { TermsAndConditionsComponent } from './pages/terms-and-conditions/terms-and-conditions.component';
+import { SoporteComponent } from './pages/soporte/soporte.component';
 
 
 const routes: Routes = [
@@ -20,6 +23,9 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'perfil', component: PerfilComponent },
   { path: 'listas', component: ListasComponent, canActivate: [AuthGuard] },
+  { path: 'privacy-policy', component: PrivacyPolicyComponent },
+  { path: 'terms-and-conditions', component: TermsAndConditionsComponent },
+  { path: 'soporte', component: SoporteComponent },
 ];
 
 @NgModule ({

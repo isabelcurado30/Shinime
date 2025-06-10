@@ -1,63 +1,67 @@
 <!DOCTYPE html>
 <html lang = "es">
-    <head>
-        <meta charset = "UTF-8">
-        <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
-        <title>Animes - Shinime</title>
-        <link href = "https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel = "stylesheet">
-    </head>
-    <body>
-        <div *ngIf = "loading" class = "loading">Cargando Detalles...</div>
-        <div *ngIf = "error" class = "error">{{ error }}</div>
+  <head>
+    <meta charset = "UTF-8">
+    <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+    <title>Detalle de Anime - Shinime</title>
+    <link href = "https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel = "stylesheet">
+  </head>
+  <body>
+    <main *ngIf = "anime" class = "anime-detail">
+      <img [src] = "anime.images.jpg.image_url" [alt] = "anime.title">
 
-        <div *ngIf = "anime" class = "anime-detail">
-            <img src = "{{ anime.images.jpg.image_url }}" alt = "{{ anime.title }}">
+      <div class = "anime-info">
+        <h1>{{ anime.title }}</h1>
+        <p><strong>Estado:</strong> {{ anime.status | statusTranslate }}</p>
+        <p><strong>Puntuación:</strong> {{ anime.score }}</p>
+        <p><strong>Episodios:</strong> {{ anime.episodes }}</p>
+        <p><strong>Géneros:</strong> {{ anime.genres | genresTranslate }}</p>
+        <p><strong>Clasificación:</strong> {{ anime.rating | ratingTranslate }}</p>
+      </div>
 
-            <div class = "anime-info">
-                <h1>{{ anime.title }}</h1>
-                <p><strong>Estado:</strong> {{ anime.status | statusTranslate }}</p>
-                <p><strong>Puntuación:</strong> {{ anime.score }}</p>
-                <p><strong>Episodios:</strong> {{ anime.episodes }}</p>
-                <p><strong>Géneros:</strong> {{ anime.genres | genresTranslate }}</p>
-                <p><strong>Clasificación:</strong> {{ anime.rating | ratingTranslate }}</p>
-            </div>
+      <div class = "synopsis">
+        <h2>Sinopsis</h2>
+        <p>{{ anime.synopsis }}</p>
+      </div>
 
-            <div class = "synopsis">
-                {{ anime.synopsis }}
-            </div>
+      <div *ngIf = "trailerUrl" class = "trailer-container">
+        <h2>Tráiler</h2>
+        <iframe
+          width = "100%"
+          height = "400"
+          [src] = "trailerUrl"
+          frameborder = "0"
+          allowfullscreen
+          title = "Tráiler de {{ anime.title }}"
+        ></iframe>
+      </div>
+    </main>
 
-            <div *ngIf="trailerUrl" class="trailer-container">
-  <h2>Tráiler</h2>
-  <iframe
-    width="100%"
-    height="400"
-    [src]="trailerUrl"
-    frameborder="0"
-    allowfullscreen
-  ></iframe>
-</div>
+    <div class = "añadir-a-lista">
+      <button (click) = "abrirSelectorDeLista()" aria-label = "Añadir este Anime a tu Lista">
+        Añadir a Lista
+      </button>
+    </div>
 
-        </div>
+    <div *ngIf = "episodes.length > 0" class = "anime-episodes">
+      <h2>Episodios</h2>
+      <ul>
+        <li
+          *ngFor = "let ep of episodes"
+          [class.visto] = "episodiosVistos.has (ep.mal_id)"
+          (click) = "toggleVisto (ep.mal_id)"
+        >
+          <strong>
+            {{ ep.mal_id }}. {{ ep.title }}
+            <span *ngIf = "episodiosVistos.has (ep.mal_id)" class = "check-icon">✅</span>
+          </strong>
+          <span *ngIf = "ep.aired">({{ ep.aired | date: 'yyyy-MM-dd' }})</span>
+        </li>
+      </ul>
+    </div>
 
-        <div class = "añadir-a-lista">
-          <button (click) = "abrirSelectorDeLista()">Añadir a Lista</button>
-        </div>
-
-        <div *ngIf="episodes.length > 0" class="anime-episodes">
-            <h2>Episodios</h2>
-            <ul>
-              <li *ngFor="let ep of episodes" [class.visto] = "episodiosVistos.has (ep.mal_id)" (click) = "toggleVisto (ep.mal_id)">
-                <strong>
-                  {{ ep.mal_id }}. {{ ep.title }}
-                  <span *ngIf = "episodiosVistos.has(ep.mal_id)" class = "check-icon">✅</span>
-                </strong>
-                <span *ngIf="ep.aired"> ({{ ep.aired | date:'yyyy-MM-dd' }})</span>
-              </li>
-            </ul>
-          </div>
-
-          <div *ngIf="!loading && episodes.length === 0" class="no-episodes">
-            <p>No se encontraron episodios.</p>
-          </div>
-    </body>
+    <div *ngIf = "!loading && episodes.length === 0" class = "no-episodes">
+      <p>No se Encontraron Episodios</p>
+    </div>
+  </body>
 </html>
